@@ -1,0 +1,60 @@
+﻿@{ 
+    string cur = @PageData["param"];
+    string sy = "", yx = "", xw = "", xz = "", cz = "", bz = "";
+ }
+@switch (cur)
+{
+    case "game":
+        yx = "cur";
+        break;
+    case "news":
+        xw = "cur";
+        break;
+    case "download":
+        xz = "cur";
+        break;
+    case "recharge":
+        cz = "cur";
+        break;
+    case "helper":
+        bz = "cur";
+        break;
+    default:
+        sy = "cur";
+        break;
+}
+<div class="header">
+    <div class="header_c wrap clearfix">
+        <!--logo-->
+        <a href="index.html" class="logo">
+            <h1><img src="~/Content/Img/logo.png" alt="logo" /></h1>
+        </a>
+        <!--/logo-->
+        <div class="head_r">
+            <!--导航-->
+            <div class="nav clearfix">
+                <ul>
+                    <li>
+                        <a href="/home" class="@sy">首页</a>
+                    </li>
+                    <li>
+                        <a href="/game" class="@yx">游戏</a>
+                    </li>
+                    <li>
+                        <a href="/news" class="@xw">新闻</a>
+                    </li>
+                    <li>
+                        <a href="/download" class="@xz">下载</a>
+                    </li>
+                    <li>
+                        <a href="/recharge" class="@cz">充值</a>
+                    </li>
+                    <li>
+                        <a href="/helper" class="@bz">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/导航-->
+        </div>
+    </div>
+</div>

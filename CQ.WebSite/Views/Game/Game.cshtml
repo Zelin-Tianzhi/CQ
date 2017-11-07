@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Game";
+    Layout = "~/Views/Shared/_LayoutGame.cshtml";
+}
+
+<div class="wrap mt20">
+    <div class="hd">
+        <h3><i class="icon-title icon-event"></i>游戏中心</h3>
+    </div>
+    <div class="game-inf clearfix">
+        <span class="game-img"><img src="/Content/Img/temp/game-img.jpg" alt=""></span>
+        <div class="game-text">
+            <h1>欢乐斗地主</h1>
+            <p>斗地主，属于基础类扑克游戏。起源和流行于湖北十堰房县一带，玩法简单，娱乐性强，老少皆宜。据传在万恶的旧社会，地主横行乡里，无恶不做，人们为了发泄对地主的痛恨，常常在一天的劳作之后，一家人关起门来“斗地主”。斗地主对抗性和配合性都很强，用一副牌共54 张牌。每局牌有一个玩家是“地主”，地主为一方，其余两家农民为另一方，双方对战，地主的目标是(以合法的出牌方式)先出完手里所有的牌，而农民的目标是在地主出完牌以前，先出完手里所有的牌。先出完牌的人所代表的一方获胜。</p>
+        </div>
+        <div class="g-down-lnk">
+            <a href="###" class="down-lnk-fast" title="经典版下载"><i></i>经典版下载</a>
+            <a href="###" class="down-lnk-web" title="豪华版下载"><i></i>豪华版下载</a>
+        </div>
+    </div>
+    <div class="text-title">游戏截图</div>
+
+    <div class="device">
+        <a class="arrow-left" href="#"></a>
+        <a class="arrow-right" href="#"></a>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="/Content/Img/temp/gh_01.jpg"></div>
+                <div class="swiper-slide"> <img src="/Content/Img/temp/gh_02.jpg"></div>
+                <div class="swiper-slide"><img src="/Content/Img/temp/gh_01.jpg"></div>
+                <div class="swiper-slide"> <img src="/Content/Img/temp/gh_02.jpg"></div>
+                <div class="swiper-slide"><img src="/Content/Img/temp/gh_01.jpg"></div>
+                <div class="swiper-slide"> <img src="/Content/Img/temp/gh_02.jpg"></div>
+                <div class="swiper-slide"><img src="/Content/Img/temp/gh_01.jpg"></div>
+                <div class="swiper-slide"> <img src="/Content/Img/temp/gh_02.jpg"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/Content/js/idangerous.swiper.min.js"></script>
+    <script>
+				  var mySwiper = $('.swiper-container').swiper({
+				    loop: false,
+				    grabCursor: true,
+				    paginationClickable: true,
+				    slidesPerView: 4
+				  });
+				  $('.arrow-left').on('click', function(e){
+				    e.preventDefault()
+				    var swiper = $(this).siblings('.swiper-container').data('swiper');
+				    swiper.swipePrev();
+				  });
+				  $('.arrow-right').on('click', function(e){
+				    e.preventDefault()
+				    var swiper = $(this).siblings('.swiper-container').data('swiper');
+				    swiper.swipeNext();
+				  });
+    </script>
+
+    <div class="text-li">
+        <div class="text-title">基本规则</div>
+        <p>一、基本规则：</p>
+        <p style="padding: 0 0 30px 35px;">
+            每桌3-5个玩家游戏，使用一副扑克54张牌，首先给每个玩家依次发三张牌，以先发牌者为先，依次进行下注每个玩家至少要跟平上一个玩家（或全下所有筹码），
+            亦可以选择放弃。如果本轮玩家下注相等（或已全下）则再发一张牌，继续重复下注，发满五张牌之后进行最后一轮下注，最后按照斗牛的牌型大小进行比牌，最大
+            的人获胜。首轮下注限制为底注的20倍。
+        </p>
+        <p>二、牌型及大小：</p>
+        <p style="padding: 5px 0 5px 35px; color: #6c1b06;">1.组牌规则</p>
+        <p style="padding: 0 0 10px 35px;">
+            玩家把5张牌分为两组， 第一组必须拿且只拿3张牌组成10、20、30的整数（加法运算）数字A-10的扑克牌数字代表其大小，JQK和大小王统一以10计算。若玩家
+            有三张牌能凑成10或20或30的整数，我们称之为有牛若有人无法使用3张牌凑成10或20或30的整数，我们称之为没牛。<br />
+            第二组牌则把剩下的两张牌按照加法计算，10的整数倍数最大，1最小，若大于10小于20则取个位数计算。第2组牌数字为1，我们称之为牛一；若第2组数字为10或
+            20，我们称之为牛牛，其他以牛二、牛三等名称称呼。
+        </p>
+        <p style="padding: 5px 0 5px 35px; color: #6c1b06;">2.特殊牌型</p>
+        <p style="padding: 0 0 10px 35px;">
+            四炸：5张牌中有4张一样的牌（无需有牛），若都是四炸牌型，则比较4张一样的牌的大小；<br />
+            五花牛：5张牌全为JQK及大小王的特殊牛牛牌型；<br />
+            五小牛：5张牌点数都<5，且牌点总数≤10；
+        </p>
+        <p style="padding: 5px 0 5px 35px; color: #6c1b06;">3.比牌规则</p>
+        <p style="padding: 0 0 0px 35px;">
+            牌型大小顺序为：无牛&lt;牛一&lt;牛二&lt;…&lt;牛九&lt;牛牛&lt;四炸&lt;五花牛&lt;五小牛；<br />
+            当两名玩家牌型大小相同时，按照五张牌中最大的单张牌点数决定输赢，单张牌大王最大，A最小；<br />
+            当单张牌点数大小相同时，按照花色大小决定输赢，黑桃&gt;红桃&gt;梅花&gt;方块；
+        </p>
+        <div class="text-title">逃跑处理</div>
+        <p style="padding: 0 0 30px 35px;">
+            玩家在游戏开始后点击 退出 按钮后选择 强退，视为逃跑。<br />
+            任何一名玩家逃跑，按游戏当局基数*32扣除，扣除的金币50%给另一名玩家，50%的金币系统回收。
+        </p>
+
+
+    </div>
+
+
+</div>
+

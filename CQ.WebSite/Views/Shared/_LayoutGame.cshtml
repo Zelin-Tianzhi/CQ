@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <title>@ViewBag.Title</title>
+    <meta name="keywords" content="特色棋牌游戏,斗地主,麻将,斗牛,四人牛牛,温州麻将,二人麻将,二人斗牛,五子棋,找茬,扑克,棋牌游戏平台,网络游戏,永久免费游戏,视频斗地主,视频游戏,斗地主技巧,麻将技巧,棋牌官方网站,棋牌游戏下载">
+    <meta name="description" content="最潮流的免费在线棋牌游戏平台，包含扑克、斗地主、麻将、牛牛、等诸多时尚棋牌游戏玩法，致力于为玩家提供最愉快的网络游戏快乐，打造最火爆的棋牌游戏平台，并且将会为玩家带来最震撼的娱乐享受。">
+    <link rel="stylesheet" type="text/css" href="~/Content/Css/base.css">
+    <link rel="stylesheet" type="text/css" href="/Content/Css/sub.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="favicon.ico" />
+    <script type="text/javascript" src="/Content/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Content/js/base.js"></script>
+    <!--[if lt IE 7]>
+    <script src="/Content/js/DD_belatedPNG.js"></script>
+    <script>
+        DD_belatedPNG.fix('*');
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+    <script type="text/javascript">
+        /*禁止js报错(ie6png)*/
+        function killErrors() {
+            return true;
+        }
+        window.onerror = killErrors;
+    </script>
+    <div class="container">
+        @RenderPage("~/Views/Shared/_Header.cshtml", new { param = ViewContext.RouteData.Values["controller"].ToString().ToLower() })
+        <div class="banner clearfix"></div>
+        @RenderBody()
+        @RenderPage("~/Views/Shared/_Footer.cshtml")
+    </div>
+</body>
+</html>

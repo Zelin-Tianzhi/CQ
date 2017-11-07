@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "充值中心-棋牌-斗地主,麻将,牛牛,棋牌游戏平台";
+    Layout = "~/Views/Shared/_LayoutGame.cshtml";
+}
+
+<div class="wrap mt20">
+    <div class="hd">
+        <h3><i class="icon-title icon-event"></i>充值</h3>
+    </div>
+</div>
+<div class="wrap clearfix">
+    <div class="recharge_list">
+        <ul>
+            <li class="current">
+                <a href="javascript:;" onclick="ShowPayType('ZHIFUBAO')"><em class="icon01"></em><i>支付宝支付(扫码)</i></a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="ShowPayType('WEIXIN')"><em class="icon02"></em><i>微信支付(扫码)</i></a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="ShowPayType('WANGYIN')"><em class="icon03"></em><i>网上银行</i></a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="ShowPayType('DIANKA')"><em class="icon04"></em><i>游戏点卡</i></a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="ShowPayType('SHOJICHONGZHIKA')"><em class="icon05"></em><i>手机充值卡</i></a>
+            </li>
+        </ul>
+    </div>
+    <div id="pay_right" class="pay_right">
+        <table class="paymentTable">
+            <tbody>
+                <tr>
+                    <th align="right" width="110" style="height: 45px; line-height: 45px;">充值ID：</th>
+                    <td id="pay_center_input" style="height: 45px; line-height: 45px;">
+                        <input id="userName" name="userName" type="text" class="input" style="margin-top: 5px;" onblur="paytool.change_pay_user_submit2();">
+                        <button type="button" class="sure_btn" onclick="paytool.change_pay_user_submit2();">确认</button>
+                        <span style="color: red">*请确认游戏ID</span>
+                        <p style="color:red;font-weight:bold;">*充值ID即游戏ID</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="right" width="110" style="padding-top: 9px;">
+                        充值类型：
+                    </th>
+                    <td>
+                        <div class="pruneShow">
+                            <div class="simRadio">
+                                <ul class="bankSelect clearfix">
+                                    <li class="ZHIFUBAO select"><span>支付宝</span></li>
+                                    <!--<li class="WEIXIN"><span>微信</span></li>-->
+                                    <!--网上银行-->
+                                    <!--<li class="ICBC"><span>工商银行</span></li>
+                                    <li class="BOC"><span>中国银行</span></li>
+                                    <li class="ABC"><span>农业银行</span></li>
+                                    <li class="CCB"><span>建设银行</span></li>
+                                    <li class="PSBC"><span>邮政银行</span></li>
+                                    <li class="BCOM"><span>交通银行</span></li>
+                                    <li class="CMB"><span>招商银行</span></li>
+                                    <li class="CIB"><span>兴业银行</span></li>
+                                    <li class="CMBC"><span>民生银行</span></li>
+                                    <li class="CITIC"><span>中信银行</span></li>
+                                    <li class="CEB"><span>光大银行</span></li>
+                                    <li class="PAB"><span>平安银行</span></li>
+                                    <li class="HXB"><span>华夏银行</span></li>
+                                    <li class="GDB"><span>广发银行</span></li>
+                                    <li class="SDB"><span>深发银行</span></li>
+                                    <li class="SPDB"><span>浦发银行</span></li>
+                                    <li class="SHB"><span>上海银行</span></li>-->
+                                    <!--/网上银行-->
+                                    <!--游戏点卡-->
+                                    <!--<li class="JUNKA"><span>骏网卡</span></li>
+                                    <li class="SHENDA"><span>盛大卡</span></li>
+                                    <li class="WANGYI"><span>网易卡</span></li>
+                                    <li class="WANMEI"><span>完美卡</span></li>
+                                    <li class="JIUYOU"><span>久游卡</span></li>
+                                    <li class="SHOUHU"><span>搜狐卡</span></li>
+                                    <li class="ZHENTU"><span>征途卡</span></li>
+                                    <li class="QQ"><span>Q币卡</span></li>-->
+                                    <!--/游戏点卡-->
+                                    <!--手机充值卡-->
+                                    <!--<li class="MOBILE"><span>中国移动</span></li>
+                                    <li class="UNICOM"><span>中国联通</span></li>
+                                    <li class="TELECOM"><span>中国电信</span></li>-->
+                                    <!--/手机充值卡-->
+
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="right" width="110" style="padding-top: 12px;">
+                        <div>
+                            充值金额：
+                        </div>
+                    </th>
+                    <td>
+                        <div id="amountList" class="simRadio">
+                            <ul id="amountList_child" class="recharge clearfix">
+                                <li onclick="ShowPayVal('10.00');"><span class="select">10元</span></li>
+                                <li onclick="ShowPayVal('20.00');"><span class="unChoose">20元</span></li>
+                                <li onclick="ShowPayVal('30.00');"><span class="unChoose">30元</span></li>
+                                <li onclick="ShowPayVal('50.00');"><span class="unChoose">50元</span></li>
+                                <li onclick="ShowPayVal('100.00');"><span class="unChoose">100元</span></li>
+                                <li onclick="ShowPayVal('200.00');"><span class="unChoose">200元</span></li>
+                                <li onclick="ShowPayVal('500.00');"><span class="unChoose">500元</span></li>
+                                <li onclick="ShowPayVal('1000.00');"><span class="unChoose">1000元</span></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="right" width="110" style="padding-top: 10px;">
+                        总计需支付：
+                    </th>
+                    <td>
+                        <em class="amount" id="pay_center_submit_amount">￥10.00</em>元 获赠<em class="amount" id="pay_center_submit_getjb">1000</em>豆
+                    </td>
+                </tr>
+                <tr>
+                    <th align="right" width="110" style="padding-top: 10px;">图片验证码：</th>
+                    <td>
+                        <input id="vcode" name="vcode" type="text" class="input">&nbsp;
+                        <img src="images/temp/yzm.jpg" style="height:32px; cursor: pointer; border: 1px solid #333333;vertical-align: middle;" title="点击更换验证码图片!">
+                        <a href="javascript:void(0)" class="ll" id="ImageCheck2">看不清楚？ 换一个</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="right" width="110" style="padding-top: 10px;"></th>
+                    <td>
+                        <input type="submit" class="confirm_btn" value="下一步">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="recharge_tip">
+            <p>
+                <b>支付宝支付说明：</b>
+            </p>
+            1、您必须拥有支付宝账户；
+            <br> 2、请您仔细填写准确的充值账号（即游戏“用户名“），确保游戏账号准确无误再点击“下一步”，如因玩家输入错误而导致的任何损失由用户自行承担。
+            <br> 3、请充值时务必确认好您的充值金额准确无误后再进行充值，避免输错金额导致的失误，如因未仔细确认金额造成的充值问题，我们将一律不予处理此类退款申诉。
+        </div>
+    </div>
+</div>
+
