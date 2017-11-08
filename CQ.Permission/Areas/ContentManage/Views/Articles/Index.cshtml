@@ -9,6 +9,7 @@
     });
     function gridList() {
         var $gridList = $("#gridList");
+        
         $gridList.dataGrid({
             url: "/ContentManage/Articles/GetGridJson",
             height: $(window).height() - 128,
@@ -25,7 +26,7 @@
                     }
                 },
                 {
-                    label: '文章标题', name: 'F_ArticleTitle', width: 100, align: 'left',
+                    label: '文章标题', name: 'F_ArticleTitle', width: 300, align: 'left',
                     formatter: function (cellvalue, options, rowObject) {
                         if (cellvalue.length <= 10) {
                             return cellvalue;
@@ -34,7 +35,19 @@
                         }
                     }
                 },
-                { label: '发布时间', name: 'F_PublishTime', width: 100, align: 'center' }
+                { label: '发布时间', name: 'F_PublishTime', width: 100, align: 'center' },
+                {
+                    label: "热点", name: "F_IsHot", width: 100, align: "center",
+                    formatter: function (cellvalue) {
+                        return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                    }
+                },
+                {
+                    label: "有效", name: "F_EnableMark", width: 100, align: "left",
+                    formatter: function (cellvalue) {
+                        return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                    }
+                }
             ],
             pager: "#gridPager",
             sortname: 'F_PublishTime desc',
@@ -108,11 +121,6 @@
                 <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改文章</a></li>
                 <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除文章</a></li>
                 <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>预览文章</a></li>
-                <li class="split"></li>
-                <li><a id="NF-revisepassword" authorize="yes" onclick="btn_revisepassword()"><i class="fa fa-key"></i>密码重置</a></li>
-                <li class="split"></li>
-                <li><a id="NF-disabled" authorize="yes" onclick="btn_disabled()"><i class="fa fa-stop-circle"></i>禁用</a></li>
-                <li><a id="NF-enabled" authorize="yes" onclick="btn_enabled()"><i class="fa fa-play-circle"></i>启用</a></li>
             </ul>
             <a href="javascript:;" class="close"></a>
         </div>

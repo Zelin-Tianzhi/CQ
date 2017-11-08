@@ -11,13 +11,13 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
 {
     public class ArticlesController : BaseController
     {
-        [ValidateInput(false)]
         public override ActionResult Form()
         {
             return View();
         }
         private ArticleApp articleApp = new ArticleApp();
-
+        [HttpGet]
+        [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new

@@ -174,6 +174,9 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Content\Js\FileUpload\UploadFile.ashx.cs">
+      <DependentUpon>UploadFile.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Content\Js\ueditor\net\App_Code\Config.cs" />
     <Compile Include="Content\Js\ueditor\net\App_Code\ConfigHandler.cs" />
     <Compile Include="Content\Js\ueditor\net\App_Code\CrawlerHandler.cs" />
@@ -276,6 +279,14 @@
     <Content Include="Content\Js\echarts\echarts.js" />
     <Content Include="Content\Js\echarts\echarts.min.js" />
     <Content Include="Content\Js\echarts\infographic.js" />
+    <Content Include="Content\Js\FileUpload\bootstrap.min.css" />
+    <Content Include="Content\Js\FileUpload\bootstrap.min.js" />
+    <Content Include="Content\Js\FileUpload\fileinput.css" />
+    <Content Include="Content\Js\FileUpload\fileinput.js" />
+    <Content Include="Content\Js\FileUpload\imgShow.html" />
+    <Content Include="Content\Js\FileUpload\index.html" />
+    <Content Include="Content\Js\FileUpload\Jquery.min.js" />
+    <Content Include="Content\Js\FileUpload\zh.js" />
     <Content Include="Content\Js\framework-clientdata.js" />
     <Content Include="Content\Js\framework-ui.js" />
     <Content Include="Content\Js\highcharts\adapters\mootools-adapter.js" />
@@ -884,6 +895,7 @@
     <Content Include="Content\Js\ueditor\third-party\video-js\font\vjs.woff" />
     <Content Include="Areas\ContentManage\Views\Games\Index.cshtml" />
     <Content Include="Areas\ContentManage\Views\Games\Form.cshtml" />
+    <Content Include="Content\Js\FileUpload\UploadFile.ashx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
