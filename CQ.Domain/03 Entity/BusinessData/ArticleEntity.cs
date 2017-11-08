@@ -14,6 +14,7 @@ namespace CQ.Domain.Entity.BusinessData
         public DateTime? F_PublishTime { get; set; }
         public string F_ArticleContent { get; set; }
         public int F_SortCode { get; set; }
+        public bool F_IsHot { get; set; }
         public bool? F_DeleteMark { get; set; }
         public bool F_EnableMark { get; set; }
         public DateTime? F_CreatorTime { get; set; }

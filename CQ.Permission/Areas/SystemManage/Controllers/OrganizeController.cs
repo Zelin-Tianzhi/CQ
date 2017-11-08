@@ -98,5 +98,6 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             organizeApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
+        
     }
 }

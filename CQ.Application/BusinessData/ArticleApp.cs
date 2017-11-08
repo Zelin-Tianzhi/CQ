@@ -1,4 +1,5 @@
-﻿using CQ.Domain.Entity.BusinessData;
+﻿using CQ.Core;
+using CQ.Domain.Entity.BusinessData;
 using CQ.Domain.IRepository.BusinessData;
 using CQ.Repository.BusinessData;
 using System;
@@ -13,9 +14,14 @@ namespace CQ.Application.BusinessData
     {
         private IArticleRepository service = new ArticleRepository();
 
-        public List<ArticleEntity> GetLis()
+        public List<ArticleEntity> GetList(Pagination pagination, string keyword)
         {
-            return service.IQueryable().ToList();
+            var expression = ExtLinq.True<ArticleEntity>();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                expression = expression.And(t => t.F_ArticleTitle.Contains(keyword));
+            }
+            return service.FindList(expression, pagination);
         }
         public ArticleEntity GetForm(string keyValue)
         {

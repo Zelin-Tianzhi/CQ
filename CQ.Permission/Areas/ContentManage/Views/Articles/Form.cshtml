@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script src="~/Content/Js/ueditor/ueditor.config.js"></script>
+<script src="~/Content/Js/ueditor/ueditor.all.min.js"></script>
+<script src="~/Content/Js/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+</script>
+<form id="form1">
+    <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">基本信息</a></li>
+            @*<li ><a href="#">扩展信息</a></li>*@
+        </ul>
+        <div style="padding-top: 20px; margin-right: 30px;">
+            <table class="form">
+                <tr>
+                    <th class="formTitle">标题</th>
+                    <td class="formValue" colspan="3">
+                        <input id="F_ArticleTitle" name="F_ArticleTitle" type="text" class="form-control required" placeholder="请输入账户" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">类型</th>
+                    <td class="formValue">
+                        <select id="F_ArticleType" name="F_ArticleType" class="form-control required">
+                            <option value="">==请选择==</option>
+                            <option value="1">新闻</option>
+                            <option value="2">公告</option>
+                        </select>
+                    </td>
+                    <th class="formTitle">发布时间</th>
+                    <td class="formValue">
+                        <input id="F_PublishTime" name="F_PublishTime" type="text" class="form-control input-wdatepicker required" onfocus="WdatePicker()" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">状态</th>
+                    <td class="formValue">
+                        <select id="F_EnableMark" name="F_EnableMark" class="form-control">
+                            <option value="true">启用</option>
+                            <option value="false">禁用</option>
+                        </select>
+                    </td>
+                    <th class="formTitle">热点文章</th>
+                    <td class="formValue">
+                        <select id="F_IsHot" name="F_IsHot" class="form-control">
+                            <option value="true">否</option>
+                            <option value="false">是</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        内容
+                    </th>
+                    <td class="formValue" colspan="3">
+                        <textarea id="ueditor" name="ueditor" style="width:650px;height:320px;"></textarea>
+                        <input type="hidden" id="F_ArticleContent" name="F_ArticleContent"  value="123"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    var ue = UE.getEditor('ueditor');
+    var keyValue = $.request("keyValue");
+    $(function () {
+        if (!!keyValue) {
+            $.ajax({
+                url: "/ContentManage/Articles/GetFormJson",
+                data: { keyValue: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                    var value = $("#F_ArticleContent").val();
+                    $("#ueditor").html(value);
+                }
+            });
+        }
+    });
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        var arti = ue.getContent();
+        $("#F_ArticleContent").val(arti);
+        $.submitForm({
+            url: "/ContentManage/Articles/SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+
