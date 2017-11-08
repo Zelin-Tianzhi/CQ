@@ -194,6 +194,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CABase.sql" />
     <Content Include="Content\Css\framework-about.css" />
     <Content Include="Content\Css\framework-font.css" />
     <Content Include="Content\Css\framework-login.css" />
@@ -744,7 +745,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\ContentManage\Models\" />
     <Folder Include="Areas\ContentManage\Views\Shared\" />
     <Folder Include="Areas\ExampleManage\Models\" />
