@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CABase.sql" />
+    <Content Include="App_Data\CQBase_Change2017-11-10.sql" />
     <Content Include="Content\Css\framework-about.css" />
     <Content Include="Content\Css\framework-font.css" />
     <Content Include="Content\Css\framework-login.css" />
@@ -769,6 +770,7 @@
     <Folder Include="Areas\SystemSecurity\Models\" />
     <Folder Include="Areas\SystemSecurity\Views\Shared\" />
     <Folder Include="Content\Js\ueditor\net\upload\image\" />
+    <Folder Include="Upload\" />
     <Folder Include="Views\ClientsData\" />
   </ItemGroup>
   <ItemGroup>

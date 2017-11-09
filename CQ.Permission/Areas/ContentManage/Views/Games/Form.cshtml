@@ -10,8 +10,24 @@
 <script src="~/Content/Js/fileinput/js/fileinput.js"></script>
 <script src="~/Content/Js/fileinput/js/fileinput_locale_zh.js"></script>
 <link href="~/Content/Js/fileinput/css/fileinput.css" rel="stylesheet" />
-<script>
-</script>
+
+<style type="text/css">
+    .imgpack td {
+        font-size: 0;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        padding: 5px;
+    }
+
+    .imgpack img {
+        max-height: 100%;
+        max-width: 100%;
+        vertical-align: middle;
+        outline: 1px solid #000;
+    }
+</style>
 <form id="form1">
     <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
         <ul class="nav nav-tabs">
@@ -35,7 +51,7 @@
                     </td>
                     <th class="formTitle" rowspan="3">图片</th>
                     <td class="formValue" rowspan="3">
-                        <input id="F_PublishTime" name="F_PublishTime" type="text" class="form-control input-wdatepicker required" onfocus="WdatePicker()" />
+                        <input id="F_CreatorTime" name="F_CreatorTime" type="text" class="form-control input-wdatepicker" onfocus="WdatePicker()" />
                     </td>
                 </tr>
                 <tr>
@@ -61,15 +77,23 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">请选择Excel文件</h4>
+                                        <h4 class="modal-title" id="myModalLabel">请选择图片文件</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <a href="~/Data/ExcelTemplate/Order.xlsx" class="form-control" style="border:none;">下载导入模板</a>
                                         <input type="file" name="txt_file" id="txt_file" multiple class="file-loading" />
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table class="imgpack">
+                            <tr id="imgbox">
+                            </tr>
+                        </table>
+                        <input type="hidden" id="F_Remark" name="F_Remark" value="" />
                     </td>
                 </tr>
                 <tr>
@@ -80,7 +104,7 @@
                 </tr>
                 <tr>
                     <th class="formTitle" valign="top" style="padding-top: 5px;">
-                        游戏玩法
+                        玩法规则
                     </th>
                     <td class="formValue" colspan="3">
                         <textarea id="ueditor" name="ueditor" style="width:635px;height:320px;"></textarea>
@@ -97,7 +121,7 @@
     $(function () {
         if (!!keyValue) {
             $.ajax({
-                url: "/ContentManage/Articles/GetFormJson",
+                url: "/ContentManage/Games/GetFormJson",
                 data: { keyValue: keyValue },
                 dataType: "json",
                 async: false,
@@ -105,12 +129,13 @@
                     $("#form1").formSerialize(data);
                     var value = $("#F_Rule").val();
                     $("#ueditor").html(value);
+
                 }
             });
         }
         //1.初始化input控件
         var oFileInput = new FileInput();
-        oFileInput.Init("txt_file", "/Home/Update");
+        oFileInput.Init("txt_file", "/ContentManage/Games/UploadImg");
 
         //2.注册导入按钮的事件
         $("#btn_import").click(function () {
@@ -124,7 +149,7 @@
         var arti = ue.getContent();
         $("#F_Rule").val(arti);
         $.submitForm({
-            url: "/ContentManage/Articles/SubmitForm?keyValue=" + keyValue,
+            url: "/ContentManage/Games/SubmitForm?keyValue=" + keyValue,
             param: $("#form1").formSerialize(),
             success: function () {
                 $.currentWindow().$("#gridList").trigger("reloadGrid");
@@ -147,14 +172,7 @@
                 allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
                 showUpload: true, //是否显示上传按钮
                 showCaption: false,//是否显示标题
-                browseClass: "btn btn-primary", //按钮样式     
-                //dropZoneEnabled: false,//是否显示拖拽区域
-                //minImageWidth: 50, //图片的最小宽度
-                //minImageHeight: 50,//图片的最小高度
-                //maxImageWidth: 1000,//图片的最大宽度
-                //maxImageHeight: 1000,//图片的最大高度
-                //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-                //minFileCount: 0,
+                browseClass: "btn btn-primary", //按钮样式
                 maxFileCount: 100,
                 enctype: 'multipart/form-data',
                 validateInitialCount: true,
@@ -166,18 +184,15 @@
             //导入文件上传完成之后的事件
             $("#txt_file").on("fileuploaded", function (event, data, previewId, index) {
                 $("#myModal").modal("hide");
-                var data = data.response.lstOrderImport;
-                if (data == undefined) {
-                    //toastr.error('文件格式类型不正确');
-                    return;
+                var result = data.response;
+                if (result.Success == true) {
+                    $("#imgbox").append('<td><img src="' + result.ImgPaht + '" /></td>');
+                    var imgVal = $("#F_Remark").val();
+                    $("#F_Remark").val(imgVal + result.ImgPaht + ",");
                 }
-                //1.初始化表格
-                var oTable = new TableInit();
-                oTable.Init(data);
-                $("#div_startimport").show();
             });
             $("#txt_file").on("fileerror", function (event, data, msg) {
-                Console.write("123");
+                //Console.write("123");
             })
         }
         return oFile;

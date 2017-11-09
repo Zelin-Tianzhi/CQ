@@ -15,6 +15,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
     {
 
         private ProductApp productApp = new ProductApp();
+        private ImageApp imageApp = new ImageApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
@@ -42,9 +43,19 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [ValidateInput(false)]
         public ActionResult SubmitForm(ProductEntity productEntity, string keyValue)
         {
-            productEntity.Create();
-            productApp.SubmitForm(productEntity, keyValue);
+            string imgListStr = productEntity.F_Remark;
+            productApp.SubmitForm(productEntity, imgListStr.TrimEnd(',').Split(','), keyValue);
             return Success("操作成功。");
+        }
+
+        [HttpPost]
+        [HandlerAuthorize]
+        [HandlerAjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(string keyValue)
+        {
+            productApp.DeleteForm(keyValue);
+            return Success("删除成功。");
         }
 
         public JsonResult UploadImg()
@@ -55,7 +66,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
             //得到了文件的流对象，我们不管是用NPOI、GDI还是直接保存文件都不是问题了吧。。。。
 
             //后台TODO
-
+            var imgType = oFile.FileName.Split('.')[1];
             try
             {
                 byte[] bytes = new byte[oStream.Length];
@@ -68,18 +79,27 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
 
                 throw;
             }
+            Random rd = new Random();
             System.Drawing.Image img = System.Drawing.Bitmap.FromStream(oStream);
             Bitmap bmp = new Bitmap(img);
             MemoryStream bmpStream = new MemoryStream();
             bmp.Save(bmpStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-            string fileName = "";
-            FileStream fs = new FileStream(System.Web.HttpContext.Current.Server.MapPath("~/b1.jpg"), FileMode.Create);
+            string fileName = DateTime.Now.ToString("yyyyMMddHHmmssffff") + rd.Next(100000, 1000000);
+            string folderName = DateTime.Now.ToString("yyyy-MM-dd");
+            string rootPath = System.Web.HttpContext.Current.Server.MapPath("~/");
+            string fullPath = rootPath + "Upload/" + folderName;
+            if (!Directory.Exists(fullPath))
+            {
+                Directory.CreateDirectory(fullPath);
+            }
+            FileStream fs = new FileStream(fullPath + "/" + fileName + "." + imgType, FileMode.Create);
             bmpStream.WriteTo(fs);
             bmpStream.Close();
             fs.Close();
             bmpStream.Dispose();
             fs.Dispose();
-            return Json(new { success = true, msg = 0 }, JsonRequestBehavior.AllowGet);
+            string imgPath = "/Upload/" + folderName + "/" + fileName + "." + imgType;
+            return Json(new { Success = true, ImgPaht = imgPath }, JsonRequestBehavior.AllowGet);
         }
     }
 }

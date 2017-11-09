@@ -46,5 +46,15 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
             articleApp.SubmitForm(articleEntity, keyValue);
             return Success("操作成功。");
         }
+
+        [HttpPost]
+        [HandlerAuthorize]
+        [HandlerAjaxOnly]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(string keyValue)
+        {
+            articleApp.DeleteForm(keyValue);
+            return Success("删除成功。");
+        }
     }
 }

@@ -35,7 +35,7 @@
                         }
                     }
                 },
-                { label: '发布时间', name: 'F_PublishTime', width: 100, align: 'center' },
+                { label: '发布时间', name: 'F_PublishTime', width: 150, align: 'center' },
                 {
                     label: "热点", name: "F_IsHot", width: 100, align: "center",
                     formatter: function (cellvalue) {
@@ -87,7 +87,7 @@
     }
     function btn_delete() {
         $.deleteForm({
-            url: "/SystemManage/User/DeleteForm",
+            url: "/ContentManage/Articles/DeleteForm",
             param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
             success: function () {
                 $.currentWindow().$("#gridList").trigger("reloadGrid");
@@ -99,7 +99,7 @@
         $.modalOpen({
             id: "Details",
             title: "预览文章",
-            url: "/SystemManage/User/Details?keyValue=" + keyValue,
+            url: "/ContentManage/Articles/Details?keyValue=" + keyValue,
             width: "700px",
             height: "550px",
             btn: null,

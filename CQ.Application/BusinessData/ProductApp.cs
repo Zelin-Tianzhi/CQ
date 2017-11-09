@@ -13,6 +13,7 @@ namespace CQ.Application.BusinessData
     public class ProductApp
     {
         private IProductRepository service = new ProductRepository();
+        private ImageApp imageApp = new ImageApp();
         public List<ProductEntity> GetList(Pagination pagination, string keyword)
         {
             var expression = ExtLinq.True<ProductEntity>();
@@ -28,19 +29,28 @@ namespace CQ.Application.BusinessData
         }
         public void DeleteForm(string keyValue)
         {
-            service.Delete(t => t.F_Id == keyValue);
+            service.DeleteForm(keyValue);
         }
-        public void SubmitForm(ProductEntity areaEntity, string keyValue)
+        public void SubmitForm(ProductEntity produceEntity, string[] imgPaths, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                areaEntity.Modify(keyValue);
-                service.Update(areaEntity);
+                produceEntity.F_Id = keyValue;
             }
             else
             {
-                service.Insert(areaEntity);
+                produceEntity.F_Id = Common.GuId();
             }
+            List<ImageEntity> imageEntitys = new List<ImageEntity>();
+            foreach (string item in imgPaths)
+            {
+                ImageEntity imageEntity = new ImageEntity();
+                imageEntity.F_Id = Common.GuId();
+                imageEntity.F_Img = item;
+                imageEntity.F_FId = produceEntity.F_Id;
+                imageEntitys.Add(imageEntity);
+            }
+            service.SubmitForm(produceEntity, imageEntitys, keyValue);
         }
     }
 }

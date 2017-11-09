@@ -16,7 +16,7 @@
             colModel: [
                 { label: '主键', name: 'F_Id', hidden: true },
                 { label: '名称', name: 'F_ProductName', width: 80, align: 'center' },
-                { label: '创建时间', name: 'F_CreatorTime', width: 100, align: 'center' },
+                { label: '创建时间', name: 'F_CreatorTime', width: 150, align: 'center' },
                 {
                     label: "热点", name: "F_IsHot", width: 100, align: "center",
                     formatter: function (cellvalue) {
@@ -57,8 +57,8 @@
         var keyValue = $("#gridList").jqGridRowValue().F_Id;
         $.modalOpen({
             id: "Form",
-            title: "修改文章",
-            url: "/ContentManage/Articles/Form?keyValue=" + keyValue,
+            title: "修改产品",
+            url: "/ContentManage/Games/Form?keyValue=" + keyValue,
             width: "800px",
             height: "730px",
             callBack: function (iframeId) {
@@ -68,23 +68,12 @@
     }
     function btn_delete() {
         $.deleteForm({
-            url: "/SystemManage/User/DeleteForm",
+            url: "/ContentManage/Games/DeleteForm",
             param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
             success: function () {
                 $.currentWindow().$("#gridList").trigger("reloadGrid");
             }
         })
-    }
-    function btn_details() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
-        $.modalOpen({
-            id: "Details",
-            title: "预览文章",
-            url: "/SystemManage/User/Details?keyValue=" + keyValue,
-            width: "700px",
-            height: "550px",
-            btn: null,
-        });
     }
 </script>
 
