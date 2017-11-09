@@ -61,11 +61,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         public JsonResult UploadImg()
         {
             var oFile = Request.Files["txt_file"];
-
+            string imgPath = string.Empty;
             var oStream = oFile.InputStream;
-            //得到了文件的流对象，我们不管是用NPOI、GDI还是直接保存文件都不是问题了吧。。。。
-
-            //后台TODO
+            var result = false;
             var imgType = oFile.FileName.Split('.')[1];
             try
             {
@@ -73,33 +71,34 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
                 oStream.Read(bytes, 0, bytes.Length);
                 oStream.Seek(0, System.IO.SeekOrigin.Begin);
                 Session["img1"] = bytes;
+                Random rd = new Random();
+                System.Drawing.Image img = System.Drawing.Bitmap.FromStream(oStream);
+                Bitmap bmp = new Bitmap(img);
+                MemoryStream bmpStream = new MemoryStream();
+                bmp.Save(bmpStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                string fileName = DateTime.Now.ToString("yyyyMMddHHmmssffff") + rd.Next(100000, 1000000);
+                string folderName = DateTime.Now.ToString("yyyy-MM-dd");
+                string rootPath = System.Web.HttpContext.Current.Server.MapPath("~/");
+                string fullPath = rootPath + "Upload/" + folderName;
+                if (!Directory.Exists(fullPath))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+                FileStream fs = new FileStream(fullPath + "/" + fileName + "." + imgType, FileMode.Create);
+                bmpStream.WriteTo(fs);
+                bmpStream.Close();
+                fs.Close();
+                bmpStream.Dispose();
+                fs.Dispose();
+                imgPath = "/Upload/" + folderName + "/" + fileName + "." + imgType;
+                result = true;
             }
             catch (Exception ex)
             {
-
-                throw;
+                Log.Error(ex);
+                result = false;
             }
-            Random rd = new Random();
-            System.Drawing.Image img = System.Drawing.Bitmap.FromStream(oStream);
-            Bitmap bmp = new Bitmap(img);
-            MemoryStream bmpStream = new MemoryStream();
-            bmp.Save(bmpStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-            string fileName = DateTime.Now.ToString("yyyyMMddHHmmssffff") + rd.Next(100000, 1000000);
-            string folderName = DateTime.Now.ToString("yyyy-MM-dd");
-            string rootPath = System.Web.HttpContext.Current.Server.MapPath("~/");
-            string fullPath = rootPath + "Upload/" + folderName;
-            if (!Directory.Exists(fullPath))
-            {
-                Directory.CreateDirectory(fullPath);
-            }
-            FileStream fs = new FileStream(fullPath + "/" + fileName + "." + imgType, FileMode.Create);
-            bmpStream.WriteTo(fs);
-            bmpStream.Close();
-            fs.Close();
-            bmpStream.Dispose();
-            fs.Dispose();
-            string imgPath = "/Upload/" + folderName + "/" + fileName + "." + imgType;
-            return Json(new { Success = true, ImgPaht = imgPath }, JsonRequestBehavior.AllowGet);
+            return Json(new { Success = result, ImgPaht = imgPath }, JsonRequestBehavior.AllowGet);
         }
     }
 }
