@@ -4,5 +4,183 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 
-<h2>Form</h2>
+<script src="~/Content/Js/ueditor/ueditor.config.js"></script>
+<script src="~/Content/Js/ueditor/ueditor.all.min.js"></script>
+<script src="~/Content/Js/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="~/Content/Js/fileinput/js/fileinput.js"></script>
+<script src="~/Content/Js/fileinput/js/fileinput_locale_zh.js"></script>
+<link href="~/Content/Js/fileinput/css/fileinput.css" rel="stylesheet" />
+<script>
+</script>
+<form id="form1">
+    <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">基本信息</a></li>
+        </ul>
+        <div style="padding-top: 20px; margin-right: 30px;">
+            <table class="form">
+                <tr>
+                    <th class="formTitle">标题</th>
+                    <td class="formValue" colspan="3">
+                        <input id="F_ProductName" name="F_ProductName" type="text" class="form-control required" placeholder="请输入账户" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">状态</th>
+                    <td class="formValue">
+                        <select id="F_EnableMark" name="F_EnableMark" class="form-control">
+                            <option value="true">启用</option>
+                            <option value="false">禁用</option>
+                        </select>
+                    </td>
+                    <th class="formTitle" rowspan="3">图片</th>
+                    <td class="formValue" rowspan="3">
+                        <input id="F_PublishTime" name="F_PublishTime" type="text" class="form-control input-wdatepicker required" onfocus="WdatePicker()" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">热门游戏</th>
+                    <td class="formValue">
+                        <select id="F_IsHot" name="F_IsHot" class="form-control">
+                            <option value="false">否</option>
+                            <option value="true">是</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">图片展示</th>
+                    <td class="formValue" colspan="3">
+                        <div>
+                            <button id="btn_import" type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-import" aria-hidden="true"></span>导入
+                            </button>
+                        </div>
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">请选择Excel文件</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <a href="~/Data/ExcelTemplate/Order.xlsx" class="form-control" style="border:none;">下载导入模板</a>
+                                        <input type="file" name="txt_file" id="txt_file" multiple class="file-loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle">游戏介绍</th>
+                    <td class="formValue" colspan="3">
+                        <textarea id="F_Explain" name="F_Explain" style="width:635px;height:120px;resize: none;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="formTitle" valign="top" style="padding-top: 5px;">
+                        游戏玩法
+                    </th>
+                    <td class="formValue" colspan="3">
+                        <textarea id="ueditor" name="ueditor" style="width:635px;height:320px;"></textarea>
+                        <input type="hidden" id="F_Rule" name="F_Rule" value="123" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    var ue = UE.getEditor('ueditor');
+    var keyValue = $.request("keyValue");
+    $(function () {
+        if (!!keyValue) {
+            $.ajax({
+                url: "/ContentManage/Articles/GetFormJson",
+                data: { keyValue: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                    var value = $("#F_Rule").val();
+                    $("#ueditor").html(value);
+                }
+            });
+        }
+        //1.初始化input控件
+        var oFileInput = new FileInput();
+        oFileInput.Init("txt_file", "/Home/Update");
+
+        //2.注册导入按钮的事件
+        $("#btn_import").click(function () {
+            $("#myModal").modal();
+        });
+    });
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        var arti = ue.getContent();
+        $("#F_Rule").val(arti);
+        $.submitForm({
+            url: "/ContentManage/Articles/SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+
+    //初始化fileinput
+    var FileInput = function () {
+        var oFile = new Object();
+
+        //初始化fileinput控件（第一次初始化）
+        oFile.Init = function (ctrlName, uploadUrl) {
+            var control = $('#' + ctrlName);
+
+            //初始化上传控件的样式
+            control.fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: uploadUrl, //上传的地址
+                allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+                showUpload: true, //是否显示上传按钮
+                showCaption: false,//是否显示标题
+                browseClass: "btn btn-primary", //按钮样式     
+                //dropZoneEnabled: false,//是否显示拖拽区域
+                //minImageWidth: 50, //图片的最小宽度
+                //minImageHeight: 50,//图片的最小高度
+                //maxImageWidth: 1000,//图片的最大宽度
+                //maxImageHeight: 1000,//图片的最大高度
+                //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+                //minFileCount: 0,
+                maxFileCount: 100,
+                enctype: 'multipart/form-data',
+                validateInitialCount: true,
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+
+                msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            });
+
+            //导入文件上传完成之后的事件
+            $("#txt_file").on("fileuploaded", function (event, data, previewId, index) {
+                $("#myModal").modal("hide");
+                var data = data.response.lstOrderImport;
+                if (data == undefined) {
+                    //toastr.error('文件格式类型不正确');
+                    return;
+                }
+                //1.初始化表格
+                var oTable = new TableInit();
+                oTable.Init(data);
+                $("#div_startimport").show();
+            });
+            $("#txt_file").on("fileerror", function (event, data, msg) {
+                Console.write("123");
+            })
+        }
+        return oFile;
+    };
+</script>
 

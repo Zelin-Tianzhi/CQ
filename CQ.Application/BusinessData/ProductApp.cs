@@ -39,7 +39,6 @@ namespace CQ.Application.BusinessData
             }
             else
             {
-                areaEntity.Create();
                 service.Insert(areaEntity);
             }
         }

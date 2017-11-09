@@ -25,6 +25,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -280,6 +281,17 @@
     <Content Include="Content\Js\echarts\echarts.js" />
     <Content Include="Content\Js\echarts\echarts.min.js" />
     <Content Include="Content\Js\echarts\infographic.js" />
+    <Content Include="Content\Js\fileinput\.gitignore" />
+    <Content Include="Content\Js\fileinput\css\fileinput.css" />
+    <Content Include="Content\Js\fileinput\css\fileinput.min.css" />
+    <Content Include="Content\Js\fileinput\examples\index.html" />
+    <Content Include="Content\Js\fileinput\img\loading-sm.gif" />
+    <Content Include="Content\Js\fileinput\img\loading.gif" />
+    <Content Include="Content\Js\fileinput\js\fileinput.js" />
+    <Content Include="Content\Js\fileinput\js\fileinput.min.js" />
+    <Content Include="Content\Js\fileinput\js\fileinput_locale_zh.js" />
+    <Content Include="Content\Js\fileinput\js\plugins\canvas-to-blob.js" />
+    <Content Include="Content\Js\fileinput\js\plugins\canvas-to-blob.min.js" />
     <Content Include="Content\Js\FileUpload\bootstrap.min.css" />
     <Content Include="Content\Js\FileUpload\bootstrap.min.js" />
     <Content Include="Content\Js\FileUpload\fileinput.css" />
@@ -896,6 +908,14 @@
     <Content Include="Areas\ContentManage\Views\Games\Index.cshtml" />
     <Content Include="Areas\ContentManage\Views\Games\Form.cshtml" />
     <Content Include="Content\Js\FileUpload\UploadFile.ashx" />
+    <Content Include="Content\Js\fileinput\bower.json" />
+    <Content Include="Content\Js\fileinput\CHANGE.md" />
+    <Content Include="Content\Js\fileinput\composer.json" />
+    <Content Include="Content\Js\fileinput\LICENSE.md" />
+    <Content Include="Content\Js\fileinput\nuget\build.bat" />
+    <Content Include="Content\Js\fileinput\nuget\Package.nuspec" />
+    <Content Include="Content\Js\fileinput\package.json" />
+    <Content Include="Content\Js\fileinput\README.md" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
