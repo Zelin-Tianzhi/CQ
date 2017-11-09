@@ -95,5 +95,10 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult ModifyPassword()
+        {
+            return View();
+        }
     }
 }

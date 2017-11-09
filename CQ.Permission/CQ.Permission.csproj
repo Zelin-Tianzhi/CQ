@@ -918,6 +918,7 @@
     <Content Include="Content\Js\fileinput\nuget\Package.nuspec" />
     <Content Include="Content\Js\fileinput\package.json" />
     <Content Include="Content\Js\fileinput\README.md" />
+    <Content Include="Areas\SystemManage\Views\User\ModifyPassword.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
