@@ -158,6 +158,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Handler\BaseController.cs" />
+    <Compile Include="App_Start\Handler\HandlerAjaxOnlyAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
@@ -258,7 +259,6 @@
     <Content Include="Views\Helper\Index.cshtml" />
     <Content Include="Views\Download\Index.cshtml" />
     <Content Include="Views\Recharge\Index.cshtml" />
-    <Content Include="Views\News\ShowNews.cshtml" />
     <Content Include="Views\Game\Game.cshtml" />
     <Content Include="Views\News\News.cshtml" />
   </ItemGroup>
@@ -280,6 +280,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CQ.Application\CQ.Application.csproj">
+      <Project>{5835f58f-5da9-415c-b35b-69cbc6a13c23}</Project>
+      <Name>CQ.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CQ.Cache.AspNet\CQ.Plugin.Cache.AspNet.csproj">
       <Project>{eb98ed8d-538a-4187-b56b-f774d12a8863}</Project>
       <Name>CQ.Plugin.Cache.AspNet</Name>
@@ -299,6 +303,14 @@
     <ProjectReference Include="..\CQ.Data\CQ.Data.csproj">
       <Project>{3fe3b448-2e5c-4ad4-a12f-3c714b41bb3a}</Project>
       <Name>CQ.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQ.Domain\CQ.Domain.csproj">
+      <Project>{196a7834-6803-44c7-94f3-b4e6ec0d1e64}</Project>
+      <Name>CQ.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQ.Mapping\CQ.Mapping.csproj">
+      <Project>{071c89a9-c657-4b50-ac4c-825343c61275}</Project>
+      <Name>CQ.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

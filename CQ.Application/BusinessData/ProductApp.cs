@@ -23,6 +23,18 @@ namespace CQ.Application.BusinessData
             }
             return service.FindList(expression, pagination);
         }
+        public List<ProductEntity> GetList()
+        {
+            var expression = ExtLinq.True<ProductEntity>();
+            Pagination pagination = new Pagination
+            {
+                page = 1,
+                rows = 20,
+                sord = "desc",
+                sidx = "F_CreatorTime desc"
+            };
+            return service.FindList(expression, pagination);
+        }
         public ProductEntity GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);

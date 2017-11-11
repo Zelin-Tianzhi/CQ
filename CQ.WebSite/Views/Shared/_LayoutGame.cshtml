@@ -30,6 +30,21 @@
             return true;
         }
         window.onerror = killErrors;
+        $.request = function (name) {
+            var search = location.search.slice(1);
+            var arr = search.split("&");
+            for (var i = 0; i < arr.length; i++) {
+                var ar = arr[i].split("=");
+                if (ar[0] == name) {
+                    if (unescape(ar[1]) == 'undefined') {
+                        return "";
+                    } else {
+                        return unescape(ar[1]);
+                    }
+                }
+            }
+            return "";
+        }
     </script>
     <div class="container">
         @RenderPage("~/Views/Shared/_Header.cshtml", new { param = ViewContext.RouteData.Values["controller"].ToString().ToLower() })

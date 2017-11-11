@@ -19,7 +19,7 @@
         </ul>
     </div>
     <div class="news_list">
-        <ul>
+        <ul id="NewList">
             <li>
                 <a href="shownews.html">那些让人恐惧的国服第一，第一个最牛逼！</a>
                 <p>2017-10-10</p>
@@ -73,5 +73,33 @@
         </ul>
     </div>
 
-</div>			
+</div>	
+<script>
+    $(function () {
+        GetArticleList();
+    });
+    function GetArticleList() {
+        var keyValue = 0;
+        $.ajax({
+            url: "/News/GetArticleEntitys",
+            data: { keyValue: keyValue },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var _html = "";
+                $.each(data, function (i,o) {
+                    _html+='<li>';
+
+                    _html += ' <a href= "/News/News?keyValue=' + o.F_Id + '" >' + o.F_ArticleTitle + '</a>';
+                    _html += ' <p>' + o.F_PublishTime.split(' ')[0] + '</p>';
+                    _html += '    </li >';
+                });
+                $("#NewList").prepend(_html);
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+    }
+</script>		
 

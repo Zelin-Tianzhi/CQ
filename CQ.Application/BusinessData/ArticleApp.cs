@@ -23,6 +23,30 @@ namespace CQ.Application.BusinessData
             }
             return service.FindList(expression, pagination);
         }
+
+        public List<ArticleEntity> GetList(int articleType)
+        {
+            var expression = ExtLinq.True<ArticleEntity>();
+            if (articleType != 0)
+                if (articleType == 99)
+                {
+                    expression = expression.And(t => t.F_IsHot == true);
+                }
+                else
+                {
+                    expression = expression.And(t => t.F_ArticleType == articleType);
+                }
+            Pagination pagination = new Pagination
+            {
+                page = 1,
+                rows = 20,
+                sord = "desc",
+                sidx = "F_PublishTime desc"
+
+            };
+            return service.FindList(expression, pagination);
+        }
+
         public ArticleEntity GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
