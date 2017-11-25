@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CABase.sql" />
+    <Content Include="App_Data\CQBase2017-11-25.sql" />
     <Content Include="App_Data\CQBase_Change2017-11-10.sql" />
     <Content Include="Content\Css\framework-about.css" />
     <Content Include="Content\Css\framework-font.css" />
