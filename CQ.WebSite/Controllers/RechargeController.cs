@@ -13,5 +13,12 @@ namespace CQ.WebSite.Controllers
         {
             return View();
         }
+
+        [HandlerAjaxOnly]
+        public ActionResult Chongzhi()
+        {
+
+            return Content("success");
+        }
     }
 }

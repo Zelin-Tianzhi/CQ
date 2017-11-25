@@ -30,7 +30,7 @@ namespace CQ.Permission.Areas.SystemSecurity.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        public ActionResult SubmitForm(FilterIPEntity filterIPEntity, long keyValue)
         {
             filterIPApp.SubmitForm(filterIPEntity, keyValue);
             return Success("操作成功。");
@@ -39,7 +39,7 @@ namespace CQ.Permission.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public ActionResult DeleteForm(long keyValue)
         {
             filterIPApp.DeleteForm(keyValue);
             return Success("删除成功。");

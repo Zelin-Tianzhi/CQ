@@ -28,17 +28,12 @@ namespace CQ.WebSite.Controllers
         {
             List<ProductEntity> productEntitys = new List<ProductEntity>();
             productEntitys = productApp.GetList();
-            for (int i = 0; i < productEntitys.Count; i++)
-            {
-                productEntitys[i].F_Id = DESEncrypt.Encrypt(productEntitys[i].F_Id.ToLower(), SysConstant.DES_KEY).ToLower();
-            }
             return Content(productEntitys.ToJson());
         }
         [HttpGet]
-        public ActionResult GetFormJson(string keyValue)
+        public ActionResult GetFormJson(long keyValue)
         {
-            string key = DESEncrypt.Decrypt(keyValue, SysConstant.DES_KEY).ToLower();
-            var data = productApp.GetForm(key);
+            var data = productApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
     }

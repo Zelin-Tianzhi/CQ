@@ -11,7 +11,7 @@ namespace CQ.Repository.BusinessData
 {
     public class ProductRepository: RepositoryBase<ProductEntity>, IProductRepository
     {
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
@@ -21,11 +21,11 @@ namespace CQ.Repository.BusinessData
             }
         }
 
-        public void SubmitForm(ProductEntity productEntity, List<ImageEntity> imageEntitys, string keyValue)
+        public void SubmitForm(ProductEntity productEntity, List<ImageEntity> imageEntitys, long keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
-                if (!string.IsNullOrEmpty(keyValue))
+                if (keyValue > 0)
                 {
                     db.Update(productEntity);
                 }

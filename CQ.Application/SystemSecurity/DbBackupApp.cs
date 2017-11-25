@@ -44,7 +44,6 @@ namespace CQ.Application.SystemSecurity
         }
         public void SubmitForm(DbBackupEntity dbBackupEntity)
         {
-            dbBackupEntity.F_Id = Common.GuId();
             dbBackupEntity.F_EnabledMark = true;
             dbBackupEntity.F_BackupTime = DateTime.Now;
             service.ExecuteDbBackup(dbBackupEntity);

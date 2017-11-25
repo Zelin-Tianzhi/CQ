@@ -41,7 +41,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult SubmitForm(ProductEntity productEntity, string keyValue)
+        public ActionResult SubmitForm(ProductEntity productEntity, long keyValue)
         {
             string imgListStr = productEntity.F_Remark;
             productApp.SubmitForm(productEntity, imgListStr.TrimEnd(',').Split(','), keyValue);
@@ -52,7 +52,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAuthorize]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public ActionResult DeleteForm(long keyValue)
         {
             productApp.DeleteForm(keyValue);
             return Success("删除成功。");

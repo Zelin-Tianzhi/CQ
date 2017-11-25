@@ -31,19 +31,15 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(RoleEntity roleEntity, string[] permissionIds, string keyValue)
+        public void SubmitForm(RoleEntity roleEntity, string[] permissionIds, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 roleEntity.F_Id = keyValue;
-            }
-            else
-            {
-                roleEntity.F_Id = Common.GuId();
             }
             var moduledata = moduleApp.GetList();
             var buttondata = moduleButtonApp.GetList();
@@ -51,15 +47,14 @@ namespace CQ.Application.SystemManage
             foreach (var itemId in permissionIds)
             {
                 RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                roleAuthorizeEntity.F_Id = Common.GuId();
                 roleAuthorizeEntity.F_ObjectType = 1;
                 roleAuthorizeEntity.F_ObjectId = roleEntity.F_Id;
-                roleAuthorizeEntity.F_ItemId = itemId;
-                if (moduledata.Find(t => t.F_Id == itemId) != null)
+                roleAuthorizeEntity.F_ItemId = itemId.ToInt64();
+                if (moduledata.Find(t => t.F_Id == itemId.ToInt64()) != null)
                 {
                     roleAuthorizeEntity.F_ItemType = 1;
                 }
-                if (buttondata.Find(t => t.F_Id == itemId) != null)
+                if (buttondata.Find(t => t.F_Id == itemId.ToInt64()) != null)
                 {
                     roleAuthorizeEntity.F_ItemType = 2;
                 }

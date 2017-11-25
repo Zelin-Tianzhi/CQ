@@ -74,7 +74,7 @@ namespace CQ.Permission.Controllers
                     operatorModel.UserName = userEntity.F_RealName;
                     operatorModel.CompanyId = userEntity.F_OrganizeId;
                     operatorModel.DepartmentId = userEntity.F_DepartmentId;
-                    operatorModel.RoleId = userEntity.F_RoleId;
+                    operatorModel.RoleId = userEntity.F_RoleId.ToString();
                     operatorModel.LoginIPAddress = Net.Ip;
                     operatorModel.LoginIPAddressName = Net.GetLocation(operatorModel.LoginIPAddress);
                     operatorModel.LoginTime = DateTime.Now;

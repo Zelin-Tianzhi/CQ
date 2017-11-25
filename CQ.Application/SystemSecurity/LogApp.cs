@@ -70,7 +70,6 @@ namespace CQ.Application.SystemSecurity
         public void WriteDbLog(bool result, string resultLog)
         {
             LogEntity logEntity = new LogEntity();
-            logEntity.F_Id = Common.GuId();
             logEntity.F_Date = DateTime.Now;
             logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
             logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
@@ -78,16 +77,25 @@ namespace CQ.Application.SystemSecurity
             logEntity.F_IPAddressName = Net.GetLocation(logEntity.F_IPAddress);
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
-            logEntity.Create();
+            var loginInfo = OperatorProvider.Provider.GetCurrent();
+            if (loginInfo != null)
+            {
+                logEntity.F_CreatorUserId = loginInfo.UserId;
+            }
+            logEntity.F_CreatorTime = DateTime.Now;
             service.Insert(logEntity);
         }
         public void WriteDbLog(LogEntity logEntity)
         {
-            logEntity.F_Id = Common.GuId();
             logEntity.F_Date = DateTime.Now;
             logEntity.F_IPAddress = Net.Ip;
             logEntity.F_IPAddressName = Net.GetLocation(logEntity.F_IPAddress);
-            logEntity.Create();
+            var loginInfo = OperatorProvider.Provider.GetCurrent();
+            if (loginInfo != null)
+            {
+                logEntity.F_CreatorUserId = loginInfo.UserId;
+            }
+            logEntity.F_CreatorTime = DateTime.Now;
             service.Insert(logEntity);
         }
     }

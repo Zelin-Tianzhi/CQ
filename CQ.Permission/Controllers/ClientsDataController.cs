@@ -59,7 +59,7 @@ namespace CQ.Permission.Controllers
                     encode = item.F_EnCode,
                     fullname = item.F_FullName
                 };
-                dictionary.Add(item.F_Id, fieldItem);
+                dictionary.Add(item.F_Id.ToString(), fieldItem);
             }
             return dictionary;
         }
@@ -75,7 +75,7 @@ namespace CQ.Permission.Controllers
                     encode = item.F_EnCode,
                     fullname = item.F_FullName
                 };
-                dictionary.Add(item.F_Id, fieldItem);
+                dictionary.Add(item.F_Id.ToString(), fieldItem);
             }
             return dictionary;
         }
@@ -91,16 +91,16 @@ namespace CQ.Permission.Controllers
                     encode = item.F_EnCode,
                     fullname = item.F_FullName
                 };
-                dictionary.Add(item.F_Id, fieldItem);
+                dictionary.Add(item.F_Id.ToString(), fieldItem);
             }
             return dictionary;
         }
         private object GetMenuList()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
-            return ToMenuJson(new RoleAuthorizeApp().GetMenuList(roleId), "0");
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId.ToInt64();
+            return ToMenuJson(new RoleAuthorizeApp().GetMenuList(roleId), 0);
         }
-        private string ToMenuJson(List<ModuleEntity> data, string parentId)
+        private string ToMenuJson(List<ModuleEntity> data, long parentId)
         {
             StringBuilder sbJson = new StringBuilder();
             sbJson.Append("[");
@@ -120,14 +120,14 @@ namespace CQ.Permission.Controllers
         }
         private object GetMenuButtonList()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId.ToInt64();
             var data = new RoleAuthorizeApp().GetButtonList(roleId);
-            var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
+            var dataModuleId = data.MyDistinct(o=> o.F_ModuleId);
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (ModuleButtonEntity item in dataModuleId)
             {
                 var buttonList = data.Where(t => t.F_ModuleId.Equals(item.F_ModuleId));
-                dictionary.Add(item.F_ModuleId, buttonList);
+                dictionary.Add(item.F_ModuleId.ToString(), buttonList);
             }
             return dictionary;
         }

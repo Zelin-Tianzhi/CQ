@@ -47,17 +47,17 @@ namespace CQ.Application.BusinessData
             return service.FindList(expression, pagination);
         }
 
-        public ArticleEntity GetForm(string keyValue)
+        public ArticleEntity GetForm(long keyValue)
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(ArticleEntity areaEntity, string keyValue)
+        public void SubmitForm(ArticleEntity areaEntity, long keyValue = 0)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 areaEntity.Modify(keyValue);
                 service.Update(areaEntity);

@@ -13,7 +13,7 @@ namespace CQ.Repository.SystemManage
 {
     public class UserRepository : RepositoryBase<UserEntity>, IUserRepository
     {
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
@@ -22,11 +22,11 @@ namespace CQ.Repository.SystemManage
                 db.Commit();
             }
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, long keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
-                if (!string.IsNullOrEmpty(keyValue))
+                if (keyValue > 0)
                 {
                     db.Update(userEntity);
                 }

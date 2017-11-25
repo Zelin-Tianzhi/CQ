@@ -21,7 +21,7 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             if (service.IQueryable().Count(t => t.F_ParentId.Equals(keyValue)) > 0)
             {
@@ -32,9 +32,9 @@ namespace CQ.Application.SystemManage
                 service.Delete(t => t.F_Id == keyValue);
             }
         }
-        public void SubmitForm(ItemsEntity itemsEntity, string keyValue)
+        public void SubmitForm(ItemsEntity itemsEntity, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 itemsEntity.Modify(keyValue);
                 service.Update(itemsEntity);

@@ -29,13 +29,13 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(RoleEntity roleEntity, string keyValue)
+        public void SubmitForm(RoleEntity roleEntity, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 roleEntity.Modify(keyValue);
                 service.Update(roleEntity);

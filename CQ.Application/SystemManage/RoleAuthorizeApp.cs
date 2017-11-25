@@ -18,11 +18,11 @@ namespace CQ.Application.SystemManage
         private ModuleApp moduleApp = new ModuleApp();
         private ModuleButtonApp moduleButtonApp = new ModuleButtonApp();
 
-        public List<RoleAuthorizeEntity> GetList(string ObjectId)
+        public List<RoleAuthorizeEntity> GetList(long ObjectId)
         {
             return service.IQueryable(t => t.F_ObjectId == ObjectId).ToList();
         }
-        public List<ModuleEntity> GetMenuList(string roleId)
+        public List<ModuleEntity> GetMenuList(long roleId)
         {
             var data = new List<ModuleEntity>();
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
@@ -44,7 +44,7 @@ namespace CQ.Application.SystemManage
             }
             return data.OrderBy(t => t.F_SortCode).ToList();
         }
-        public List<ModuleButtonEntity> GetButtonList(string roleId)
+        public List<ModuleButtonEntity> GetButtonList(long roleId)
         {
             var data = new List<ModuleButtonEntity>();
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
@@ -66,7 +66,7 @@ namespace CQ.Application.SystemManage
             }
             return data.OrderBy(t => t.F_SortCode).ToList();
         }
-        public bool ActionValidate(string roleId, string moduleId, string action)
+        public bool ActionValidate(long roleId, long moduleId, string action)
         {
             var authorizeurldata = new List<AuthorizeActionModel>();
             var cachedata = Cache.Get<List<AuthorizeActionModel>>("authorizeurldata_" + roleId);

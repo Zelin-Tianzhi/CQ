@@ -8,7 +8,7 @@ namespace CQ.Domain.Entity.BusinessData
 {
     public class ProductEntity : IEntity<ProductEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        public string F_Id { get; set; }
+        public long F_Id { get; set; }
         public string F_ProductName { get; set; }
         public bool F_IsHot { get; set; }
         public string F_ProductImg { get; set; }
@@ -18,11 +18,11 @@ namespace CQ.Domain.Entity.BusinessData
         public bool? F_DeleteMark { get; set; }
         public bool F_EnableMark { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public string F_CreatorUserId { get; set; }
+        public long? F_CreatorUserId { get; set; }
         public DateTime? F_LastModifyTime { get; set; }
-        public string F_LastModifyUserId { get; set; }
+        public long? F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
-        public string F_DeleteUserId { get; set; }
+        public long? F_DeleteUserId { get; set; }
         public string F_Remark { get; set; }
     }
 }

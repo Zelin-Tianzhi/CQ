@@ -12,7 +12,7 @@ namespace CQ.Domain
         /// <summary>
         /// 删除实体的用户
         /// </summary>
-        string F_DeleteUserId { get; set; }
+        long? F_DeleteUserId { get; set; }
 
         /// <summary>
         /// 删除实体时间

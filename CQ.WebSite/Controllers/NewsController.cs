@@ -28,15 +28,14 @@ namespace CQ.WebSite.Controllers
             List<ArticleEntity> articleEntitys = articleApp.GetList(keyValue);
             for (int i = 0; i < articleEntitys.Count; i++)
             {
-                articleEntitys[i].F_Id = DESEncrypt.Encrypt(articleEntitys[i].F_Id.ToLower(), SysConstant.DES_KEY).ToLower();
                 articleEntitys[i].F_PublishTime = articleEntitys[i].F_PublishTime.ToDate();
             }
             return Content(articleEntitys.ToJson());
         }
         [HttpGet]
-        public ActionResult GetFormJson(string keyValue)
+        public ActionResult GetFormJson(long keyValue)
         {
-            string key = DESEncrypt.Decrypt(keyValue, SysConstant.DES_KEY).ToLower();
+            long key = keyValue;
             var data = articleApp.GetForm(key);
             return Content(data.ToJson());
         }

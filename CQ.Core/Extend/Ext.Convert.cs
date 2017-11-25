@@ -31,6 +31,27 @@ namespace CQ.Core
                 return 0;
             }
         }
+        /// <summary>
+        /// 转换为整型
+        /// </summary>
+        /// <param name="data">数据</param>
+        public static long ToInt64(this object data)
+        {
+            if (data == null)
+                return 0;
+            long result;
+            var success = long.TryParse(data.ToString(), out result);
+            if (success)
+                return result;
+            try
+            {
+                return Convert.ToInt64(ToDouble(data, 0));
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
 
         /// <summary>
         /// 转换为可空整型

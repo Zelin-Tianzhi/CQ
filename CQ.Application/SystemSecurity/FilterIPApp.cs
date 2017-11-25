@@ -27,13 +27,13 @@ namespace CQ.Application.SystemSecurity
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        public void SubmitForm(FilterIPEntity filterIPEntity, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 filterIPEntity.Modify(keyValue);
                 service.Update(filterIPEntity);

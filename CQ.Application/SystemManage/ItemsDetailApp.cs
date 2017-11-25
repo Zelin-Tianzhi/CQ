@@ -14,10 +14,10 @@ namespace CQ.Application.SystemManage
     {
         private IItemsDetailRepository service = new ItemsDetailRepository();
 
-        public List<ItemsDetailEntity> GetList(string itemId = "", string keyword = "")
+        public List<ItemsDetailEntity> GetList(long itemId = 0, string keyword = "")
         {
             var expression = ExtLinq.True<ItemsDetailEntity>();
-            if (!string.IsNullOrEmpty(itemId))
+            if (itemId > 0)
             {
                 expression = expression.And(t => t.F_ItemId == itemId);
             }
@@ -36,13 +36,13 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(ItemsDetailEntity itemsDetailEntity, string keyValue)
+        public void SubmitForm(ItemsDetailEntity itemsDetailEntity, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 itemsDetailEntity.Modify(keyValue);
                 service.Update(itemsDetailEntity);

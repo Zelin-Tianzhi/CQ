@@ -16,7 +16,7 @@ namespace CQ.Data.Extensions
         private string connstring = string.Empty;
         public DbHelper()
         {
-            connstring = ConfigurationManager.ConnectionStrings["TzDbContext"].ConnectionString;
+            connstring = ConfigurationManager.ConnectionStrings["CqDbContext"].ConnectionString;
         }
         public DbHelper(string connectionStr)
         {

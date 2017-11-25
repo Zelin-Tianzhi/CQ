@@ -35,29 +35,24 @@ namespace CQ.Application.BusinessData
             };
             return service.FindList(expression, pagination);
         }
-        public ProductEntity GetForm(string keyValue)
+        public ProductEntity GetForm(long keyValue)
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(ProductEntity produceEntity, string[] imgPaths, string keyValue)
+        public void SubmitForm(ProductEntity produceEntity, string[] imgPaths, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 produceEntity.F_Id = keyValue;
-            }
-            else
-            {
-                produceEntity.F_Id = Common.GuId();
             }
             List<ImageEntity> imageEntitys = new List<ImageEntity>();
             foreach (string item in imgPaths)
             {
                 ImageEntity imageEntity = new ImageEntity();
-                imageEntity.F_Id = Common.GuId();
                 imageEntity.F_Img = item;
                 imageEntity.F_FId = produceEntity.F_Id;
                 imageEntitys.Add(imageEntity);

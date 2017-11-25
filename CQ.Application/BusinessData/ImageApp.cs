@@ -13,9 +13,9 @@ namespace CQ.Application.BusinessData
     {
         private IImagesRepository service = new ImageRepository();
 
-        public void SubmitForm(ImageEntity imageEntity, string keyValue)
+        public void SubmitForm(ImageEntity imageEntity, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 imageEntity.Modify(keyValue);
                 service.Update(imageEntity);
@@ -27,11 +27,11 @@ namespace CQ.Application.BusinessData
             }
         }
 
-        public List<ImageEntity> GetList(string keyValue)
+        public List<ImageEntity> GetList(long keyValue)
         {
             return service.IQueryable().Where(t=> t.F_FId == keyValue).ToList();
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             service.Delete(t => t.F_FId == keyValue);
         }

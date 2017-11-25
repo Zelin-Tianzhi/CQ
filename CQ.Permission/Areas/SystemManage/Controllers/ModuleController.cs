@@ -22,9 +22,9 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
+                treeModel.id = item.F_Id.ToString();
                 treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.parentId = item.F_ParentId.ToString();
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
@@ -42,10 +42,10 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleEntity item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                treeModel.id = item.F_Id;
+                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) != 0;
+                treeModel.id = item.F_Id.ToString();
                 treeModel.isLeaf = hasChildren;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.parentId = item.F_ParentId.ToString();
                 treeModel.expanded = hasChildren;
                 treeModel.entityJson = item.ToJson();
                 treeList.Add(treeModel);
@@ -62,7 +62,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ModuleEntity moduleEntity, string keyValue)
+        public ActionResult SubmitForm(ModuleEntity moduleEntity, long keyValue)
         {
             moduleApp.SubmitForm(moduleEntity, keyValue);
             return Success("操作成功。");
@@ -71,7 +71,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public ActionResult DeleteForm(long keyValue)
         {
             moduleApp.DeleteForm(keyValue);
             return Success("删除成功。");

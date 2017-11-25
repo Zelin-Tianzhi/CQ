@@ -15,23 +15,23 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         private ModuleButtonApp moduleButtonApp = new ModuleButtonApp();
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeSelectJson(string moduleId)
+        public ActionResult GetTreeSelectJson(long moduleId)
         {
             var data = moduleButtonApp.GetList(moduleId);
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleButtonEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
+                treeModel.id = item.F_Id.ToString();
                 treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.parentId = item.F_ParentId.ToString();
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeGridJson(string moduleId)
+        public ActionResult GetTreeGridJson(long moduleId)
         {
             var data = moduleButtonApp.GetList(moduleId);
             var treeList = new List<TreeGridModel>();
@@ -39,9 +39,9 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             {
                 TreeGridModel treeModel = new TreeGridModel();
                 bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                treeModel.id = item.F_Id;
+                treeModel.id = item.F_Id.ToString();
                 treeModel.isLeaf = hasChildren;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.parentId = item.F_ParentId.ToString();
                 treeModel.expanded = hasChildren;
                 treeModel.entityJson = item.ToJson();
                 treeList.Add(treeModel);
@@ -58,7 +58,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
+        public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, long keyValue)
         {
             moduleButtonApp.SubmitForm(moduleButtonEntity, keyValue);
             return Success("操作成功。");
@@ -66,7 +66,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public ActionResult DeleteForm(long keyValue)
         {
             moduleButtonApp.DeleteForm(keyValue);
             return Success("删除成功。");
@@ -87,10 +87,10 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             {
                 TreeViewModel tree = new TreeViewModel();
                 bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                tree.id = item.F_Id;
+                tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;
-                tree.parentId = item.F_ParentId;
+                tree.parentId = item.F_ParentId.ToString();
                 tree.isexpand = true;
                 tree.complete = true;
                 tree.hasChildren = true;
@@ -100,16 +100,16 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             {
                 TreeViewModel tree = new TreeViewModel();
                 bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                tree.id = item.F_Id;
+                tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;
-                if (item.F_ParentId == "0")
+                if (item.F_ParentId == 0)
                 {
-                    tree.parentId = item.F_ModuleId;
+                    tree.parentId = item.F_ModuleId.ToString();
                 }
                 else
                 {
-                    tree.parentId = item.F_ParentId;
+                    tree.parentId = item.F_ParentId.ToString();
                 }
                 tree.isexpand = true;
                 tree.complete = true;
@@ -125,7 +125,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public ActionResult SubmitCloneButton(string moduleId, string Ids)
+        public ActionResult SubmitCloneButton(long moduleId, string Ids)
         {
             moduleButtonApp.SubmitCloneButton(moduleId, Ids);
             return Success("克隆成功。");

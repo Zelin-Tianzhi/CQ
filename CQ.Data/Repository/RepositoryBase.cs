@@ -19,7 +19,7 @@ namespace CQ.Data.Repository
 {
     public class RepositoryBase : IRepositoryBase, IDisposable
     {
-        private TzDbContext dbcontext = new TzDbContext();
+        private CqDbContext dbcontext = new CqDbContext();
         private DbTransaction dbTransaction { get; set; }
         public IRepositoryBase BeginTrans()
         {

@@ -13,7 +13,6 @@ namespace CQ.Domain
         public void Create()
         {
             var entity = this as ICreationAudited;
-            entity.F_Id = Common.GuId();
             var LoginInfo = OperatorProvider.Provider.GetCurrent();
             if (LoginInfo != null)
             {
@@ -21,7 +20,7 @@ namespace CQ.Domain
             }
             entity.F_CreatorTime = DateTime.Now;
         }
-        public void Modify(string keyValue)
+        public void Modify(long keyValue)
         {
             var entity = this as IModificationAudited;
             entity.F_Id = keyValue;

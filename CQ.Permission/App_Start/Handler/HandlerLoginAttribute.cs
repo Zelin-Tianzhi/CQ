@@ -26,8 +26,9 @@ namespace CQ.Permission
                 //        { "action","Index"},
                 //        { "returnurl",HttpUtility.HtmlEncode(filterContext.HttpContext.Request.RawUrl)}
                 //    });
-                filterContext.HttpContext.Response.Write("<script>top.location.href = '/Login/Index';</script>");
-                return;
+                filterContext.HttpContext.Response.Write("<script>top.location.href = '/Login/Index?returnurl=" +
+                                                         HttpUtility.HtmlEncode(
+                                                             filterContext.HttpContext.Request.RawUrl) + "';</script>");
             }
         }
     }

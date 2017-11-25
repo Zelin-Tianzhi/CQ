@@ -37,7 +37,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, long keyValue)
         {
             userApp.SubmitForm(userEntity, userLogOnEntity, keyValue);
             return Success("操作成功。");
@@ -46,7 +46,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAuthorize]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public ActionResult DeleteForm(long keyValue)
         {
             userApp.DeleteForm(keyValue);
             return Success("删除成功。");
@@ -60,7 +60,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitRevisePassword(string userPassword, string keyValue)
+        public ActionResult SubmitRevisePassword(string userPassword, long keyValue)
         {
             userLogOnApp.RevisePassword(userPassword, keyValue);
             return Success("重置密码成功。");
@@ -69,7 +69,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DisabledAccount(string keyValue)
+        public ActionResult DisabledAccount(long keyValue)
         {
             UserEntity userEntity = new UserEntity();
             userEntity.F_Id = keyValue;
@@ -81,7 +81,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult EnabledAccount(string keyValue)
+        public ActionResult EnabledAccount(long keyValue)
         {
             UserEntity userEntity = new UserEntity();
             userEntity.F_Id = keyValue;

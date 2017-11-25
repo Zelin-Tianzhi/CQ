@@ -17,6 +17,21 @@ namespace CQ.WebSite.Controllers
             return View();
         }
 
-        
+        [HttpGet]
+        public ActionResult GetAuthCode()
+        {
+
+            VerifyCode verifyCode = new VerifyCode();
+            byte[] bytes = verifyCode.CreateImage();
+            string code = verifyCode.ValidationCode;
+            string token = Md5.md5(Guid.NewGuid().ToString(), 16);
+            Log.Debug("生成token：" + token);
+            Cache.Insert(token, (object)Md5.md5(code.ToLower(), 16), 10);
+            byte[] byteArray = System.Text.Encoding.Default.GetBytes(token);
+            byte[] result = YSEncrypt.EncryptFishFile(bytes);
+
+            byte[] arr = byteArray.Concat(result).ToArray();
+            return File(arr, @"image/Gif");
+        }
     }
 }

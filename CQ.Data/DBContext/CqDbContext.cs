@@ -11,9 +11,9 @@ using System.Reflection;
 
 namespace CQ.Data
 {
-    public class TzDbContext : DbContext
+    public class CqDbContext : DbContext
     {
-        public TzDbContext()
+        public CqDbContext()
             : base("CQBase")
         {
             this.Configuration.AutoDetectChangesEnabled = false;

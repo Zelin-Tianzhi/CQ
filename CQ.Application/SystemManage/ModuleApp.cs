@@ -15,13 +15,13 @@ namespace CQ.Application.SystemManage
 
         public List<ModuleEntity> GetList()
         {
-            return service.IQueryable().OrderBy(t => t.F_SortCode).ToList();
+            return service.IQueryable().Where(t=> t.F_EnabledMark.Value == true).OrderBy(t => t.F_SortCode).ToList();
         }
         public ModuleEntity GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public void DeleteForm(long keyValue)
         {
             if (service.IQueryable().Count(t => t.F_ParentId.Equals(keyValue)) > 0)
             {
@@ -32,9 +32,9 @@ namespace CQ.Application.SystemManage
                 service.Delete(t => t.F_Id == keyValue);
             }
         }
-        public void SubmitForm(ModuleEntity moduleEntity, string keyValue)
+        public void SubmitForm(ModuleEntity moduleEntity, long keyValue)
         {
-            if (!string.IsNullOrEmpty(keyValue))
+            if (keyValue > 0)
             {
                 moduleEntity.Modify(keyValue);
                 service.Update(moduleEntity);
