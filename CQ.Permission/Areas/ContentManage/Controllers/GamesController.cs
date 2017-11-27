@@ -31,7 +31,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(string keyValue)
+        public ActionResult GetFormJson(long keyValue)
         {
             var data = productApp.GetForm(keyValue);
             return Content(data.ToJson());

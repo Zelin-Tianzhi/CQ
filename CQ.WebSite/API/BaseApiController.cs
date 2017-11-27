@@ -12,10 +12,6 @@ namespace CQ.WebSite.API
     {
         // GET: BaseApi
 
-        public Log Log
-        {
-            get { return LogFactory.GetLogger(this.GetType().ToString()); }
-        }
-
+        public Log Log => LogFactory.GetLogger(this.GetType().ToString());
     }
 }

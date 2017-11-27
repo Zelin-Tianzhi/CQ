@@ -14,7 +14,10 @@ namespace CQ.Core
     {
         static LogFactory()
         {
-            FileInfo configFile = new FileInfo(HttpContext.Current.Server.MapPath("/Configs/log4net.config"));
+            string logConfigPath = HttpContext.Current == null
+                ? AppDomain.CurrentDomain.BaseDirectory + "Configs\\log4net.config"
+                : HttpContext.Current.Server.MapPath("/Configs/log4net.config");
+            FileInfo configFile = new FileInfo(logConfigPath);
             log4net.Config.XmlConfigurator.Configure(configFile);
         }
         public static Log GetLogger(Type type)

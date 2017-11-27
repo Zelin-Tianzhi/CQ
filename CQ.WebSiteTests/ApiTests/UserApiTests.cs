@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CQ.WebApi.Api;
 using CQ.Core;
+using CQ.Core.Security;
 
 namespace CQ.WebSiteTests.ApiTests
 {
@@ -47,8 +49,10 @@ namespace CQ.WebSiteTests.ApiTests
         [TestMethod]
         public void TestReg()
         {
-            string date = "2017-10-13";
-            DateTime dt = Convert.ToDateTime(date);
+
+            string zifuchuan = "UlCk7cAbhAIlhDlw+avnCj/z/KAzJcgO7PBxfq3iX7ECamYbikjcVbbmYARZSUk=";
+
+
 
             //string url = "http://192.168.1.10:11005/api/user/MemberRegister?username=w11111&userpwd=123123&yzm=1231&useryz=1231&fw=1231";
             //UserController user = new UserController();
