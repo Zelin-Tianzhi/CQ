@@ -42,7 +42,7 @@ namespace CQ.Application.SystemManage
                     }
                 }
             }
-            return data.OrderBy(t => t.F_SortCode).ToList();
+            return data.Where(t => t.F_EnabledMark != null && t.F_EnabledMark.Value).OrderBy(t => t.F_SortCode).ToList();
         }
         public List<ModuleButtonEntity> GetButtonList(long roleId)
         {

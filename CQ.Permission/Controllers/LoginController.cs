@@ -55,15 +55,16 @@ namespace CQ.Permission.Controllers
             logEntity.F_Type = DbLogType.Login.ToString();
             try
             {
-                var verifyCode = Cache.Get(token);
-                if (verifyCode.IsEmpty())
-                {
-                    throw new Exception("验证码超时，请重新获取");
-                }
-                else if (Md5.md5(code.ToLower(), 16) != verifyCode.ToString())
-                {
-                    throw new Exception("验证码错误，请重新输入");
-                }
+                //暂时屏蔽验证码
+                //var verifyCode = Cache.Get(token);
+                //if (verifyCode.IsEmpty())
+                //{
+                //    throw new Exception("验证码超时，请重新获取");
+                //}
+                //else if (Md5.md5(code.ToLower(), 16) != verifyCode.ToString())
+                //{
+                //    throw new Exception("验证码错误，请重新输入");
+                //}
 
                 UserEntity userEntity = new UserApp().CheckLogin(username, password);
                 if (userEntity != null)

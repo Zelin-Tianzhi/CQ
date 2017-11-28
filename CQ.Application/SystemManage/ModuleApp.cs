@@ -15,7 +15,7 @@ namespace CQ.Application.SystemManage
 
         public List<ModuleEntity> GetList()
         {
-            return service.IQueryable().Where(t=> t.F_EnabledMark.Value == true).OrderBy(t => t.F_SortCode).ToList();
+            return service.IQueryable().OrderBy(t => t.F_SortCode).ToList();
         }
         public ModuleEntity GetForm(string keyValue)
         {
