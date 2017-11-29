@@ -4,11 +4,12 @@
  * Description: Tz通用权限
 *********************************************************************************/
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Web;
 using log4net;
 
-namespace CQ.Core
+namespace CQ.Core.Log
 {
     public class LogFactory
     {
@@ -27,6 +28,35 @@ namespace CQ.Core
         public static Log GetLogger(string str)
         {
             return new Log(LogManager.GetLogger(str));
+        }
+
+        public static Log GetLogger()
+        {
+            return new Log(LogManager.GetLogger(GetCurrentMethodFullName()));
+        }
+
+        private static string GetCurrentMethodFullName()
+        {
+            try
+            {
+                StackFrame frame;
+                string className;
+                int num = 2;
+                StackTrace trace = new StackTrace();
+                int len = trace.GetFrames().Length;
+                do
+                {
+                    frame = trace.GetFrame(num++);
+                    className = frame.GetMethod().DeclaringType.FullName;
+                } while (className.EndsWith("Excption") && num < len);
+                string methodName = frame.GetMethod().Name;
+                return className + "." + methodName;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString();
+            }
         }
     }
 }

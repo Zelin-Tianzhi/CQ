@@ -4,9 +4,9 @@
  * Description: Tz通用权限
 *********************************************************************************/
 using System;
-using CQ.Data.Repository;
 using CQ.Domain.Entity.SystemSecurity;
 using CQ.Domain.IRepository.SystemSecurity;
+using CQ.Repository.EntityFramework;
 
 namespace CQ.Repository.SystemSecurity
 {

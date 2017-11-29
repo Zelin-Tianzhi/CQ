@@ -6,7 +6,7 @@
 using System;
 using log4net;
 
-namespace CQ.Core
+namespace CQ.Core.Log
 {
     public class Log
     {

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using CQ.Core;
+using CQ.Core.Log;
 
 namespace CQ.Permission
 {

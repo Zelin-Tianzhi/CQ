@@ -5,10 +5,10 @@
 *********************************************************************************/
 using System;
 using CQ.Core;
-using CQ.Data.Extensions;
-using CQ.Data.Repository;
 using CQ.Domain.Entity.SystemSecurity;
 using CQ.Domain.IRepository.SystemSecurity;
+using CQ.Repository.EntityFramework;
+using DbHelper = CQ.Repository.EntityFramework.DbHelper;
 
 namespace CQ.Repository.SystemSecurity
 {

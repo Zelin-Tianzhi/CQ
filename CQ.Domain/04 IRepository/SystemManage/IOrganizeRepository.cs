@@ -1,5 +1,4 @@
-﻿using CQ.Data.Repository;
-using CQ.Domain.Entity.SystemManage;
+﻿using CQ.Domain.Entity.SystemManage;
 
 namespace CQ.Domain.IRepository.SystemManage
 {

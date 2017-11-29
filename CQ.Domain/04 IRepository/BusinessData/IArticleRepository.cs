@@ -1,4 +1,4 @@
-﻿using CQ.Data.Repository;
+﻿
 using CQ.Domain.Entity.BusinessData;
 using System;
 using System.Collections.Generic;

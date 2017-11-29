@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -65,6 +66,8 @@
     <Compile Include="04 IRepository\BusinessData\IArticleRepository.cs" />
     <Compile Include="04 IRepository\BusinessData\IImagesRepository.cs" />
     <Compile Include="04 IRepository\BusinessData\IProductRepository.cs" />
+    <Compile Include="04 IRepository\IRepositoryBase.cs" />
+    <Compile Include="04 IRepository\IRepositoryBase.T.cs" />
     <Compile Include="04 IRepository\SystemManage\IAreaRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IItemsDetailRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IItemsRepository.cs" />
@@ -85,11 +88,9 @@
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>
       <Name>CQ.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CQ.Data\CQ.Data.csproj">
-      <Project>{3fe3b448-2e5c-4ad4-a12f-3c714b41bb3a}</Project>
-      <Name>CQ.Data</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

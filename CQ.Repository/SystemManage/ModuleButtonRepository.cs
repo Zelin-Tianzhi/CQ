@@ -5,9 +5,9 @@
 *********************************************************************************/
 using System;
 using System.Collections.Generic;
-using CQ.Data.Repository;
 using CQ.Domain.Entity.SystemManage;
 using CQ.Domain.IRepository.SystemManage;
+using CQ.Repository.EntityFramework;
 
 namespace CQ.Repository.SystemManage
 {

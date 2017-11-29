@@ -9,9 +9,9 @@ namespace CQ.Domain.Entity.SystemManage
 {
     public class ItemsDetailEntity : IEntity<ItemsDetailEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        public long F_Id { get; set; }
-        public long F_ItemId { get; set; }
-        public string F_ParentId { get; set; }
+        public int F_Id { get; set; }
+        public int F_ItemId { get; set; }
+        public int F_ParentId { get; set; }
         public string F_ItemCode { get; set; }
         public string F_ItemName { get; set; }
         public string F_SimpleSpelling { get; set; }
@@ -22,10 +22,10 @@ namespace CQ.Domain.Entity.SystemManage
         public bool? F_EnabledMark { get; set; }
         public string F_Description { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public long? F_CreatorUserId { get; set; }
+        public int? F_CreatorUserId { get; set; }
         public DateTime? F_LastModifyTime { get; set; }
-        public long? F_LastModifyUserId { get; set; }
+        public int? F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
-        public long? F_DeleteUserId { get; set; }
+        public int? F_DeleteUserId { get; set; }
     }
 }

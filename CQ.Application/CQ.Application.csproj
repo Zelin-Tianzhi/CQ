@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseApp.cs" />
     <Compile Include="BusinessData\ArticleApp.cs" />
     <Compile Include="BusinessData\ImageApp.cs" />
     <Compile Include="BusinessData\ProductApp.cs" />
+    <Compile Include="GameUsers\UsersApp.cs" />
     <Compile Include="Infrastructure\DbLogType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManage\AreaApp.cs" />
@@ -80,10 +82,6 @@
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>
       <Name>CQ.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CQ.Data\CQ.Data.csproj">
-      <Project>{3fe3b448-2e5c-4ad4-a12f-3c714b41bb3a}</Project>
-      <Name>CQ.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CQ.Domain\CQ.Domain.csproj">
       <Project>{196a7834-6803-44c7-94f3-b4e6ec0d1e64}</Project>
       <Name>CQ.Domain</Name>
@@ -97,5 +95,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

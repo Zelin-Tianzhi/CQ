@@ -1,5 +1,4 @@
-﻿using CQ.Data.Repository;
-using CQ.Domain.Entity.SystemSecurity;
+﻿using CQ.Domain.Entity.SystemSecurity;
 
 namespace CQ.Domain.IRepository.SystemSecurity
 {

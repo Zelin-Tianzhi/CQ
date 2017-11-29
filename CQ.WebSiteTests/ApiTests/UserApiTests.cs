@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CQ.WebApi.Api;
 using CQ.Core;
+using CQ.Core.Log;
 using CQ.Core.Security;
 
 namespace CQ.WebSiteTests.ApiTests
@@ -52,7 +53,8 @@ namespace CQ.WebSiteTests.ApiTests
 
             string zifuchuan = "UlCk7cAbhAIlhDlw+avnCj/z/KAzJcgO7PBxfq3iX7ECamYbikjcVbbmYARZSUk=";
 
-
+            Log log = LogFactory.GetLogger();
+            log.Info("获取当前运行的方法完整路径。");
 
             //string url = "http://192.168.1.10:11005/api/user/MemberRegister?username=w11111&userpwd=123123&yzm=1231&useryz=1231&fw=1231";
             //UserController user = new UserController();
