@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemManage
 {
     public class AreaRepository : RepositoryBase<AreaEntity>, IAreaRepository
     {
+        public AreaRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

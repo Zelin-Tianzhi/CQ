@@ -12,5 +12,9 @@ namespace CQ.Repository.BusinessData
 {
     public class ArticleRepository : RepositoryBase<ArticleEntity>, IArticleRepository
     {
+        public ArticleRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

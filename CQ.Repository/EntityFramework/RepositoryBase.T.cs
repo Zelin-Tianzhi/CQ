@@ -18,7 +18,7 @@ namespace CQ.Repository.EntityFramework
 {
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
     {
-        public CqDbContext dbcontext = new CqDbContext();
+        public DbContext dbcontext = null;
         public int Insert(TEntity entity)
         {
             dbcontext.Entry<TEntity>(entity).State = EntityState.Added;

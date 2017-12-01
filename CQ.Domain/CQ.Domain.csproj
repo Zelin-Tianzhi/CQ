@@ -30,9 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +57,27 @@
     <Compile Include="03 Entity\BusinessData\ArticleEntity.cs" />
     <Compile Include="03 Entity\BusinessData\ImageEntity.cs" />
     <Compile Include="03 Entity\BusinessData\ProductEntity.cs" />
+    <Compile Include="03 Entity\QPAccount\Account.cs" />
+    <Compile Include="03 Entity\QPAccount\AccountFreeze.cs" />
+    <Compile Include="03 Entity\QPAccount\AccountLastLogin.cs" />
+    <Compile Include="03 Entity\QPAccount\AccountParentID.cs" />
+    <Compile Include="03 Entity\QPAccount\AccountRegInfo.cs" />
+    <Compile Include="03 Entity\QPAccount\AddGoldLog.cs" />
+    <Compile Include="03 Entity\QPAccount\BindMachine.cs" />
+    <Compile Include="03 Entity\QPAccount\IPBlackList.cs" />
+    <Compile Include="03 Entity\QPAccount\IPWhiteList.cs" />
+    <Compile Include="03 Entity\QPAccount\ModelTest.cs" />
+    <Compile Include="03 Entity\QPAccount\OfflineMessage.cs" />
+    <Compile Include="03 Entity\QPAccount\OfflineMsgBonusLog.cs" />
+    <Compile Include="03 Entity\QPAccount\RbtNickName.cs" />
+    <Compile Include="03 Entity\QPAccount\RbtNickNameLog.cs" />
+    <Compile Include="03 Entity\QPAccount\SafeWayMsg.cs" />
+    <Compile Include="03 Entity\QPAccount\UserAccountInfo.cs" />
+    <Compile Include="03 Entity\QPAccount\UserAdditionDescribe.cs" />
+    <Compile Include="03 Entity\QPAccount\UserAdditionSolution.cs" />
+    <Compile Include="03 Entity\QPAccount\UserCheckMacList.cs" />
+    <Compile Include="03 Entity\QPAccount\UserGYB2Gold.cs" />
+    <Compile Include="03 Entity\QPAccount\UserTasksExtraDayInfo.cs" />
     <Compile Include="03 Entity\SystemManage\AreaEntity.cs" />
     <Compile Include="03 Entity\SystemManage\ItemsDetailEntity.cs" />
     <Compile Include="03 Entity\SystemManage\ItemsEntity.cs" />
@@ -90,6 +119,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

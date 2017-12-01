@@ -12,6 +12,10 @@ namespace CQ.Repository.BusinessData
 {
     public class ProductRepository: RepositoryBase<ProductEntity>, IProductRepository
     {
+        public ProductRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
         public void DeleteForm(int keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())

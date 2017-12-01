@@ -12,5 +12,9 @@ namespace CQ.Repository.BusinessData
 {
     public class ImageRepository: RepositoryBase<ImageEntity>, IImagesRepository
     {
+        public ImageRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

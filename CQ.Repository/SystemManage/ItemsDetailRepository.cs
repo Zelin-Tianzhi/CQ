@@ -16,6 +16,10 @@ namespace CQ.Repository.SystemManage
 {
     public class ItemsDetailRepository : RepositoryBase<ItemsDetailEntity>, IItemsDetailRepository
     {
+        public ItemsDetailRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
         public List<ItemsDetailEntity> GetItemList(string enCode)
         {
             StringBuilder strSql = new StringBuilder();
