@@ -20,7 +20,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             var moduledata = moduleApp.GetList();
             var buttondata = moduleButtonApp.GetList();
             var authorizedata = new List<RoleAuthorizeEntity>();
-            if (roleId > 0)
+            if (roleId>0)
             {
                 authorizedata = roleAuthorizeApp.GetList(roleId);
             }
@@ -28,7 +28,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleEntity item in moduledata)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) != 0;
                 tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;
@@ -44,7 +44,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleButtonEntity item in buttondata)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) != 0;
                 tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;

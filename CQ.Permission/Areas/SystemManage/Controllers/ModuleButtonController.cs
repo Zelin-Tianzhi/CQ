@@ -38,7 +38,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleButtonEntity item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) != 0;
                 treeModel.id = item.F_Id.ToString();
                 treeModel.isLeaf = hasChildren;
                 treeModel.parentId = item.F_ParentId.ToString();
@@ -86,7 +86,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleEntity item in moduledata)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) != 0;
                 tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;
@@ -99,7 +99,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (ModuleButtonEntity item in buttondata)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) != 0;
                 tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;

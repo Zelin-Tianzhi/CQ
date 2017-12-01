@@ -37,9 +37,10 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, int keyValue)
+        public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
-            userApp.SubmitForm(userEntity, userLogOnEntity, keyValue);
+
+            userApp.SubmitForm(userEntity, userLogOnEntity, 0);
             return Success("操作成功。");
         }
         [HttpPost]
@@ -92,11 +93,6 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 
         [HttpGet]
         public ActionResult Info()
-        {
-            return View();
-        }
-        [HttpGet]
-        public ActionResult ModifyPassword()
         {
             return View();
         }
