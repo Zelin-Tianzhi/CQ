@@ -9,7 +9,7 @@ namespace CQ.Domain.ViewModel
 {
     public class AuthorizeActionModel
     {
-        public long F_Id { set; get; }
+        public int F_Id { set; get; }
         public string F_UrlAddress { set; get; }
     }
 }

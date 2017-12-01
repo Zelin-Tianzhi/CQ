@@ -9,7 +9,7 @@ namespace CQ.Core
 {
     public class OperatorModel
     {
-        public long UserId { get; set; }
+        public int UserId { get; set; }
         public string UserCode { get; set; }
         public string UserName { get; set; }
         public string UserPwd { get; set; }

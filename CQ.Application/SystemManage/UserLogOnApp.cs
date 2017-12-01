@@ -9,7 +9,7 @@ namespace CQ.Application.SystemManage
     {
         private IUserLogOnRepository service = new UserLogOnRepository();
 
-        public UserLogOnEntity GetForm(long keyValue)
+        public UserLogOnEntity GetForm(int keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -17,7 +17,7 @@ namespace CQ.Application.SystemManage
         {
             service.Update(userLogOnEntity);
         }
-        public void RevisePassword(string userPassword, long keyValue)
+        public void RevisePassword(string userPassword, int keyValue)
         {
             UserLogOnEntity userLogOnEntity = new UserLogOnEntity();
             userLogOnEntity.F_Id = keyValue;

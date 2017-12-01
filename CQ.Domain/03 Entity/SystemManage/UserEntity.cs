@@ -9,7 +9,7 @@ namespace CQ.Domain.Entity.SystemManage
 {
     public class UserEntity : IEntity<UserEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        public long F_Id { get; set; }
+        public int F_Id { get; set; }
         public string F_Account { get; set; }
         public string F_RealName { get; set; }
         public string F_NickName { get; set; }
@@ -24,7 +24,7 @@ namespace CQ.Domain.Entity.SystemManage
         public string F_Signature { get; set; }
         public string F_OrganizeId { get; set; }
         public string F_DepartmentId { get; set; }
-        public long F_RoleId { get; set; }
+        public int F_RoleId { get; set; }
         public string F_DutyId { get; set; }
         public bool? F_IsAdministrator { get; set; }
         public int? F_SortCode { get; set; }
@@ -32,10 +32,10 @@ namespace CQ.Domain.Entity.SystemManage
         public bool? F_EnabledMark { get; set; }
         public string F_Description { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public long? F_CreatorUserId { get; set; }
+        public int? F_CreatorUserId { get; set; }
         public DateTime? F_LastModifyTime { get; set; }
-        public long? F_LastModifyUserId { get; set; }
+        public int? F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
-        public long? F_DeleteUserId { get; set; }
+        public int? F_DeleteUserId { get; set; }
     }
 }

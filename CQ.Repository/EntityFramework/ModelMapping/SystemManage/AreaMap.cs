@@ -4,6 +4,7 @@
  * Description: Tz通用权限
 *********************************************************************************/
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using CQ.Domain.Entity.SystemManage;
 
@@ -14,6 +15,7 @@ namespace CQ.Repository.EntityFramework
         public AreaMap()
         {
             this.ToTable("Sys_Area");
+            this.Property(t => t.F_Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.HasKey(t => t.F_Id);
         }
     }

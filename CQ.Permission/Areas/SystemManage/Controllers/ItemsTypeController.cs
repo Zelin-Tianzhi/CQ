@@ -79,7 +79,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ItemsEntity itemsEntity, long keyValue)
+        public ActionResult SubmitForm(ItemsEntity itemsEntity, int keyValue)
         {
             itemsApp.SubmitForm(itemsEntity, keyValue);
             return Success("操作成功。");
@@ -87,7 +87,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(long keyValue)
+        public ActionResult DeleteForm(int keyValue)
         {
             itemsApp.DeleteForm(keyValue);
             return Success("删除成功。");

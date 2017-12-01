@@ -35,15 +35,15 @@ namespace CQ.Application.BusinessData
             };
             return service.FindList(expression, pagination);
         }
-        public ProductEntity GetForm(long keyValue)
+        public ProductEntity GetForm(int keyValue)
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(long keyValue)
+        public void DeleteForm(int keyValue)
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(ProductEntity produceEntity, string[] imgPaths, long keyValue)
+        public void SubmitForm(ProductEntity produceEntity, string[] imgPaths, int keyValue)
         {
             if (keyValue > 0)
             {

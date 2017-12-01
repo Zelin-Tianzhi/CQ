@@ -50,13 +50,13 @@ namespace CQ.Repository.EntityFramework
          /// <summary>
          ///  执行查询SQL语句，返回离线记录集
          /// </summary>
-         /// <param name="strSQL">SQL语句</param>
+         /// <param name="strSql">SQL语句</param>
          /// <returns>离线记录DataSet</returns>
-         public DataSet GetDataTablebySQL(string strSQL)
+         public DataSet GetDataTablebySql(string strSql)
          {
              using (SqlConnection conn = new SqlConnection(connstring))
              {
-                 using (SqlCommand cmd = new SqlCommand(strSQL, conn))
+                 using (SqlCommand cmd = new SqlCommand(strSql, conn))
                  {
                      try
                      {
@@ -66,13 +66,55 @@ namespace CQ.Repository.EntityFramework
                          myAdapter.Fill(ds);
                          return ds;
                      }
-                     catch (System.Data.SqlClient.SqlException ex)
+                     catch (SqlException ex)
                      {
                          conn.Close();//出异常,关闭数据源连接
-                         throw new Exception(string.Format("执行{0}失败:{1}", strSQL, ex.Message));
+                         throw new Exception($"执行{strSql}失败:{ex.Message}");
                      }
                  }
              }
          }
+
+        public SqlDataReader ExecuteNonQuery(string sqlText, SqlParameter[] parameters)
+        {
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlText,conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    foreach (SqlParameter parameter in parameters)
+                    {
+                        cmd.Parameters.Add(parameter);
+                    }
+                    var sqlReader = cmd.ExecuteReader();
+                    return sqlReader;
+                }
+            }
+            //SqlConnection sqlconn = new SqlConnection(conn);
+            //SqlCommand cmd = new SqlCommand();
+            //cmd.Connection = sqlconn;
+            //cmd.CommandText = "Categoriestest5";
+            //cmd.CommandType = CommandType.StoredProcedure;
+            //// 创建参数
+            //IDataParameter[] parameters = {
+            //    new SqlParameter("@Id", SqlDbType.Int,4) ,
+            //    new SqlParameter("@CategoryName", SqlDbType.NVarChar,15) ,
+            //    new SqlParameter("rval", SqlDbType.Int,4)
+            //};
+            //// 设置参数类型
+            //parameters[0].Direction = ParameterDirection.Output;    // 设置为输出参数
+            //parameters[1].Value = "testCategoryName";         // 给输入参数赋值
+            //parameters[2].Direction = ParameterDirection.ReturnValue; // 设置为返回值
+            //// 添加参数
+            //cmd.Parameters.Add(parameters[0]);
+            //cmd.Parameters.Add(parameters[1]);
+            //cmd.Parameters.Add(parameters[2]);
+            //sqlconn.Open();
+            //// 执行存储过程并返回影响的行数
+            //Label1.Text = cmd.ExecuteNonQuery().ToString();
+            //sqlconn.Close();
+            //// 显示影响的行数，输出参数和返回值
+            //Label1.Text += "-" + parameters[0].Value.ToString() + "-" + parameters[2].Value.ToString();
+        }
     }
 }

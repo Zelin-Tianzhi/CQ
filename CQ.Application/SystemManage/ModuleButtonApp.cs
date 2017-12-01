@@ -14,7 +14,7 @@ namespace CQ.Application.SystemManage
     {
         private IModuleButtonRepository service = new ModuleButtonRepository();
 
-        public List<ModuleButtonEntity> GetList(long moduleId = 0)
+        public List<ModuleButtonEntity> GetList(int moduleId = 0)
         {
             var expression = ExtLinq.True<ModuleButtonEntity>();
             if (moduleId > 0)
@@ -27,7 +27,7 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(long keyValue)
+        public void DeleteForm(int keyValue)
         {
             if (service.IQueryable().Count(t => t.F_ParentId.Equals(keyValue)) > 0)
             {
@@ -38,7 +38,7 @@ namespace CQ.Application.SystemManage
                 service.Delete(t => t.F_Id == keyValue);
             }
         }
-        public void SubmitForm(ModuleButtonEntity moduleButtonEntity, long keyValue)
+        public void SubmitForm(ModuleButtonEntity moduleButtonEntity, int keyValue)
         {
             if (keyValue > 0)
             {
@@ -51,7 +51,7 @@ namespace CQ.Application.SystemManage
                 service.Insert(moduleButtonEntity);
             }
         }
-        public void SubmitCloneButton(long moduleId, string Ids)
+        public void SubmitCloneButton(int moduleId, string Ids)
         {
             string[] ArrayId = Ids.Split(',');
             var data = this.GetList();

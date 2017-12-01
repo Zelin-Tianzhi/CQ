@@ -15,6 +15,7 @@ namespace CQ.Repository.EntityFramework
         {
             this.ToTable("Bus_Articles");
             this.Property(t => t.F_ArticleContent).HasColumnType("text");
+            this.Property(t => t.F_Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.HasKey(t => t.F_Id);
         }
     }

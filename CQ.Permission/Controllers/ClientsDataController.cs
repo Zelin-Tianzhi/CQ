@@ -97,7 +97,7 @@ namespace CQ.Permission.Controllers
         }
         private object GetMenuList()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId.ToInt64();
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId.ToInt();
             return ToMenuJson(new RoleAuthorizeApp().GetMenuList(roleId), 0);
         }
         private string ToMenuJson(List<ModuleEntity> data, long parentId)
@@ -120,7 +120,7 @@ namespace CQ.Permission.Controllers
         }
         private object GetMenuButtonList()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId.ToInt64();
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId.ToInt();
             var data = new RoleAuthorizeApp().GetButtonList(roleId);
             var dataModuleId = data.MyDistinct(o=> o.F_ModuleId);
             Dictionary<string, object> dictionary = new Dictionary<string, object>();

@@ -311,10 +311,6 @@
       <Project>{196a7834-6803-44c7-94f3-b4e6ec0d1e64}</Project>
       <Name>CQ.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CQ.Mapping\CQ.Mapping.csproj">
-      <Project>{071c89a9-c657-4b50-ac4c-825343c61275}</Project>
-      <Name>CQ.Mapping</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

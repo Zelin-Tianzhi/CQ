@@ -10,7 +10,7 @@ namespace CQ.Domain.IRepository.BusinessData
 {
     public interface IProductRepository : IRepositoryBase<ProductEntity>
     {
-        void DeleteForm(long keyValue);
-        void SubmitForm(ProductEntity productEntity, List<ImageEntity> imageList, long keyValue);
+        void DeleteForm(int keyValue);
+        void SubmitForm(ProductEntity productEntity, List<ImageEntity> imageList, int keyValue);
     }
 }

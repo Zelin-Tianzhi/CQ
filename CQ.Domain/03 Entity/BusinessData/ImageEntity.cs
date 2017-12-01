@@ -8,12 +8,12 @@ namespace CQ.Domain.Entity.BusinessData
 {
     public class ImageEntity : IEntity<ImageEntity>, ICreationAudited
     {
-        public long F_Id { get; set; }
+        public int F_Id { get; set; }
         public int F_Category { get; set; }
-        public long F_FId { get; set; }
+        public int F_FId { get; set; }
         public string F_Thumb { get; set; }
         public string F_Img { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public long? F_CreatorUserId { get; set; }
+        public int? F_CreatorUserId { get; set; }
     }
 }

@@ -31,11 +31,11 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(long keyValue)
+        public void DeleteForm(int keyValue)
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, long keyValue)
+        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, int keyValue)
         {
             if (keyValue > 0)
             {

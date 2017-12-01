@@ -8,7 +8,7 @@ namespace CQ.Domain.Entity.BusinessData
 {
     public class ArticleEntity : IEntity<ArticleEntity>,ICreationAudited,IDeleteAudited,IModificationAudited
     {
-        public long F_Id { get; set; }
+        public int F_Id { get; set; }
         public string F_ArticleTitle { get; set; }
         public int? F_ArticleType { get; set; }
         public DateTime? F_PublishTime { get; set; }
@@ -18,11 +18,11 @@ namespace CQ.Domain.Entity.BusinessData
         public bool? F_DeleteMark { get; set; }
         public bool F_EnableMark { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public long? F_CreatorUserId { get; set; }
+        public int? F_CreatorUserId { get; set; }
         public DateTime? F_LastModifyTime { get; set; }
-        public long? F_LastModifyUserId { get; set; }
+        public int? F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
-        public long? F_DeleteUserId { get; set; }
+        public int? F_DeleteUserId { get; set; }
 
     }
 }

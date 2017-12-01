@@ -80,6 +80,14 @@
     <Compile Include="Migrations\201711290817390_update datatype.Designer.cs">
       <DependentUpon>201711290817390_update datatype.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711290837522_updatekeytype.cs" />
+    <Compile Include="Migrations\201711290837522_updatekeytype.Designer.cs">
+      <DependentUpon>201711290837522_updatekeytype.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711290842133_setIdentity.cs" />
+    <Compile Include="Migrations\201711290842133_setIdentity.Designer.cs">
+      <DependentUpon>201711290842133_setIdentity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManage\AreaRepository.cs" />
@@ -116,6 +124,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711290817390_update datatype.resx">
       <DependentUpon>201711290817390_update datatype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711290837522_updatekeytype.resx">
+      <DependentUpon>201711290837522_updatekeytype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711290842133_setIdentity.resx">
+      <DependentUpon>201711290842133_setIdentity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

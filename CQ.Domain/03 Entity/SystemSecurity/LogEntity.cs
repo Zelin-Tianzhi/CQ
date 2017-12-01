@@ -9,7 +9,7 @@ namespace CQ.Domain.Entity.SystemSecurity
 {
     public class LogEntity : IEntity<LogEntity>,ICreationAudited
     {
-        public long F_Id { get; set; }
+        public int F_Id { get; set; }
         public DateTime? F_Date { get; set; }
         public string F_Account { get; set; }
         public string F_NickName { get; set; }
@@ -21,6 +21,6 @@ namespace CQ.Domain.Entity.SystemSecurity
         public bool? F_Result { get; set; }
         public string F_Description { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public long? F_CreatorUserId { get; set; }
+        public int? F_CreatorUserId { get; set; }
     }
 }

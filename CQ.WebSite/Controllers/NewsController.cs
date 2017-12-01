@@ -33,9 +33,9 @@ namespace CQ.WebSite.Controllers
             return Content(articleEntitys.ToJson());
         }
         [HttpGet]
-        public ActionResult GetFormJson(long keyValue)
+        public ActionResult GetFormJson(int keyValue)
         {
-            long key = keyValue;
+            int key = keyValue;
             var data = articleApp.GetForm(key);
             return Content(data.ToJson());
         }

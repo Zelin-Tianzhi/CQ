@@ -15,7 +15,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(long itemId, string keyword)
+        public ActionResult GetGridJson(int itemId, string keyword)
         {
             var data = itemsDetailApp.GetList(itemId, keyword);
             return Content(data.ToJson());
@@ -42,7 +42,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ItemsDetailEntity itemsDetailEntity, long keyValue)
+        public ActionResult SubmitForm(ItemsDetailEntity itemsDetailEntity, int keyValue)
         {
             itemsDetailApp.SubmitForm(itemsDetailEntity, keyValue);
             return Success("操作成功。");
@@ -51,7 +51,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(long keyValue)
+        public ActionResult DeleteForm(int keyValue)
         {
             itemsDetailApp.DeleteForm(keyValue);
             return Success("删除成功。");

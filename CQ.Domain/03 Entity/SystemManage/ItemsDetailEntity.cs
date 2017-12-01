@@ -11,7 +11,7 @@ namespace CQ.Domain.Entity.SystemManage
     {
         public int F_Id { get; set; }
         public int F_ItemId { get; set; }
-        public int F_ParentId { get; set; }
+        public int? F_ParentId { get; set; }
         public string F_ItemCode { get; set; }
         public string F_ItemName { get; set; }
         public string F_SimpleSpelling { get; set; }

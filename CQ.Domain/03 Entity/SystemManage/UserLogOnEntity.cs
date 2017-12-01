@@ -9,8 +9,8 @@ namespace CQ.Domain.Entity.SystemManage
 {
     public class UserLogOnEntity
     {
-        public long F_Id { get; set; }
-        public long F_UserId { get; set; }
+        public int F_Id { get; set; }
+        public int F_UserId { get; set; }
         public string F_UserPassword { get; set; }
         public string F_UserSecretkey { get; set; }
         public DateTime? F_AllowStartTime { get; set; }

@@ -9,7 +9,7 @@ namespace CQ.Domain.Entity.SystemSecurity
 {
     public class DbBackupEntity : ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        public long F_Id { get; set; }
+        public int F_Id { get; set; }
         public string F_BackupType { get; set; }
         public string F_DbName { get; set; }
         public string F_FileName { get; set; }
@@ -21,10 +21,10 @@ namespace CQ.Domain.Entity.SystemSecurity
         public bool? F_EnabledMark { get; set; }
         public string F_Description { get; set; }
         public DateTime? F_CreatorTime { get; set; }
-        public long? F_CreatorUserId { get; set; }
+        public int? F_CreatorUserId { get; set; }
         public DateTime? F_LastModifyTime { get; set; }
-        public long? F_LastModifyUserId { get; set; }
+        public int? F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
-        public long? F_DeleteUserId { get; set; }
+        public int? F_DeleteUserId { get; set; }
     }
 }

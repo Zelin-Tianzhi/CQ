@@ -33,7 +33,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(RoleEntity roleEntity, string permissionIds, long keyValue)
+        public ActionResult SubmitForm(RoleEntity roleEntity, string permissionIds, int keyValue)
         {
             roleApp.SubmitForm(roleEntity, permissionIds.Split(','), keyValue);
             return Success("操作成功。");
@@ -42,7 +42,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(long keyValue)
+        public ActionResult DeleteForm(int keyValue)
         {
             roleApp.DeleteForm(keyValue);
             return Success("删除成功。");

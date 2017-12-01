@@ -5,7 +5,7 @@ namespace CQ.Domain.IRepository.SystemManage
 {
     public interface IRoleRepository : IRepositoryBase<RoleEntity>
     {
-        void DeleteForm(long keyValue);
-        void SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, long keyValue);
+        void DeleteForm(int keyValue);
+        void SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, int keyValue);
     }
 }

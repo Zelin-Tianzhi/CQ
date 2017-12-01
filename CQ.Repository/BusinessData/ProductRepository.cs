@@ -12,7 +12,7 @@ namespace CQ.Repository.BusinessData
 {
     public class ProductRepository: RepositoryBase<ProductEntity>, IProductRepository
     {
-        public void DeleteForm(long keyValue)
+        public void DeleteForm(int keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
@@ -22,7 +22,7 @@ namespace CQ.Repository.BusinessData
             }
         }
 
-        public void SubmitForm(ProductEntity productEntity, List<ImageEntity> imageEntitys, long keyValue)
+        public void SubmitForm(ProductEntity productEntity, List<ImageEntity> imageEntitys, int keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {

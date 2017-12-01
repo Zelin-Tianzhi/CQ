@@ -15,7 +15,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         private ModuleButtonApp moduleButtonApp = new ModuleButtonApp();
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeSelectJson(long moduleId)
+        public ActionResult GetTreeSelectJson(int moduleId)
         {
             var data = moduleButtonApp.GetList(moduleId);
             var treeList = new List<TreeSelectModel>();
@@ -31,7 +31,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeGridJson(long moduleId)
+        public ActionResult GetTreeGridJson(int moduleId)
         {
             var data = moduleButtonApp.GetList(moduleId);
             var treeList = new List<TreeGridModel>();
@@ -58,7 +58,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, long keyValue)
+        public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, int keyValue)
         {
             moduleButtonApp.SubmitForm(moduleButtonEntity, keyValue);
             return Success("操作成功。");
@@ -66,7 +66,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(long keyValue)
+        public ActionResult DeleteForm(int keyValue)
         {
             moduleButtonApp.DeleteForm(keyValue);
             return Success("删除成功。");
@@ -125,7 +125,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public ActionResult SubmitCloneButton(long moduleId, string Ids)
+        public ActionResult SubmitCloneButton(int moduleId, string Ids)
         {
             moduleButtonApp.SubmitCloneButton(moduleId, Ids);
             return Success("克隆成功。");

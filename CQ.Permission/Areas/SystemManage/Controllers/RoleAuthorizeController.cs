@@ -15,7 +15,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         private ModuleApp moduleApp = new ModuleApp();
         private ModuleButtonApp moduleButtonApp = new ModuleButtonApp();
 
-        public ActionResult GetPermissionTree(long roleId)
+        public ActionResult GetPermissionTree(int roleId)
         {
             var moduledata = moduleApp.GetList();
             var buttondata = moduleButtonApp.GetList();

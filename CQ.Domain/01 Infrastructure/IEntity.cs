@@ -20,7 +20,7 @@ namespace CQ.Domain
             }
             entity.F_CreatorTime = DateTime.Now;
         }
-        public void Modify(long keyValue)
+        public void Modify(int keyValue)
         {
             var entity = this as IModificationAudited;
             entity.F_Id = keyValue;

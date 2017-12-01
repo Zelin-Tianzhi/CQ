@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiTests\UserApiTests.cs" />
+    <Compile Include="ApplicationTests\UserTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +60,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CQ.Application\CQ.Application.csproj">
+      <Project>{5835f58f-5da9-415c-b35b-69cbc6a13c23}</Project>
+      <Name>CQ.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CQ.Core\CQ.Core.csproj">
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>
       <Name>CQ.Core</Name>

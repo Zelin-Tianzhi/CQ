@@ -774,7 +774,6 @@
     <Folder Include="Areas\SystemSecurity\Views\Shared\" />
     <Folder Include="Areas\UserManage\Models\" />
     <Folder Include="Areas\UserManage\Views\Shared\" />
-    <Folder Include="Areas\UserManage\Views\Users\" />
     <Folder Include="Content\Js\ueditor\net\upload\image\" />
     <Folder Include="Upload\" />
     <Folder Include="Views\ClientsData\" />
@@ -922,6 +921,7 @@
     <Content Include="Content\Js\fileinput\README.md" />
     <Content Include="Areas\SystemManage\Views\User\ModifyPassword.cshtml" />
     <Content Include="Areas\UserManage\Views\web.config" />
+    <Content Include="Areas\UserManage\Views\Users\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

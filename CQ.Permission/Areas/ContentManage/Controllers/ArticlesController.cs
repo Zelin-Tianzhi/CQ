@@ -31,7 +31,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(long keyValue)
+        public ActionResult GetFormJson(int keyValue)
         {
             var data = articleApp.GetForm(keyValue);
             return Content(data.ToJson());
@@ -41,7 +41,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult SubmitForm(ArticleEntity articleEntity, long keyValue)
+        public ActionResult SubmitForm(ArticleEntity articleEntity, int keyValue)
         {
             articleApp.SubmitForm(articleEntity, keyValue);
             return Success("操作成功。");
@@ -51,7 +51,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAuthorize]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(long keyValue)
+        public ActionResult DeleteForm(int keyValue)
         {
             articleApp.DeleteForm(keyValue);
             return Success("删除成功。");

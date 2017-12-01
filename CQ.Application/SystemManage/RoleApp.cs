@@ -31,11 +31,11 @@ namespace CQ.Application.SystemManage
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(long keyValue)
+        public void DeleteForm(int keyValue)
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(RoleEntity roleEntity, string[] permissionIds, long keyValue)
+        public void SubmitForm(RoleEntity roleEntity, string[] permissionIds, int keyValue)
         {
             if (keyValue > 0)
             {
@@ -49,7 +49,7 @@ namespace CQ.Application.SystemManage
                 RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
                 roleAuthorizeEntity.F_ObjectType = 1;
                 roleAuthorizeEntity.F_ObjectId = roleEntity.F_Id;
-                roleAuthorizeEntity.F_ItemId = itemId.ToInt64();
+                roleAuthorizeEntity.F_ItemId = itemId.ToInt();
                 if (moduledata.Find(t => t.F_Id == itemId.ToInt64()) != null)
                 {
                     roleAuthorizeEntity.F_ItemType = 1;

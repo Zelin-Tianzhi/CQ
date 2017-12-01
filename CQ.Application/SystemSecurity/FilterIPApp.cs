@@ -27,11 +27,11 @@ namespace CQ.Application.SystemSecurity
         {
             return service.FindEntity(keyValue);
         }
-        public void DeleteForm(long keyValue)
+        public void DeleteForm(int keyValue)
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(FilterIPEntity filterIPEntity, long keyValue)
+        public void SubmitForm(FilterIPEntity filterIPEntity, int keyValue)
         {
             if (keyValue > 0)
             {

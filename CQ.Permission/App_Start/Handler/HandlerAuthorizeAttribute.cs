@@ -34,8 +34,8 @@ namespace CQ.Permission
         private bool ActionAuthorize(ActionExecutingContext filterContext)
         {
             var operatorProvider = OperatorProvider.Provider.GetCurrent();
-            var roleId = operatorProvider.RoleId.ToInt64();
-            var moduleId = WebHelper.GetCookie("tz_currentmoduleid").ToInt64();
+            var roleId = operatorProvider.RoleId.ToInt();
+            var moduleId = WebHelper.GetCookie("tz_currentmoduleid").ToInt();
             var action = HttpContext.Current.Request.ServerVariables["SCRIPT_NAME"];
             return new RoleAuthorizeApp().ActionValidate(roleId, moduleId, action);
         }
