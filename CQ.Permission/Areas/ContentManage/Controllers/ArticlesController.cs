@@ -15,14 +15,14 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         {
             return View();
         }
-        private ArticleApp articleApp = new ArticleApp();
+        private readonly ArticleApp _articleApp = new ArticleApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new
             {
-                rows = articleApp.GetList(pagination, keyword),
+                rows = _articleApp.GetList(pagination, keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -31,9 +31,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(int keyValue)
+        public ActionResult GetFormJson(string keyValue)
         {
-            var data = articleApp.GetForm(keyValue);
+            var data = _articleApp.GetForm(keyValue.ToInt());
             return Content(data.ToJson());
         }
 
@@ -41,9 +41,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult SubmitForm(ArticleEntity articleEntity, int keyValue)
+        public ActionResult SubmitForm(ArticleEntity articleEntity, string keyValue)
         {
-            articleApp.SubmitForm(articleEntity, keyValue);
+            _articleApp.SubmitForm(articleEntity, keyValue.ToInt());
             return Success("操作成功。");
         }
 
@@ -51,9 +51,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAuthorize]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(int keyValue)
+        public ActionResult DeleteForm(string keyValue)
         {
-            articleApp.DeleteForm(keyValue);
+            _articleApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
     }

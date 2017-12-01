@@ -11,21 +11,23 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class OrganizeController : BaseController
     {
-        private OrganizeApp organizeApp = new OrganizeApp();
+        private readonly OrganizeApp _organizeApp = new OrganizeApp();
 
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeSelectJson()
         {
-            var data = organizeApp.GetList();
+            var data = _organizeApp.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (OrganizeEntity item in data)
             {
-                TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id.ToString();
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId.ToString();
-                treeModel.data = item;
+                TreeSelectModel treeModel = new TreeSelectModel
+                {
+                    id = item.F_Id.ToString(),
+                    text = item.F_FullName,
+                    parentId = item.F_ParentId.ToString(),
+                    data = item
+                };
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
@@ -34,12 +36,12 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetTreeJson()
         {
-            var data = organizeApp.GetList();
+            var data = _organizeApp.GetList();
             var treeList = new List<TreeViewModel>();
             foreach (OrganizeEntity item in data)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) != 0;
                 tree.id = item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;
@@ -55,7 +57,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = organizeApp.GetList();
+            var data = _organizeApp.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -64,7 +66,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             foreach (OrganizeEntity item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
+                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) != 0;
                 treeModel.id = item.F_Id.ToString();
                 treeModel.isLeaf = hasChildren;
                 treeModel.parentId = item.F_ParentId.ToString();
@@ -78,24 +80,24 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = organizeApp.GetForm(keyValue);
+            var data = _organizeApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(OrganizeEntity organizeEntity, int keyValue)
+        public ActionResult SubmitForm(OrganizeEntity organizeEntity, string keyValue)
         {
-            organizeApp.SubmitForm(organizeEntity, keyValue);
+            _organizeApp.SubmitForm(organizeEntity, keyValue.ToInt());
             return Success("操作成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(int keyValue)
+        public ActionResult DeleteForm(string keyValue)
         {
-            organizeApp.DeleteForm(keyValue);
+            _organizeApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
     }

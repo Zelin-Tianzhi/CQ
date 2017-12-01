@@ -11,8 +11,8 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class UserController : BaseController
     {
-        private UserApp userApp = new UserApp();
-        private UserLogOnApp userLogOnApp = new UserLogOnApp();
+        private readonly UserApp _userApp = new UserApp();
+        private readonly UserLogOnApp _userLogOnApp = new UserLogOnApp();
 
         [HttpGet]
         [HandlerAjaxOnly]
@@ -20,7 +20,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         {
             var data = new
             {
-                rows = userApp.GetList(pagination, keyword),
+                rows = _userApp.GetList(pagination, keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -31,7 +31,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = userApp.GetForm(keyValue);
+            var data = _userApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -40,16 +40,16 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
 
-            userApp.SubmitForm(userEntity, userLogOnEntity, 0);
+            _userApp.SubmitForm(userEntity, userLogOnEntity, keyValue.ToInt());
             return Success("操作成功。");
         }
         [HttpPost]
         [HandlerAuthorize]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(int keyValue)
+        public ActionResult DeleteForm(string keyValue)
         {
-            userApp.DeleteForm(keyValue);
+            _userApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
         [HttpGet]
@@ -61,33 +61,37 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitRevisePassword(string userPassword, int keyValue)
+        public ActionResult SubmitRevisePassword(string userPassword, string keyValue)
         {
-            userLogOnApp.RevisePassword(userPassword, keyValue);
+            _userLogOnApp.RevisePassword(userPassword, keyValue.ToInt());
             return Success("重置密码成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DisabledAccount(int keyValue)
+        public ActionResult DisabledAccount(string keyValue)
         {
-            UserEntity userEntity = new UserEntity();
-            userEntity.F_Id = keyValue;
-            userEntity.F_EnabledMark = false;
-            userApp.UpdateForm(userEntity);
+            UserEntity userEntity = new UserEntity
+            {
+                F_Id = keyValue.ToInt(),
+                F_EnabledMark = false
+            };
+            _userApp.UpdateForm(userEntity);
             return Success("账户禁用成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult EnabledAccount(int keyValue)
+        public ActionResult EnabledAccount(string keyValue)
         {
-            UserEntity userEntity = new UserEntity();
-            userEntity.F_Id = keyValue;
-            userEntity.F_EnabledMark = true;
-            userApp.UpdateForm(userEntity);
+            UserEntity userEntity = new UserEntity
+            {
+                F_Id = keyValue.ToInt(),
+                F_EnabledMark = true
+            };
+            _userApp.UpdateForm(userEntity);
             return Success("账户启用成功。");
         }
 

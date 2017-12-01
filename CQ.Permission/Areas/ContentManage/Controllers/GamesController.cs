@@ -14,15 +14,15 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
     public class GamesController : BaseController
     {
 
-        private ProductApp productApp = new ProductApp();
-        private ImageApp imageApp = new ImageApp();
+        private readonly ProductApp _productApp = new ProductApp();
+        private ImageApp _imageApp = new ImageApp();
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             var data = new
             {
-                rows = productApp.GetList(pagination, keyword),
+                rows = _productApp.GetList(pagination, keyword),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -31,9 +31,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(int keyValue)
+        public ActionResult GetFormJson(string keyValue)
         {
-            var data = productApp.GetForm(keyValue);
+            var data = _productApp.GetForm(keyValue.ToInt());
             return Content(data.ToJson());
         }
 
@@ -41,10 +41,10 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult SubmitForm(ProductEntity productEntity, int keyValue)
+        public ActionResult SubmitForm(ProductEntity productEntity, string keyValue)
         {
             string imgListStr = productEntity.F_Remark;
-            productApp.SubmitForm(productEntity, imgListStr.TrimEnd(',').Split(','), keyValue);
+            _productApp.SubmitForm(productEntity, imgListStr.TrimEnd(',').Split(','), keyValue.ToInt());
             return Success("操作成功。");
         }
 
@@ -52,9 +52,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAuthorize]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(int keyValue)
+        public ActionResult DeleteForm(string keyValue)
         {
-            productApp.DeleteForm(keyValue);
+            _productApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
 
@@ -72,7 +72,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
                 oStream.Seek(0, System.IO.SeekOrigin.Begin);
                 Session["img1"] = bytes;
                 Random rd = new Random();
-                System.Drawing.Image img = System.Drawing.Bitmap.FromStream(oStream);
+                Image img = Image.FromStream(oStream);
                 Bitmap bmp = new Bitmap(img);
                 MemoryStream bmpStream = new MemoryStream();
                 bmp.Save(bmpStream, System.Drawing.Imaging.ImageFormat.Jpeg);

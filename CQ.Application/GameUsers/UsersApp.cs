@@ -45,8 +45,7 @@ namespace CQ.Application.GameUsers
         public string MemberRegister(string username, string userpwd, string macaddress)
         {
             //解密获得mac地址
-            int len;
-            len = macaddress.Length / 2;
+            var len = macaddress.Length / 2;
             byte[] inputByteArray = new byte[len];
             int x, i;
             for (x = 0; x < len; x++)

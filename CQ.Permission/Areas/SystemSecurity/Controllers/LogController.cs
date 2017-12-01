@@ -10,7 +10,7 @@ namespace CQ.Permission.Areas.SystemSecurity.Controllers
 {
     public class LogController : BaseController
     {
-        private LogApp logApp = new LogApp();
+        private readonly LogApp _logApp = new LogApp();
 
         [HttpGet]
         public ActionResult RemoveLog()
@@ -23,7 +23,7 @@ namespace CQ.Permission.Areas.SystemSecurity.Controllers
         {
             var data = new
             {
-                rows = logApp.GetList(pagination, queryJson),
+                rows = _logApp.GetList(pagination, queryJson),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -36,7 +36,7 @@ namespace CQ.Permission.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitRemoveLog(string keepTime)
         {
-            logApp.RemoveLog(keepTime);
+            _logApp.RemoveLog(keepTime);
             return Success("清空成功。");
         }
     }

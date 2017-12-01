@@ -11,29 +11,27 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class ModuleController : BaseController
     {
-        private ModuleApp moduleApp = new ModuleApp();
+        private readonly ModuleApp _moduleApp = new ModuleApp();
 
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeSelectJson()
         {
-            var data = moduleApp.GetList();
-            var treeList = new List<TreeSelectModel>();
-            foreach (ModuleEntity item in data)
-            {
-                TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id.ToString();
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId.ToString();
-                treeList.Add(treeModel);
-            }
+            var data = _moduleApp.GetList();
+            var treeList = data.Select(item => new TreeSelectModel
+                {
+                    id = item.F_Id.ToString(),
+                    text = item.F_FullName,
+                    parentId = item.F_ParentId.ToString()
+                })
+                .ToList();
             return Content(treeList.TreeSelectJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = moduleApp.GetList();
+            var data = _moduleApp.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -56,24 +54,24 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = moduleApp.GetForm(keyValue);
+            var data = _moduleApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ModuleEntity moduleEntity, int keyValue)
+        public ActionResult SubmitForm(ModuleEntity moduleEntity, string keyValue)
         {
-            moduleApp.SubmitForm(moduleEntity, keyValue);
+            _moduleApp.SubmitForm(moduleEntity, keyValue.ToInt());
             return Success("操作成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(int keyValue)
+        public ActionResult DeleteForm(string keyValue)
         {
-            moduleApp.DeleteForm(keyValue);
+            _moduleApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
     }

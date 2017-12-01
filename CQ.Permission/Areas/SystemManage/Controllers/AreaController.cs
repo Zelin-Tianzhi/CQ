@@ -11,42 +11,38 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class AreaController : BaseController
     {
-        private AreaApp areaApp = new AreaApp();
+        private readonly AreaApp _areaApp = new AreaApp();
 
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeSelectJson()
         {
-            var data = areaApp.GetList();
-            var treeList = new List<TreeSelectModel>();
-            foreach (AreaEntity item in data)
-            {
-                TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id.ToString();
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId.ToString();
-                treeList.Add(treeModel);
-            }
+            var data = _areaApp.GetList();
+            var treeList = data.Select(item => new TreeSelectModel
+                {
+                    id = item.F_Id.ToString(),
+                    text = item.F_FullName,
+                    parentId = item.F_ParentId.ToString()
+                })
+                .ToList();
             return Content(treeList.TreeSelectJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = areaApp.GetList();
-            var treeList = new List<TreeGridModel>();
-            foreach (AreaEntity item in data)
-            {
-                TreeGridModel treeModel = new TreeGridModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                treeModel.id = item.F_Id.ToString();
-                treeModel.text = item.F_FullName;
-                treeModel.isLeaf = hasChildren;
-                treeModel.parentId = item.F_ParentId.ToString();
-                treeModel.expanded = true;
-                treeModel.entityJson = item.ToJson();
-                treeList.Add(treeModel);
-            }
+            var data = _areaApp.GetList();
+            var treeList = (from item in data
+                let hasChildren = data.Count(t => t.F_ParentId == item.F_Id) != 0
+                select new TreeGridModel
+                {
+                    id = item.F_Id.ToString(),
+                    text = item.F_FullName,
+                    isLeaf = hasChildren,
+                    parentId = item.F_ParentId.ToString(),
+                    expanded = true,
+                    entityJson = item.ToJson()
+                }).ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 treeList = treeList.TreeWhere(t => t.text.Contains(keyword), "id", "parentId");
@@ -57,24 +53,24 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = areaApp.GetForm(keyValue);
+            var data = _areaApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(AreaEntity areaEntity, int keyValue)
+        public ActionResult SubmitForm(AreaEntity areaEntity, string keyValue)
         {
-            areaApp.SubmitForm(areaEntity, keyValue);
+            _areaApp.SubmitForm(areaEntity, keyValue.ToInt());
             return Success("操作成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(int keyValue)
+        public ActionResult DeleteForm(string keyValue)
         {
-            areaApp.DeleteForm(keyValue);
+            _areaApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
     }

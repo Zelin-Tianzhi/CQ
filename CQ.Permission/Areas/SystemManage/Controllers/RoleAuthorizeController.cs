@@ -11,18 +11,18 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class RoleAuthorizeController : BaseController
     {
-        private RoleAuthorizeApp roleAuthorizeApp = new RoleAuthorizeApp();
-        private ModuleApp moduleApp = new ModuleApp();
-        private ModuleButtonApp moduleButtonApp = new ModuleButtonApp();
+        private readonly RoleAuthorizeApp _roleAuthorizeApp = new RoleAuthorizeApp();
+        private readonly ModuleApp _moduleApp = new ModuleApp();
+        private readonly ModuleButtonApp _moduleButtonApp = new ModuleButtonApp();
 
-        public ActionResult GetPermissionTree(int roleId)
+        public ActionResult GetPermissionTree(string roleId)
         {
-            var moduledata = moduleApp.GetList();
-            var buttondata = moduleButtonApp.GetList();
+            var moduledata = _moduleApp.GetList();
+            var buttondata = _moduleButtonApp.GetList();
             var authorizedata = new List<RoleAuthorizeEntity>();
-            if (roleId>0)
+            if (!string.IsNullOrEmpty(roleId))
             {
-                authorizedata = roleAuthorizeApp.GetList(roleId);
+                authorizedata = _roleAuthorizeApp.GetList(roleId.ToInt());
             }
             var treeList = new List<TreeViewModel>();
             foreach (ModuleEntity item in moduledata)

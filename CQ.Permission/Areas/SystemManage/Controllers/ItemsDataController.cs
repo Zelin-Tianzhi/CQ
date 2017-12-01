@@ -11,21 +11,21 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class ItemsDataController : BaseController
     {
-        private ItemsDetailApp itemsDetailApp = new ItemsDetailApp();
+        private readonly ItemsDetailApp _itemsDetailApp = new ItemsDetailApp();
 
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(int itemId, string keyword)
+        public ActionResult GetGridJson(string itemId, string keyword)
         {
-            var data = itemsDetailApp.GetList(itemId, keyword);
+            var data = _itemsDetailApp.GetList(itemId.ToInt(), keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetSelectJson(string enCode)
         {
-            var data = itemsDetailApp.GetItemList(enCode);
-            List<object> list = new List<object>();
+            var data = _itemsDetailApp.GetItemList(enCode);
+            var list = new List<object>();
             foreach (ItemsDetailEntity item in data)
             {
                 list.Add(new { id = item.F_ItemCode, text = item.F_ItemName });
@@ -36,7 +36,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = itemsDetailApp.GetForm(keyValue);
+            var data = _itemsDetailApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -44,7 +44,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(ItemsDetailEntity itemsDetailEntity, int keyValue)
         {
-            itemsDetailApp.SubmitForm(itemsDetailEntity, keyValue);
+            _itemsDetailApp.SubmitForm(itemsDetailEntity, keyValue);
             return Success("操作成功。");
         }
         [HttpPost]
@@ -53,7 +53,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(int keyValue)
         {
-            itemsDetailApp.DeleteForm(keyValue);
+            _itemsDetailApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
     }
