@@ -54,7 +54,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = _moduleApp.GetForm(keyValue);
+            var data = _moduleApp.GetForm(keyValue.ToInt());
             return Content(data.ToJson());
         }
         [HttpPost]

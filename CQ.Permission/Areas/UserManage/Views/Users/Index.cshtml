@@ -12,46 +12,44 @@
         var $gridList = $("#gridList");
 
         $gridList.dataGrid({
-            url: "/ContentManage/Articles/GetGridJson",
+            url: "/UserManage/Users/GetGridJson",
             height: $(window).height() - 128,
             colModel: [
-                { label: '主键', name: 'F_Id', hidden: true },
+                { label: '主键', name: 'AccountID', hidden: true },
+                { label: '用户标识', name: 'AccountID', width: 80, align: 'center' },
+                { label: '游戏ID', name: 'AccountNum', width: 100, align: 'center' },
                 {
-                    label: '类型', name: 'F_ArticleType', width: 80, align: 'center',
-                    formatter: function (cellvalue, options, rowObject) {
-                        if (cellvalue === 1) {
-                            return '新闻';
-                        } else if (cellvalue === 2) {
-                            return '公告';
-                        }
+                    label: '用户帐号', name: 'AccountName', width: 100, align: 'left',
+                    formatter: function(cellvalue) {
+                        return "<a href='" + cellvalue + "' >" + cellvalue + "</a>";
                     }
                 },
+                { label: '昵称', name: 'NickName', width: 100, align: 'center' },
                 {
-                    label: '文章标题', name: 'F_ArticleTitle', width: 300, align: 'left',
+                    label: '性别', name: 'Sex', width: 60, align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
-                        if (cellvalue.length <= 10) {
-                            return cellvalue;
+                        if (cellvalue === true) {
+                            return '男';
                         } else {
-                            return cellvalue.substring(0, 9) + "...";
+                            return '女';
                         }
                     }
                 },
-                { label: '发布时间', name: 'F_PublishTime', width: 150, align: 'center' },
                 {
-                    label: "热点", name: "F_IsHot", width: 100, align: "center",
+                    label: "帐号类型", name: "AccountType", width: 100, align: "left",
                     formatter: function (cellvalue) {
-                        return cellvalue == 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        return cellvalue === 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                     }
                 },
                 {
-                    label: "有效", name: "F_EnableMark", width: 100, align: "left",
+                    label: "扩展类型", name: "AccountSecondType", width: 100, align: "left",
                     formatter: function (cellvalue) {
                         return cellvalue === 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
                     }
                 }
             ],
             pager: "#gridPager",
-            sortname: 'F_PublishTime desc',
+            sortname: 'AccountID desc',
             viewrecords: true
         });
         $("#btn_search").click(function () {

@@ -12,7 +12,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
     {
         #region 属性
 
-        UsersApp userApp = new UsersApp();
+        private readonly UsersApp _userApp = new UsersApp();
 
         #endregion
 
@@ -30,10 +30,10 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         {
             var data = new
             {
-                //rows = articleApp.GetList(pagination, keyword),
-                //total = pagination.total,
-                //page = pagination.page,
-                //records = pagination.records
+                rows = _userApp.GetList(pagination, keyword),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
             };
             return Content(data.ToJson());
         }

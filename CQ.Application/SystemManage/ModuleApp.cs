@@ -17,7 +17,7 @@ namespace CQ.Application.SystemManage
         {
             return service.IQueryable().OrderBy(t => t.F_SortCode).ToList();
         }
-        public ModuleEntity GetForm(string keyValue)
+        public ModuleEntity GetForm(int keyValue)
         {
             return service.FindEntity(keyValue);
         }

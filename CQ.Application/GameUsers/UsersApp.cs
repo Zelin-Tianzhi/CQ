@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,16 +24,16 @@ namespace CQ.Application.GameUsers
 
         #region 公共方法
 
-        public ExtList<Account> GetList(Pagination pagination, string keyword)
+        public List<Account> GetList(Pagination pagination, string keyword)
         {
+
             var expression = ExtLinq.True<Account>();
             if (!string.IsNullOrEmpty(keyword))
             {
                 expression = expression.And(t => t.AccountName.Contains(keyword));
                 expression = expression.Or(t => t.NickName.Contains(keyword));
             }
-            service.FindList(expression,pagination);
-            return null;
+            return service.FindList(expression,pagination);
         }
         
         /// <summary>
