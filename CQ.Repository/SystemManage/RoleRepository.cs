@@ -13,6 +13,10 @@ namespace CQ.Repository.SystemManage
 {
     public class RoleRepository : RepositoryBase<RoleEntity>, IRoleRepository
     {
+        public RoleRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
         public void DeleteForm(int keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())

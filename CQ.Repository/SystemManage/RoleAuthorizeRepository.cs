@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemManage
 {
     public class RoleAuthorizeRepository : RepositoryBase<RoleAuthorizeEntity>, IRoleAuthorizeRepository
     {
+        public RoleAuthorizeRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

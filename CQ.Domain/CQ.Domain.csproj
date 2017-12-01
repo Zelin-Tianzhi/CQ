@@ -66,7 +66,7 @@
     <Compile Include="03 Entity\QPAccount\BindMachine.cs" />
     <Compile Include="03 Entity\QPAccount\IPBlackList.cs" />
     <Compile Include="03 Entity\QPAccount\IPWhiteList.cs" />
-    <Compile Include="03 Entity\QPAccount\ModelTest.cs" />
+    <Compile Include="03 Entity\QPAccount\QpAccount.cs" />
     <Compile Include="03 Entity\QPAccount\OfflineMessage.cs" />
     <Compile Include="03 Entity\QPAccount\OfflineMsgBonusLog.cs" />
     <Compile Include="03 Entity\QPAccount\RbtNickName.cs" />
@@ -96,6 +96,7 @@
     <Compile Include="04 IRepository\BusinessData\IProductRepository.cs" />
     <Compile Include="04 IRepository\IRepositoryBase.cs" />
     <Compile Include="04 IRepository\IRepositoryBase.T.cs" />
+    <Compile Include="04 IRepository\QPAccount\IAccountRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IAreaRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IItemsDetailRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\IItemsRepository.cs" />

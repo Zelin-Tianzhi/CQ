@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemSecurity
 {
     public class LogRepository : RepositoryBase<LogEntity>, ILogRepository
     {
+        public LogRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

@@ -13,6 +13,10 @@ namespace CQ.Repository.SystemManage
 {
     public class UserRepository : RepositoryBase<UserEntity>, IUserRepository
     {
+        public UserRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
         public void DeleteForm(int keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())

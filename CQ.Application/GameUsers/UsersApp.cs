@@ -4,8 +4,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using CQ.Core;
 using CQ.Core.Security;
+using CQ.Domain.Entity.QPAccount;
+using CQ.Domain.IRepository.QPAccount;
 using CQ.Plugin.Cache;
 using CQ.Repository.EntityFramework;
+using CQ.Repository.QPAccount;
 
 namespace CQ.Application.GameUsers
 {
@@ -14,11 +17,23 @@ namespace CQ.Application.GameUsers
         #region 属性
 
         private DbHelper _helper = new DbHelper("QpAccount");
+        private IAccountRepository service = new AccountRepository();
 
         #endregion
 
         #region 公共方法
 
+        public ExtList<Account> GetList(Pagination pagination, string keyword)
+        {
+            var expression = ExtLinq.True<Account>();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                expression = expression.And(t => t.AccountName.Contains(keyword));
+                expression = expression.Or(t => t.NickName.Contains(keyword));
+            }
+            service.FindList(expression,pagination);
+            return null;
+        }
         
         /// <summary>
         /// 用户注册

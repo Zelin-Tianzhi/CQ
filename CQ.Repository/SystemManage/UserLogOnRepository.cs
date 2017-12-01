@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemManage
 {
     public class UserLogOnRepository : RepositoryBase<UserLogOnEntity>, IUserLogOnRepository
     {
+        public UserLogOnRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

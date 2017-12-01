@@ -13,6 +13,10 @@ namespace CQ.Repository.SystemManage
 {
     public class ModuleButtonRepository : RepositoryBase<ModuleButtonEntity>, IModuleButtonRepository
     {
+        public ModuleButtonRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
         public void SubmitCloneButton(List<ModuleButtonEntity> entitys)
         {
             using (var db = new RepositoryBase().BeginTrans())

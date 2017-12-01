@@ -14,6 +14,10 @@ namespace CQ.Repository.SystemSecurity
 {
     public class DbBackupRepository : RepositoryBase<DbBackupEntity>, IDbBackupRepository
     {
+        public DbBackupRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
         public void DeleteForm(string keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())

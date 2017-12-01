@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemManage
 {
     public class OrganizeRepository : RepositoryBase<OrganizeEntity>, IOrganizeRepository
     {
+        public OrganizeRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

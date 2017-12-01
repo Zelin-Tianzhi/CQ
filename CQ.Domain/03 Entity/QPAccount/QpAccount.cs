@@ -5,9 +5,9 @@ namespace CQ.Domain.Entity.QPAccount
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class ModelTest : DbContext
+    public partial class QpAccount : DbContext
     {
-        public ModelTest()
+        public QpAccount()
             : base("name=QpAccount")
         {
         }

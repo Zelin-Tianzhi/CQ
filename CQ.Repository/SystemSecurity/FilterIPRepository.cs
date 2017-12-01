@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemSecurity
 {
     public class FilterIPRepository : RepositoryBase<FilterIPEntity>, IFilterIPRepository
     {
+        public FilterIPRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }

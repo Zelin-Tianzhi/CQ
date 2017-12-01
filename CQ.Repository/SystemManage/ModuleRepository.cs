@@ -12,5 +12,9 @@ namespace CQ.Repository.SystemManage
 {
     public class ModuleRepository : RepositoryBase<ModuleEntity>, IModuleRepository
     {
+        public ModuleRepository()
+        {
+            dbcontext = new CqDbContext();
+        }
     }
 }
