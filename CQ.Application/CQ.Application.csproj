@@ -49,6 +49,7 @@
     <Compile Include="BusinessData\ImageApp.cs" />
     <Compile Include="BusinessData\ProductApp.cs" />
     <Compile Include="GameUsers\UsersApp.cs" />
+    <Compile Include="Infrastructure\BusinessType.cs" />
     <Compile Include="Infrastructure\DbLogType.cs" />
     <Compile Include="Infrastructure\ProcedureConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

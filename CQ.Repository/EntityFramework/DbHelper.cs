@@ -74,20 +74,40 @@ namespace CQ.Repository.EntityFramework
                  }
              }
          }
-
-        public SqlDataReader ExecuteNonQuery(string sqlText, SqlParameter[] parameters)
+        /// <summary>
+        /// 执行存储过程，返回结果集
+        /// </summary>
+        /// <param name="sqlText"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public DataTable ExecuteNonQuery(string sqlText, SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 using (SqlCommand cmd = new SqlCommand(sqlText,conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    foreach (SqlParameter parameter in parameters)
+                    try
                     {
-                        cmd.Parameters.Add(parameter);
+                        conn.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (SqlParameter parameter in parameters)
+                        {
+                            cmd.Parameters.Add(parameter);
+                        }
+                        
+                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+                        sqlDataAdapter.SelectCommand = cmd;
+                        DataSet ds = new DataSet();
+                        sqlDataAdapter.Fill(ds);
+                        DataTable dt = ds.Tables[0];
+                        return dt;
                     }
-                    var sqlReader = cmd.ExecuteReader();
-                    return sqlReader;
+                    catch (SqlException ex)
+                    {
+                        conn.Close();
+
+                        throw new Exception($"执行{sqlText}失败:{ex.Message}");
+                    }
                 }
             }
             //SqlConnection sqlconn = new SqlConnection(conn);

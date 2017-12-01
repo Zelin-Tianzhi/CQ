@@ -18,6 +18,8 @@ namespace CQ.Application.GameUsers
         #endregion
 
         #region 公共方法
+
+        
         /// <summary>
         /// 用户注册
         /// </summary>

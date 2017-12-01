@@ -30,10 +30,10 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         {
             var data = new
             {
-                rows = articleApp.GetList(pagination, keyword),
-                total = pagination.total,
-                page = pagination.page,
-                records = pagination.records
+                //rows = articleApp.GetList(pagination, keyword),
+                //total = pagination.total,
+                //page = pagination.page,
+                //records = pagination.records
             };
             return Content(data.ToJson());
         }
