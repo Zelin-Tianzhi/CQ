@@ -156,6 +156,7 @@
     <Compile Include="Areas\ExampleManage\Controllers\SendMessagesController.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\SignetController.cs" />
     <Compile Include="Areas\ExampleManage\ExampleManageAreaRegistration.cs" />
+    <Compile Include="Areas\RechargeSystem\RechargeSystemAreaRegistration.cs" />
     <Compile Include="Areas\ReportManage\Controllers\EchartsController.cs" />
     <Compile Include="Areas\ReportManage\Controllers\HighchartsController.cs" />
     <Compile Include="Areas\ReportManage\ReportManageAreaRegistration.cs" />
@@ -764,6 +765,9 @@
     <Folder Include="Areas\ContentManage\Models\" />
     <Folder Include="Areas\ContentManage\Views\Shared\" />
     <Folder Include="Areas\ExampleManage\Models\" />
+    <Folder Include="Areas\RechargeSystem\Controllers\" />
+    <Folder Include="Areas\RechargeSystem\Models\" />
+    <Folder Include="Areas\RechargeSystem\Views\Shared\" />
     <Folder Include="Areas\ReportManage\Models\" />
     <Folder Include="Areas\ReportManage\Views\Echarts\" />
     <Folder Include="Areas\ReportManage\Views\Shared\" />
@@ -921,6 +925,7 @@
     <Content Include="Content\Js\fileinput\README.md" />
     <Content Include="Areas\SystemManage\Views\User\ModifyPassword.cshtml" />
     <Content Include="Areas\UserManage\Views\web.config" />
+    <Content Include="Areas\RechargeSystem\Views\web.config" />
     <Content Include="Areas\UserManage\Views\Users\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
