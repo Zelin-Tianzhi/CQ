@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Text.RegularExpressions;
 using CQ.Core;
@@ -24,16 +25,72 @@ namespace CQ.Application.GameUsers
 
         #region 公共方法
 
-        public List<Account> GetList(Pagination pagination, string keyword)
+        public List<object> GetList(Pagination pagination, string keyword)
         {
-
-            var expression = ExtLinq.True<Account>();
+            const string sysTable = @"View_UserInfo";
+            const string sysKey = @"AccountID";
+            const string sysFields = @"*";
+            const string sysOrder = "AccountID desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.AccountName.Contains(keyword));
-                expression = expression.Or(t => t.NickName.Contains(keyword));
+                sysWhere += " and ";
+                sysWhere += " ( ";
+                sysWhere += $" AccountNum like '%{keyword}%' ";
+                sysWhere += $" or Account like '%{keyword}%' ";
+                sysWhere += $" or NickName like '%{keyword}%' ";
+                sysWhere += " ) ";
             }
-            return service.FindList(expression,pagination);
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _helper.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    AccountID = dr["AccountID"],
+                    AccountNum = dr["AccountNum"],
+                    AccountName = dr["Account"],
+                    NickName = dr["NickName"],
+                    Sex = dr["Sex"],
+                    AccountType = dr["AccountType"],
+                    AccountSecondType = dr["AccountSecondType"],
+                    Gold = dr["Gold"],
+                    GoldBank = dr["GoldBank"],
+                    TotalExp = dr["TotalExp"],
+                    LastLoginIP = dr["LastLoginIP"],
+                    LastLoginTime =dr["LastLoginTime"],
+                    RegisterAddress = dr["RegisterAddress"],
+                    RegisterDate = dr["RegisterDate"],
+                    RealName = dr["RealName"],
+                    Telephone = dr["Telephone"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            //var expression = ExtLinq.True<Account>();
+            //if (!string.IsNullOrEmpty(keyword))
+            //{
+            //    expression = expression.And(t => t.AccountName.Contains(keyword));
+            //    expression = expression.Or(t => t.NickName.Contains(keyword));
+            //}
+            return list;
         }
         
         /// <summary>
@@ -117,7 +174,7 @@ namespace CQ.Application.GameUsers
                 rows = ds.Tables[0].Rows.Count;
             } while (rows > 0);
             string upwd = "c8c8e2585e7555ee27396f4645b415ff";
-            var respson = SendRegisterRequest(uname, upwd, str, "11", "0");
+            var respson = SendRegisterRequest(uname, upwd, str, "7", "2");
             if (respson != "-1" && respson != "-3" && respson != "-999" && respson != "-404")
             {
                 string result = $"0&{uname}&{upwd}";// uname + "&" + upwd;

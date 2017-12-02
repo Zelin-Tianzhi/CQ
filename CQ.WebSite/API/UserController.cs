@@ -18,6 +18,7 @@ namespace CQ.WebSite.API
         UsersApp userApp = new UsersApp();
 
         #endregion
+
         #region 视图
 
 
@@ -25,7 +26,6 @@ namespace CQ.WebSite.API
         #endregion
 
         #region Ajax请求处理
-
         /// <summary>
         /// 用户注册
         /// </summary>
