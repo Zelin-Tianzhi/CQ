@@ -29,7 +29,7 @@ namespace CQ.Application.SystemManage
         }
         public RoleEntity GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return service.FindEntity(keyValue.ToInt());
         }
         public void DeleteForm(int keyValue)
         {

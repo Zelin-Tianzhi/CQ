@@ -33,7 +33,7 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = _articleApp.GetForm(keyValue.ToInt());
+            var data = _articleApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
 

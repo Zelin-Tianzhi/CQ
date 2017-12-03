@@ -4,6 +4,7 @@
  * Description: Tz通用权限
 *********************************************************************************/
 using System;
+using System.Collections.Generic;
 
 namespace CQ.Core
 {
@@ -20,5 +21,6 @@ namespace CQ.Core
         public bool hasChildren { get; set; }
         public string img { get; set; }
         public string title { get; set; }
+        public List<TreeViewModel> ChildrensList { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace CQ.Application.SystemManage
         }
         public ItemsDetailEntity GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return service.FindEntity(keyValue.ToInt());
         }
         public void DeleteForm(int keyValue)
         {

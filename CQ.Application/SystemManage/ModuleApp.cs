@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CQ.Core;
 using CQ.Domain.Entity.SystemManage;
 using CQ.Domain.IRepository.SystemManage;
 using CQ.Repository.SystemManage;
@@ -17,9 +18,9 @@ namespace CQ.Application.SystemManage
         {
             return service.IQueryable().OrderBy(t => t.F_SortCode).ToList();
         }
-        public ModuleEntity GetForm(int keyValue)
+        public ModuleEntity GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return service.FindEntity(keyValue.ToInt());
         }
         public void DeleteForm(int keyValue)
         {

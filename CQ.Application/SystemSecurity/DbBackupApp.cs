@@ -36,7 +36,7 @@ namespace CQ.Application.SystemSecurity
         }
         public DbBackupEntity GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return service.FindEntity(keyValue.ToInt());
         }
         public void DeleteForm(string keyValue)
         {

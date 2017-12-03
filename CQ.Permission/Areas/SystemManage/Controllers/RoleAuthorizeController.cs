@@ -17,7 +17,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 
         public ActionResult GetPermissionTree(string roleId)
         {
-            var moduledata = _moduleApp.GetList();
+            var moduledata = _moduleApp.GetList().Where(t=> t.F_EnabledMark == true).ToList();
             var buttondata = _moduleButtonApp.GetList();
             var authorizedata = new List<RoleAuthorizeEntity>();
             if (!string.IsNullOrEmpty(roleId))
@@ -45,7 +45,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             {
                 TreeViewModel tree = new TreeViewModel();
                 bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) != 0;
-                tree.id = item.F_Id.ToString();
+                tree.id = "Btn_"+ item.F_Id.ToString();
                 tree.text = item.F_FullName;
                 tree.value = item.F_EnCode;
                 tree.parentId = (item.F_ParentId == 0 ? item.F_ModuleId : item.F_ParentId).ToString();

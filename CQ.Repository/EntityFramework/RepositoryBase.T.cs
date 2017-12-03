@@ -61,7 +61,7 @@ namespace CQ.Repository.EntityFramework
         }
         public TEntity FindEntity(object keyValue)
         {
-            return dbcontext.Set<TEntity>().Find(keyValue);
+            return dbcontext.Set<TEntity>().Find(keyValue.ToInt());
         }
         public TEntity FindEntity(Expression<Func<TEntity, bool>> predicate)
         {

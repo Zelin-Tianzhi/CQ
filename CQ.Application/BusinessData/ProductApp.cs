@@ -35,9 +35,9 @@ namespace CQ.Application.BusinessData
             };
             return service.FindList(expression, pagination);
         }
-        public ProductEntity GetForm(int keyValue)
+        public ProductEntity GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return service.FindEntity(keyValue.ToInt());
         }
         public void DeleteForm(int keyValue)
         {

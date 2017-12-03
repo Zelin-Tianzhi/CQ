@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CQ.Core;
 using CQ.Domain.Entity.SystemManage;
 using CQ.Domain.IRepository.SystemManage;
 using CQ.Repository.SystemManage;
@@ -22,7 +23,7 @@ namespace CQ.Application.SystemManage
         }
         public AreaEntity GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return service.FindEntity(keyValue.ToInt());
         }
         public void DeleteForm(int keyValue)
         {

@@ -31,7 +31,7 @@ namespace CQ.WebSite.Controllers
             return Content(productEntitys.ToJson());
         }
         [HttpGet]
-        public ActionResult GetFormJson(int keyValue)
+        public ActionResult GetFormJson(string keyValue)
         {
             var data = productApp.GetForm(keyValue);
             return Content(data.ToJson());

@@ -42,7 +42,10 @@ namespace CQ.Permission
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-
+            if (filterContext.ActionDescriptor.ActionName != "CheckLogin")
+            {
+                
+            }
             base.OnActionExecuted(filterContext);
         }
     }
