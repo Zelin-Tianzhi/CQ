@@ -39,5 +39,11 @@ namespace CQ.Permission
             var action = HttpContext.Current.Request.ServerVariables["SCRIPT_NAME"];
             return new RoleAuthorizeApp().ActionValidate(roleId, moduleId, action);
         }
+
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+
+            base.OnActionExecuted(filterContext);
+        }
     }
 }

@@ -15,8 +15,8 @@
             url: "/UserManage/Users/GetGridJson",
             height: $(window).height() - 128,
             colModel: [
-                { label: '主键', name: 'AccountID', hidden: true },
-                { label: '用户标识', name: 'AccountID', width: 80, align: 'center' },
+                { label: '主键', name: 'F_ID', hidden: true },
+                { label: '用户标识', name: 'F_ID', width: 80, align: 'center' },
                 { label: '游戏ID', name: 'AccountNum', width: 100, align: 'center' },
                 {
                     label: '用户帐号', name: 'AccountName', width: 100, align: 'left',
@@ -72,7 +72,7 @@
         });
     }
     function btn_edit() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+        var keyValue = $("#gridList").jqGridRowValue().F_ID;
         $.modalOpen({
             id: "Form",
             title: "修改文章",
@@ -87,7 +87,7 @@
     function btn_delete() {
         $.deleteForm({
             url: "/ContentManage/Articles/DeleteForm",
-            param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
+            param: { keyValue: $("#gridList").jqGridRowValue().F_ID },
             success: function () {
                 $.currentWindow().$("#gridList").trigger("reloadGrid");
             }

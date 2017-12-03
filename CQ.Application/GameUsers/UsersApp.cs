@@ -65,7 +65,7 @@ namespace CQ.Application.GameUsers
             {
                 list.Add(new
                 {
-                    AccountID = dr["AccountID"],
+                    F_ID = dr["AccountID"],
                     AccountNum = dr["AccountNum"],
                     AccountName = dr["Account"],
                     NickName = dr["NickName"],
