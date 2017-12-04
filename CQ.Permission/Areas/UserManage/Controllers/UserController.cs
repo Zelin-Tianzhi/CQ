@@ -8,7 +8,7 @@ using CQ.Core;
 
 namespace CQ.Permission.Areas.UserManage.Controllers
 {
-    public class UsersController : BaseController
+    public class UserController : BaseController
     {
         #region 属性
 
@@ -49,6 +49,12 @@ namespace CQ.Permission.Areas.UserManage.Controllers
                 records = pagination.records
             };
             return Content(data.ToJson());
+        }
+
+        public ActionResult SubmitModifyNickName(string nickname, string keyValue)
+        {
+
+            return Success("");
         }
 
         #endregion

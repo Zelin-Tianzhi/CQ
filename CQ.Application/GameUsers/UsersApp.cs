@@ -86,6 +86,26 @@ namespace CQ.Application.GameUsers
             pagination.records = parameters[9].Value.ToInt();
             return list;
         }
+        /// <summary>
+        /// 修改昵称
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <param name="keyValue"></param>
+        /// <returns></returns>
+        public string ModifyNickName(string nickname, string keyValue)
+        {
+            string url = GetUrlStr()+ $"function=changenicheng&account={keyValue}&nicheng={nickname}";
+            string msg = HttpMethods.HttpGet(url);
+            Regex rex = new Regex(@"(-\d+|\d+)<");
+            int result = 0;
+            string respson = rex.Match(msg).Groups[1].Value;
+            return respson;
+        }
+
+        public void ModifyGold()
+        {
+            
+        }
         
         /// <summary>
         /// 用户注册
@@ -206,10 +226,7 @@ namespace CQ.Application.GameUsers
 
         #region 私有方法
         
-        /// <summary>
-        /// 获取新的用户编号
-        /// </summary>
-        /// <returns></returns>
+        
         long GetMaxUserNum()
         {
             bool flag = false;

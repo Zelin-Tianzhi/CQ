@@ -176,7 +176,7 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
-    <Compile Include="Areas\UserManage\Controllers\UsersController.cs" />
+    <Compile Include="Areas\UserManage\Controllers\UserController.cs" />
     <Compile Include="Areas\UserManage\UserManageAreaRegistration.cs" />
     <Compile Include="Content\Js\FileUpload\UploadFile.ashx.cs">
       <DependentUpon>UploadFile.ashx</DependentUpon>
@@ -927,11 +927,11 @@
     <Content Include="Areas\SystemManage\Views\User\ModifyPassword.cshtml" />
     <Content Include="Areas\UserManage\Views\web.config" />
     <Content Include="Areas\RechargeSystem\Views\web.config" />
-    <Content Include="Areas\UserManage\Views\Users\Index.cshtml" />
-    <Content Include="Areas\UserManage\Views\Users\Form.cshtml" />
-    <Content Include="Areas\UserManage\Views\Users\ModifyNickName.cshtml" />
-    <Content Include="Areas\UserManage\Views\Users\RevisePassword.cshtml" />
-    <Content Include="Areas\UserManage\Views\Users\ModifyUserGold.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\Index.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\Form.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\ModifyNickName.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\RevisePassword.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\ModifyUserGold.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
