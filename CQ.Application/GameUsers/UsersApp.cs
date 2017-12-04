@@ -97,12 +97,11 @@ namespace CQ.Application.GameUsers
             string url = GetUrlStr()+ $"function=changenicheng&account={keyValue}&nicheng={nickname}";
             string msg = HttpMethods.HttpGet(url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
-            int result = 0;
             string respson = rex.Match(msg).Groups[1].Value;
             return respson;
         }
 
-        public void ModifyGold()
+        public void ModifyGold(int gold, string keyValue)
         {
             
         }
