@@ -931,6 +931,7 @@
     <Content Include="Areas\UserManage\Views\Users\Form.cshtml" />
     <Content Include="Areas\UserManage\Views\Users\ModifyNickName.cshtml" />
     <Content Include="Areas\UserManage\Views\Users\RevisePassword.cshtml" />
+    <Content Include="Areas\UserManage\Views\Users\ModifyUserGold.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
