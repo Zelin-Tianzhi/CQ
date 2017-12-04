@@ -20,25 +20,25 @@
         }
     });
     function initControl() {
-        $("#F_Gender").bindSelect()
-        $("#F_IsAdministrator").bindSelect()
-        $("#F_EnabledMark").bindSelect()
-        $("#F_OrganizeId").bindSelect({
-            url: "/SystemManage/Organize/GetTreeSelectJson"
-        });
-        $("#F_DepartmentId").bindSelect({
-            url: "/SystemManage/Organize/GetTreeSelectJson",
-        });
+        //$("#F_Gender").bindSelect()
+        //$("#F_IsAdministrator").bindSelect()
+        //$("#F_EnabledMark").bindSelect()
+        //$("#F_OrganizeId").bindSelect({
+        //    url: "/SystemManage/Organize/GetTreeSelectJson"
+        //});
+        //$("#F_DepartmentId").bindSelect({
+        //    url: "/SystemManage/Organize/GetTreeSelectJson",
+        //});
         $("#F_RoleId").bindSelect({
             url: "/SystemManage/Role/GetGridJson",
             id: "F_Id",
             text: "F_FullName"
         });
-        $("#F_DutyId").bindSelect({
-            url: "/SystemManage/Duty/GetGridJson",
-            id: "F_Id",
-            text: "F_FullName"
-        });
+        //$("#F_DutyId").bindSelect({
+        //    url: "/SystemManage/Duty/GetGridJson",
+        //    id: "F_Id",
+        //    text: "F_FullName"
+        //});
     }
     function submitForm() {
         if (!$('#form1').formValid()) {
@@ -66,23 +66,26 @@
                     <td class="formValue">
                         <input id="F_Account" name="F_Account" type="text" class="form-control required" placeholder="请输入账户" />
                     </td>
+                    
+                </tr>
+                <tr>
                     <th class="formTitle">密码</th>
                     <td class="formValue">
                         <input id="F_UserPassword" name="F_UserPassword" type="password" class="form-control required" placeholder="请输入密码" />
                     </td>
                 </tr>
-                <tr>
+                @*<tr>
                     <th class="formTitle">公司</th>
                     <td class="formValue">
-                        <select id="F_OrganizeId" name="F_OrganizeId" class="form-control required"></select>
+                        <select id="F_OrganizeId" name="F_OrganizeId" class="form-control"></select>
                     </td>
                     <th class="formTitle">部门</th>
                     <td class="formValue">
-                        <select id="F_DepartmentId" name="F_DepartmentId" class="form-control required">
+                        <select id="F_DepartmentId" name="F_DepartmentId" class="form-control">
                             <option value="">==请选择==</option>
                         </select>
                     </td>
-                </tr>
+                </tr>*@
                 <tr>
                     <th class="formTitle">角色</th>
                     <td class="formValue">
@@ -90,18 +93,22 @@
                             <option value="">==请选择==</option>
                         </select>
                     </td>
-                    <th class="formTitle">岗位</th>
+                    
+                    @*<th class="formTitle">岗位</th>
                     <td class="formValue">
-                        <select id="F_DutyId" name="F_DutyId" class="form-control required">
+                        <select id="F_DutyId" name="F_DutyId" class="form-control">
                             <option value="">==请选择==</option>
                         </select>
-                    </td>
+                    </td>*@
                 </tr>
                 <tr>
                     <th class="formTitle">姓名</th>
                     <td class="formValue">
                         <input id="F_RealName" name="F_RealName" type="text" class="form-control required" placeholder="请输入姓名" />
                     </td>
+                </tr>
+                @*<tr>
+                    
                     <th class="formTitle">性别</th>
                     <td class="formValue">
                         <select id="F_Gender" name="F_Gender" class="form-control required">
@@ -109,8 +116,8 @@
                             <option value="false">女</option>
                         </select>
                     </td>
-                </tr>
-                <tr>
+                </tr>*@
+                @*<tr>
                     <th class="formTitle">手机</th>
                     <td class="formValue">
                         <input id="F_MobilePhone" name="F_MobilePhone" type="text" class="form-control" />
@@ -129,15 +136,8 @@
                     <td class="formValue">
                         <input id="F_Email" name="F_Email" type="text" class="form-control" />
                     </td>
-                </tr>
+                </tr>*@
                 <tr>
-                    <th class="formTitle">类型</th>
-                    <td class="formValue">
-                        <select id="F_IsAdministrator" name="F_IsAdministrator" class="form-control">
-                            <option value="false">普通用户</option>
-                            <option value="true">系统管理员</option>
-                        </select>
-                    </td>
                     <th class="formTitle">允许登录</th>
                     <td class="formValue">
                         <select id="F_EnabledMark" name="F_EnabledMark" class="form-control">
@@ -150,7 +150,7 @@
                     <th class="formTitle" valign="top" style="padding-top: 5px;">
                         备注
                     </th>
-                    <td class="formValue" colspan="3">
+                    <td class="formValue" >
                         <textarea id="F_Description" name="F_Description" class="form-control" style="height: 60px;"></textarea>
                     </td>
                 </tr>

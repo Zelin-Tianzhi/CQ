@@ -18,7 +18,20 @@ namespace CQ.Permission.Areas.UserManage.Controllers
 
         #region 视图
 
+        public ActionResult ModifyNickName()
+        {
+            return View();
+        }
 
+        public ActionResult RevisePassword()
+        {
+            return View();
+        }
+
+        public ActionResult ModifyUserGold()
+        {
+            return View();
+        }
 
         #endregion
 

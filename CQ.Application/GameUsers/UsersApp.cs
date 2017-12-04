@@ -84,12 +84,6 @@ namespace CQ.Application.GameUsers
                 });
             }
             pagination.records = parameters[9].Value.ToInt();
-            //var expression = ExtLinq.True<Account>();
-            //if (!string.IsNullOrEmpty(keyword))
-            //{
-            //    expression = expression.And(t => t.AccountName.Contains(keyword));
-            //    expression = expression.Or(t => t.NickName.Contains(keyword));
-            //}
             return list;
         }
         

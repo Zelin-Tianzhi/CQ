@@ -58,7 +58,7 @@ namespace CQ.Application.SystemManage
             List<ModuleButtonEntity> entitys = new List<ModuleButtonEntity>();
             foreach (string item in ArrayId)
             {
-                ModuleButtonEntity moduleButtonEntity = data.Find(t => t.F_Id == item.ToInt64());
+                ModuleButtonEntity moduleButtonEntity = data.Find(t => t.F_Id == item.Split('-')[1].ToInt64());
                 moduleButtonEntity.F_ModuleId = moduleId;
                 entitys.Add(moduleButtonEntity);
             }

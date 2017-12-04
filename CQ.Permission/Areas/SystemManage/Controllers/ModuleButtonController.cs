@@ -80,7 +80,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetCloneButtonTreeJson()
         {
-            var moduledata = _moduleApp.GetList();
+            var moduledata = _moduleApp.GetList().Where(t=> t.F_EnabledMark == true).ToList();
             var buttondata = _moduleButtonApp.GetList();
             var treeList = (from item in moduledata
                 let hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) != 0
@@ -99,7 +99,7 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
                 bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) != 0;
                 TreeViewModel tree = new TreeViewModel
                 {
-                    id = item.F_Id.ToString(),
+                    id = "Btn_"+ item.F_Id.ToString(),
                     text = item.F_FullName,
                     value = item.F_EnCode,
                     parentId = item.F_ParentId == 0 ? item.F_ModuleId.ToString() : item.F_ParentId.ToString(),
