@@ -133,8 +133,8 @@ namespace CQ.Application.GameUsers
             {
                 data.Response = msg;
             }
-
-            return null;
+            data.Response = msg;
+            return data;
         }
         /// <summary>
         /// 修改昵称

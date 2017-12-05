@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="bin\Debug\Configs\autofac.json" />
+    <None Include="bin\Debug\Configs\database.config" />
+    <None Include="bin\Debug\Configs\log4net.config" />
     <None Include="Configs\log4net.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -84,6 +87,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Configs\GlobConfig.xml" />
     <Content Include="Configs\GlobConfig.xml" />
   </ItemGroup>
   <ItemGroup />
