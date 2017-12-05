@@ -24,13 +24,13 @@ namespace CQ.WebSiteTests
         }
 
         [TestMethod]
-        public void TestYS()
+        public void TestYs()
         {
-            Regex rex = new Regex("^[A-Za-z0-9_][A-Za-z0-9_]*$");
-            if (rex.IsMatch("123123adjfhak"))
-            {
+            string url = "http://115.238.87.114:11004/flop.cpp?ysfunction=getuserdata&account=wwj001";
 
-            }
+            var aa = new {Result = "Success", data = new { }};
+            var temp = HttpMethods.HttpGet(url, Encoding.Default);
+            Console.WriteLine(aa);
         }
     }
 }

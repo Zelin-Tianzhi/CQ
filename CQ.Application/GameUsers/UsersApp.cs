@@ -18,13 +18,18 @@ namespace CQ.Application.GameUsers
     {
         #region 属性
 
-        private DbHelper _helper = new DbHelper("QpAccount");
-        private IAccountRepository service = new AccountRepository();
+        private readonly DbHelper _qpAccount = new DbHelper("QpAccount");
+        private readonly DbHelper _qpLogTotal = new DbHelper("QPLogTotal");
 
         #endregion
 
         #region 公共方法
-
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="pagination"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
         public List<object> GetList(Pagination pagination, string keyword)
         {
             const string sysTable = @"View_UserInfo";
@@ -59,7 +64,7 @@ namespace CQ.Application.GameUsers
             };
             parameters[8].Direction = ParameterDirection.Output;
             parameters[9].Direction = ParameterDirection.Output;
-            var dataTable = _helper.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var dataTable = _qpAccount.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
             var list = new List<object>();
             foreach (DataRow dr in dataTable.Rows)
             {
@@ -80,11 +85,56 @@ namespace CQ.Application.GameUsers
                     RegisterAddress = dr["RegisterAddress"],
                     RegisterDate = dr["RegisterDate"],
                     RealName = dr["RealName"],
-                    Telephone = dr["Telephone"]
+                    Telephone = dr["Telephone"],
+                    UnfreezeDate = dr["UnfreezeDate"]
                 });
             }
             pagination.records = parameters[9].Value.ToInt();
             return list;
+        }
+
+        public object GetForm(string keyValue)
+        {
+            dynamic data = new { };
+            string sql = $"select * from View_UserInfo where account='{keyValue}'";
+            DataSet ds = _qpAccount.GetDataTablebySql(sql);
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow dr = ds.Tables[0].Rows[0];
+
+
+                data.F_ID = dr["AccountID"];
+                data.AccountNum = dr["AccountNum"];
+                data.AccountName = dr["Account"];
+                data.NickName = dr["NickName"];
+                data.Sex = dr["Sex"];
+                data.AccountType = dr["AccountType"];
+                data.AccountSecondType = dr["AccountSecondType"];
+                data.Gold = dr["Gold"];
+                data.GoldBank = dr["GoldBank"];
+                data.TotalExp = dr["TotalExp"];
+                data.LastLoginIP = dr["LastLoginIP"];
+                data.LastLoginTime = dr["LastLoginTime"];
+                data.RegisterAddress = dr["RegisterAddress"];
+                data.RegisterDate = dr["RegisterDate"];
+                data.RealName = dr["RealName"];
+                data.Telephone = dr["Telephone"];
+                data.UnfreezeDate = dr["UnfreezeDate"];
+
+            }
+            string url = GetUrlStr() + $"ysfunction=getuserdata&account={keyValue}";
+            string msg = HttpMethods.HttpGet(url,Encoding.Default);
+            if (msg != "用户不在线" && msg != "帐号不存在")
+            {
+                string[] userInfo = msg.Split(',');
+                //TODO:查询用户详细信息
+            }
+            else
+            {
+                data.Response = msg;
+            }
+
+            return null;
         }
         /// <summary>
         /// 修改昵称
@@ -94,18 +144,87 @@ namespace CQ.Application.GameUsers
         /// <returns></returns>
         public string ModifyNickName(string nickname, string keyValue)
         {
-            string url = GetUrlStr()+ $"function=changenicheng&account={keyValue}&nicheng={nickname}";
+            string url = GetUrlStr()+ $"ysfunction=changenicheng&account={keyValue}&nicheng={nickname}";
             string msg = HttpMethods.HttpGet(url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
-            string respson = rex.Match(msg).Groups[1].Value;
-            return respson;
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
+        }
+        /// <summary>
+        /// 增减用户金币
+        /// </summary>
+        /// <param name="gold"></param>
+        /// <param name="keyValue"></param>
+        /// <returns></returns>
+        public string ModifyGold(int gold, string keyValue)
+        {
+            string func = string.Empty;
+            if (gold > 0)
+            {
+                func = $"ysfunction=chongzhijinbi&account={keyValue}&values={gold}&nosendmail={1}";
+            }
+            else
+            {
+                 func = $"ysfunction=kouchujinbi&account={keyValue}&values={gold}&nosendmail={1}";
+            }
+            string url = GetUrlStr() + func;
+            string msg = HttpMethods.HttpGet(url);
+            Regex rex = new Regex(@"(-\d+|\d+)<");
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
+        }
+        /// <summary>
+        /// 重置登录密码
+        /// </summary>
+        /// <param name="keyValue"></param>
+        /// <param name="pwd"></param>
+        /// <param name="oldpwd"></param>
+        /// <returns></returns>
+        /// c8c8e2585e7555ee27396f4645b415ff （123456密文）
+        public string RevisePassword(string keyValue,string pwd, string oldpwd)
+        {
+            string url = GetUrlStr() + $"ysfunction=changepwd&account={keyValue}&password={pwd}&oldpassword={oldpwd}";
+            string msg = HttpMethods.HttpGet(url);
+            Regex rex = new Regex(@"(-\d+|\d+)<");
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
+        }
+        /// <summary>
+        /// 重置银行密码
+        /// </summary>
+        /// <param name="keyValue"></param>
+        /// <returns></returns>
+        public string ReviseBankPassword(string keyValue)
+        {
+            string url = GetUrlStr() + $"ysfunction=resetbankpwd&account={keyValue}";
+            string msg = HttpMethods.HttpGet(url);
+            Regex rex = new Regex(@"(-\d+|\d+)<");
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
+        }
+        /// <summary>
+        /// 踢出游戏
+        /// </summary>
+        /// <param name="keyValue"></param>
+        /// <param name="nonotify">0:发送通知，1：不发送通知</param>
+        /// <returns></returns>
+        public string GetOutGame(string keyValue, int nonotify)
+        {
+            string url = GetUrlStr() + $"ysfunction=tuser&account={keyValue}&nonotify={nonotify}";
+            string msg = HttpMethods.HttpGet(url);
+            Regex rex = new Regex(@"(-\d+|\d+)<");
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
         }
 
-        public void ModifyGold(int gold, string keyValue)
+        public string LockUser(string keyValue, long minute, string message)
         {
-            
+            string url = GetUrlStr() + $"ysfunction=tuser&account={keyValue}&minutes={minute}&message={message}";
+            string msg = HttpMethods.HttpGet(url);
+            Regex rex = new Regex(@"(-\d+|\d+)<");
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
         }
-        
         /// <summary>
         /// 用户注册
         /// </summary>
@@ -128,8 +247,8 @@ namespace CQ.Application.GameUsers
             byte[] mingwen = YSEncrypt.DecryptData(inputByteArray);
             string str = Encoding.ASCII.GetString(mingwen);
 
-            var respson = SendRegisterRequest(username, userpwd, str,"11","0");
-            return respson;
+            var response = SendRegisterRequest(username, userpwd, str,"11","0");
+            return response;
         }
         /// <summary>
         /// 游客登录
@@ -165,11 +284,11 @@ namespace CQ.Application.GameUsers
                     m++;
                 }
             }
-            DataSet ds = _helper.GetDataTablebySql(sql);
+            DataSet ds = _qpAccount.GetDataTablebySql(sql);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 sql = $"select * from account where AccountID={ds.Tables[0].Rows[0]["AccountID"]}";
-                DataSet accountDs = _helper.GetDataTablebySql(sql);
+                DataSet accountDs = _qpAccount.GetDataTablebySql(sql);
                 string username = accountDs.Tables[0].Rows[0]["Account"].ToString();
                 string pwd = accountDs.Tables[0].Rows[0]["Password"].ToString();
                 string result = "99&" + username + "&" + pwd;
@@ -183,12 +302,12 @@ namespace CQ.Application.GameUsers
             {
                 uname = BuildAccount();
                 sql = $"select * from account where account='{uname}'";
-                ds = _helper.GetDataTablebySql(sql);
+                ds = _qpAccount.GetDataTablebySql(sql);
                 rows = ds.Tables[0].Rows.Count;
             } while (rows > 0);
             string upwd = "c8c8e2585e7555ee27396f4645b415ff";
-            var respson = SendRegisterRequest(uname, upwd, str, "7", "2");
-            if (respson != "-1" && respson != "-3" && respson != "-999" && respson != "-404")
+            var response = SendRegisterRequest(uname, upwd, str, "7", "2");
+            if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
                 string result = $"0&{uname}&{upwd}";// uname + "&" + upwd;
                 byte[] bytes1 = Encoding.ASCII.GetBytes(result);
@@ -197,7 +316,7 @@ namespace CQ.Application.GameUsers
             }
             else
             {
-                string result = respson;
+                string result = response;
                 byte[] bytes1 = Encoding.ASCII.GetBytes(result);
                 byte[] bytes2 = YSEncrypt.EncryptFishFile(bytes1);
                 return string.Join(",", bytes2);
@@ -210,8 +329,8 @@ namespace CQ.Application.GameUsers
         /// <returns></returns>
         public bool UserNameIsExist(string username)
         {
-            string sql = string.Format("select * from account where account='{0}'", username);
-            DataSet ds = _helper.GetDataTablebySql(sql);
+            string sql = $"select * from account where account='{username}'";
+            DataSet ds = _qpAccount.GetDataTablebySql(sql);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 return true;
@@ -237,7 +356,7 @@ namespace CQ.Application.GameUsers
                 if (maxNum == null)
                 {
                     string maxUserIdSql = "select max(accountnum) from account";
-                    DataSet dsMaxNum = _helper.GetDataTablebySql(maxUserIdSql);
+                    DataSet dsMaxNum = _qpAccount.GetDataTablebySql(maxUserIdSql);
                     if (dsMaxNum.Tables[0].Rows.Count > 0)
                     {
                         maxNum = dsMaxNum.Tables[0].Rows[0][0].ToInt() + 1;
@@ -252,7 +371,7 @@ namespace CQ.Application.GameUsers
                     }
                     //用户num是否存在
                     string sql = $"select accountid from account where AccountNum='{maxNum}'";
-                    DataSet dsIsExist = _helper.GetDataTablebySql(sql);
+                    DataSet dsIsExist = _qpAccount.GetDataTablebySql(sql);
                     if (dsIsExist.Tables[0].Rows.Count > 0)
                     {
                         flag = true;
@@ -382,8 +501,8 @@ namespace CQ.Application.GameUsers
             string msg = HttpMethods.HttpGet(Url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
             int result = 0;
-            string respson = rex.Match(msg).Groups[1].Value;
-            return respson;
+            string response = rex.Match(msg).Groups[1].Value;
+            return response;
         }
         #endregion
     }

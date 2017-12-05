@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CQ.Application.GameUsers;
@@ -33,6 +34,11 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             return View();
         }
 
+        public ActionResult DisableUser()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Ajac请求
@@ -51,12 +57,79 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             return Content(data.ToJson());
         }
 
-        public ActionResult SubmitModifyNickName(string nickname, string keyValue)
+        public ActionResult GetFormJson(string keyValue)
         {
-
+            Regex accountRex = new Regex("^[A-Za-z0-9_][A-Za-z0-9_]*$");
+            if (!accountRex.IsMatch(keyValue))
+            {
+                return Content((new {Result = "Error", Msg="帐号错误", data = new { }}).ToJson());
+            }
+            var data = _userApp.GetForm(keyValue);
+            return Content("");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitModifyNickName(string nickName, string keyValue)
+        {
+            string result = _userApp.ModifyNickName(nickName, keyValue);
             return Success("");
         }
-
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitRevisePassword(string keyValue)
+        {
+            string result = _userApp.RevisePassword(keyValue, "", "");
+            return Success("");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitModifyJinBi(string keyValue, string num = "0")
+        {
+            string result = _userApp.ModifyGold(num.ToInt(), keyValue);
+            return Success("");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitReviseBankPassword(string keyValue)
+        {
+            string result = _userApp.ReviseBankPassword(keyValue);
+            return Success("");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitGetOut(string keyValue)
+        {
+            string result = _userApp.GetOutGame(keyValue, 1);
+            return Success("");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitEnabled(string keyValue)
+        {
+            string result = _userApp.LockUser(keyValue, 0, "");
+            return Success("");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitDisabled(string keyValue, string hj, string message)
+        {
+            string result = _userApp.LockUser(keyValue, hj.ToInt64(), message);
+            return Success("");
+        }
         #endregion
     }
 }

@@ -202,6 +202,7 @@
     <Content Include="App_Data\CQBase2017-11-25.sql" />
     <Content Include="App_Data\CQBase_Change2017-11-10.sql" />
     <Content Include="App_Data\用户信息查询2017-12-2.sql" />
+    <Content Include="Configs\GlobConfig.xml" />
     <Content Include="Content\Css\framework-about.css" />
     <Content Include="Content\Css\framework-font.css" />
     <Content Include="Content\Css\framework-login.css" />
@@ -932,6 +933,8 @@
     <Content Include="Areas\UserManage\Views\User\ModifyNickName.cshtml" />
     <Content Include="Areas\UserManage\Views\User\RevisePassword.cshtml" />
     <Content Include="Areas\UserManage\Views\User\ModifyUserGold.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\DisableUser.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\Details.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

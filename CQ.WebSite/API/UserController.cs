@@ -49,14 +49,14 @@ namespace CQ.WebSite.API
             }
 
             int result = 0;
-            string respson = userApp.MemberRegister(username, userpwd, verify);
-            if (respson != "-1" && respson != "-3" && respson != "-999" && respson != "-404")
+            string response = userApp.MemberRegister(username, userpwd, verify);
+            if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
                 result = 0;
             }
             else
             {
-                result = respson.ToInt();
+                result = response.ToInt();
             }
             return Json(result);
 

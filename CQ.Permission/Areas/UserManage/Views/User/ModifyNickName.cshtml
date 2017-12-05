@@ -5,21 +5,22 @@
 }
 <script>
     var keyValue = $.request("keyValue");
+    var account = $.request('account');
     $(function () {
-        $("#F_Account").val($.request('account'));
+        $("#F_Account").val(account);
     });
     function submitForm() {
         if (!$('#form1').formValid()) {
             return false;
         }
         var postData = $("#form1").formSerialize();
-        postData["userPassword"] = $("#F_UserPassword").val();
-        postData["keyValue"] = keyValue;
+        postData["nickName"] = $("#F_NickName").val();
+        postData["keyValue"] = account;
         $.submitForm({
-            url: "/SystemManage/User/SubmitRevisePassword",
+            url: "/UserManage/User/SubmitModifyNickName",
             param: postData,
             success: function () {
-                $.loading(false)
+                $.loading(false);
             }
         })
     }
@@ -36,7 +37,7 @@
             <tr>
                 <th class="formTitle">昵称</th>
                 <td class="formValue">
-                    <input id="F_RealName" name="F_RealName" readonly type="text" class="form-control" />
+                    <input id="F_NickName" name="F_NickName" type="text" class="form-control required" />
                 </td>
             </tr>
         </table>
