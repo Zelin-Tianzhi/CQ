@@ -160,6 +160,8 @@
     <Compile Include="Areas\ReportManage\Controllers\EchartsController.cs" />
     <Compile Include="Areas\ReportManage\Controllers\HighchartsController.cs" />
     <Compile Include="Areas\ReportManage\ReportManageAreaRegistration.cs" />
+    <Compile Include="Areas\SystemConfig\Controllers\RoomAiController.cs" />
+    <Compile Include="Areas\SystemConfig\SystemConfigAreaRegistration.cs" />
     <Compile Include="Areas\SystemManage\Controllers\AreaController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\DutyController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\ItemsDataController.cs" />
@@ -773,6 +775,8 @@
     <Folder Include="Areas\ReportManage\Models\" />
     <Folder Include="Areas\ReportManage\Views\Echarts\" />
     <Folder Include="Areas\ReportManage\Views\Shared\" />
+    <Folder Include="Areas\SystemConfig\Models\" />
+    <Folder Include="Areas\SystemConfig\Views\Shared\" />
     <Folder Include="Areas\SystemManage\Models\" />
     <Folder Include="Areas\SystemManage\Views\RoleAuthorize\" />
     <Folder Include="Areas\SystemManage\Views\Shared\" />
@@ -935,6 +939,9 @@
     <Content Include="Areas\UserManage\Views\User\ModifyUserGold.cshtml" />
     <Content Include="Areas\UserManage\Views\User\DisableUser.cshtml" />
     <Content Include="Areas\UserManage\Views\User\Details.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\web.config" />
+    <Content Include="Areas\SystemConfig\Views\RoomAi\Form.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\RoomAi\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
