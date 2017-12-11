@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<configuration>
+  <aqiuUrl url="http://115.238.87.114:11004/flop.cpp?"></aqiuUrl>
+  <oldPropID val="12082301"></oldPropID>
+  <newPropID val="12082302"></newPropID>
+
+  <TermGameList>
+    <game ID="4" Name="二人麻将" Conn="QPLog_Baccarat" DjPeople="2" roomId="461|快速夺金,462|高手夺金,463|高级场" />
+    <game ID="11" Name="三人斗地主" Conn="QPLog_Baccarat" DjPeople="3" roomId="1161|快速夺金,1162|高手夺金,1163|高级场,1164|颐高杯预赛,1165|颐高杯决赛" />
+    <game ID="24" Name="二人斗地主" Conn="QPLog_Baccarat" DjPeople="2" roomId="1161|快速夺金,1162|高手夺金,1163|高级场,1164|颐高杯预赛,1165|颐高杯决赛" />
+  </TermGameList>
+
+  <LockUserMassage>
+    <Massage ID="1" text="Ip地址" />
+    <Massage ID="2" text="Mac地址" />
+    <Massage ID="3" text="交易行为" />
+    <Massage ID="4" text="游戏行为" />
+
+    <MassageItem PID="1" text="同IP地址单位时间内登陆过频繁" />
+    <MassageItem PID="1" text="同IP注册账号过多" />
+    <MassageItem PID="1" text="同IP交易次数异常" />
+
+    <MassageItem PID="2" text="同MAC地址单位时间内登陆过频繁" />
+    <MassageItem PID="2" text="同MAC注册账号过多" />
+    <MassageItem PID="2" text="同MAC交易次数异常" />
+
+    <MassageItem PID="3" text="不公正交易或被举报且已查证属实" />
+    <MassageItem PID="3" text="交易过于频繁或被举报且已查证属实" />
+
+    <MassageItem PID="4" text="中途离开、挂机或被举报且已查证属实" />
+    <MassageItem PID="4" text="使用第三方软件破坏游戏公正" />
+    <MassageItem PID="4" text="非正常方式引起游戏数据异常" />
+    <MassageItem PID="4" text="账号用户信息异常或被举报且已查证属实" />
+    <MassageItem PID="4" text="违反国家法律法规" />
+    <MassageItem PID="4" text="散播不良信息或被举报且已查证属实" />
+  </LockUserMassage>
+
+</configuration>
