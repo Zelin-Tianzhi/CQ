@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CQ.Application.SystemConfig;
+using CQ.Core;
 
 namespace CQ.Permission.Areas.SystemConfig.Controllers
 {
@@ -10,7 +12,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
     {
         #region 属性
 
-
+        private readonly RobotApp _robotApp = new RobotApp();
 
         #endregion
 
@@ -22,7 +24,17 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
 
         #region Ajax请求
 
-        
+        public ActionResult GetGridJson(Pagination pagination, string keyValue)
+        {
+            var data = new
+            {
+                rows = _robotApp.GetRoomList(pagination, keyValue),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
 
         #endregion
     }

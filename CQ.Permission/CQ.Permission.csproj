@@ -942,6 +942,7 @@
     <Content Include="Areas\SystemConfig\Views\web.config" />
     <Content Include="Areas\SystemConfig\Views\RoomAi\Form.cshtml" />
     <Content Include="Areas\SystemConfig\Views\RoomAi\Index.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\RoomAi\Details.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />
