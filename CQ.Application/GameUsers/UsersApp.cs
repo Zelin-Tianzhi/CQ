@@ -95,35 +95,37 @@ namespace CQ.Application.GameUsers
 
         public object GetForm(string keyValue)
         {
-            dynamic data = new { };
+            
             string sql = $"select * from View_UserInfo where account='{keyValue}'";
             DataSet ds = _qpAccount.GetDataTablebySql(sql);
-            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            if (!(ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0))
             {
-                DataRow dr = ds.Tables[0].Rows[0];
-
-
-                data.F_ID = dr["AccountID"];
-                data.AccountNum = dr["AccountNum"];
-                data.AccountName = dr["Account"];
-                data.NickName = dr["NickName"];
-                data.Sex = dr["Sex"];
-                data.AccountType = dr["AccountType"];
-                data.AccountSecondType = dr["AccountSecondType"];
-                data.Gold = dr["Gold"];
-                data.GoldBank = dr["GoldBank"];
-                data.TotalExp = dr["TotalExp"];
-                data.LastLoginIP = dr["LastLoginIP"];
-                data.LastLoginTime = dr["LastLoginTime"];
-                data.RegisterAddress = dr["RegisterAddress"];
-                data.RegisterDate = dr["RegisterDate"];
-                data.RealName = dr["RealName"];
-                data.Telephone = dr["Telephone"];
-                data.UnfreezeDate = dr["UnfreezeDate"];
-
+                return null;
             }
+            DataRow dr = ds.Tables[0].Rows[0];
             string url = GetUrlStr() + $"ysfunction=getuserdata&account={keyValue}";
-            string msg = HttpMethods.HttpGet(url,Encoding.Default);
+            string msg = HttpMethods.HttpGet(url, Encoding.Default);
+            object data = new
+            {
+                F_ID = dr["AccountID"],
+                AccountNum = dr["AccountNum"],
+                AccountName = dr["Account"],
+                NickName = dr["NickName"],
+                Sex = dr["Sex"],
+                AccountType = dr["AccountType"],
+                AccountSecondType = dr["AccountSecondType"],
+                Gold = dr["Gold"],
+                GoldBank = dr["GoldBank"],
+                TotalExp = dr["TotalExp"],
+                LastLoginIP = dr["LastLoginIP"],
+                LastLoginTime = dr["LastLoginTime"],
+                RegisterAddress = dr["RegisterAddress"],
+                RegisterDate = dr["RegisterDate"],
+                RealName = dr["RealName"],
+                Telephone = dr["Telephone"],
+                UnfreezeDate = dr["UnfreezeDate"],
+                Response = msg
+            };
             if (msg != "用户不在线" && msg != "帐号不存在")
             {
                 string[] userInfo = msg.Split(',');
@@ -131,9 +133,8 @@ namespace CQ.Application.GameUsers
             }
             else
             {
-                data.Response = msg;
+                
             }
-            data.Response = msg;
             return data;
         }
         /// <summary>

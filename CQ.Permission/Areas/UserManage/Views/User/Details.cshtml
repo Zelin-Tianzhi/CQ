@@ -13,6 +13,10 @@
             async: false,
             success: function (data) {
                 $("#form1").formSerialize(data);
+                $("#AccountNum").val(data.F_ID + "(游戏ID:" + data.AccountNum + ")");
+                if (data.UnfreezeDate) {
+                    $("#F_EnabledMark").val("false");
+                } 
                 $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
                 $("#form1").find('div.ckbox label').attr('for', '');
                 $("#F_UserPassword").val("******");
@@ -34,41 +38,41 @@
                 <tr>
                     <th class="formTitle">用户标识</th>
                     <td class="formValue">
-                        <input id="F_ID" name="F_ID" type="text" class="form-control" />
+                        <input id="AccountNum" name="AccountNum" type="text" class="form-control" />
                     </td>
                     <th class="formTitle">注册时间</th>
                     <td class="formValue">
-                        <input id="F_RegisterTime" name="F_RegisterTime" type="text" class="form-control" />
+                        <input id="RegisterDate" name="RegisterDate" type="text" class="form-control" />
                     </td>
                 </tr>
                 <tr>
                     <th class="formTitle">账户</th>
                     <td class="formValue">
-                        <input id="F_Account" name="F_Account" type="text" class="form-control"/>
+                        <input id="AccountName" name="AccountName" type="text" class="form-control"/>
                     </td>
                     <th class="formTitle">昵称</th>
                     <td class="formValue">
-                        <input id="F_NickName" name="F_NickName" type="text" class="form-control"/>
+                        <input id="NickName" name="NickName" type="text" class="form-control"/>
                     </td>
                 </tr>
                 <tr>
                     <th class="formTitle">金币</th>
                     <td class="formValue">
-                        <input id="F_Gold" name="F_Gold" type="text" class="form-control" />
+                        <input id="Gold" name="Gold" type="text" class="form-control" />
                     </td>
                     <th class="formTitle">银行金币</th>
                     <td class="formValue">
-                        <input id="F_BankGold" name="F_BankGold" type="text" class="form-control" />
+                        <input id="GoldBank" name="GoldBank" type="text" class="form-control" />
                     </td>
                 </tr>
                 <tr>
                     <th class="formTitle">姓名</th>
                     <td class="formValue">
-                        <input id="F_RealName" name="F_RealName" type="text" class="form-control"/>
+                        <input id="RealName" name="RealName" type="text" class="form-control"/>
                     </td>
                     <th class="formTitle">性别</th>
                     <td class="formValue">
-                        <select id="F_Gender" name="F_Gender" class="form-control">
+                        <select id="Sex" name="Sex" class="form-control">
                             <option value="true">男</option>
                             <option value="false">女</option>
                         </select>
@@ -79,25 +83,15 @@
                     <td class="formValue">
                         <input id="F_MobilePhone" name="F_MobilePhone" type="text" class="form-control"/>
                     </td>
-                    <th class="formTitle">生日</th>
+                    <th class="formTitle">状态</th>
                     <td class="formValue">
                         <input id="F_Birthday" name="F_Birthday" type="text" class="form-control"/>
                     </td>
                 </tr>
                 <tr>
-                    <th class="formTitle">微信</th>
-                    <td class="formValue">
-                        <input id="F_WeChat" name="F_WeChat" type="text" class="form-control"/>
-                    </td>
-                    <th class="formTitle">邮箱</th>
-                    <td class="formValue">
-                        <input id="F_Email" name="F_Email" type="text" class="form-control"/>
-                    </td>
-                </tr>
-                <tr>
                     <th class="formTitle">类型</th>
                     <td class="formValue">
-                        <select id="F_IsAdministrator" name="F_IsAdministrator" class="form-control">
+                        <select id="AccountType" name="AccountType" class="form-control">
                             <option value="false">普通用户</option>
                             <option value="true">系统管理员</option>
                         </select>

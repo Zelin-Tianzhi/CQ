@@ -65,7 +65,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
                 return Content((new {Result = "Error", Msg="帐号错误", data = new { }}).ToJson());
             }
             var data = _userApp.GetForm(keyValue);
-            return Content("");
+            return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
