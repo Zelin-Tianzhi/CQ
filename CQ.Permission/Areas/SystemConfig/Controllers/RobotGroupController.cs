@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CQ.Application.GameUsers;
 using CQ.Application.SystemConfig;
 using CQ.Core;
 using CQ.Domain.Entity.QPRobot;
@@ -14,6 +15,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         #region 属性
 
         private readonly RobotApp _robotApp = new RobotApp();
+        private readonly UsersApp _usersApp = new UsersApp();
 
         #endregion
 
@@ -61,6 +63,12 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         {
             _robotApp.DeleteRoomAiForm(keyValue.ToInt());
             return Success("删除成功。");
+        }
+
+        public ActionResult SubmitCreateRobot()
+        {
+
+            return Success("");
         }
         #endregion
     }
