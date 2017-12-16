@@ -74,7 +74,7 @@ namespace CQ.Application.SystemSecurity
             logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
             logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
             logEntity.F_IPAddress = Net.Ip;
-            logEntity.F_IPAddressName = Net.GetLocation(logEntity.F_IPAddress);
+            logEntity.F_IPAddressName = "";//Net.GetLocation(logEntity.F_IPAddress);
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
             var loginInfo = OperatorProvider.Provider.GetCurrent();
@@ -89,7 +89,7 @@ namespace CQ.Application.SystemSecurity
         {
             logEntity.F_Date = DateTime.Now;
             logEntity.F_IPAddress = Net.Ip;
-            logEntity.F_IPAddressName = Net.GetLocation(logEntity.F_IPAddress);
+            logEntity.F_IPAddressName = "";//Net.GetLocation(logEntity.F_IPAddress);
             var loginInfo = OperatorProvider.Provider.GetCurrent();
             if (loginInfo != null)
             {

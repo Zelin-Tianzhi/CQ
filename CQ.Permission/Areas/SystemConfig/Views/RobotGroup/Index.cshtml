@@ -12,18 +12,15 @@
         var $gridList = $("#gridList");
 
         $gridList.dataGrid({
-            url: "/SystemConfig/RoomAi/GetGridJson",
+            url: "/SystemConfig/RobotGroup/GetGridJson",
             height: $(window).height() - 128,
             colModel: [
                 { label: '主键', name: 'F_Id', hidden: true },
                 { label: '标识', name: 'F_Id', width: 60, align: 'center' },
-                { label: '名称', name: 'RoomName', width: 80, align: 'center' },
-                { label: '登录比率', name: 'LoginRoomRate', width: 80, align: 'center' },
-                { label: '离开比率', name: 'LeaveRoomRate', width: 80, align: 'center' },
-                { label: '房间最小时间', name: 'InRoomMinTime', width: 110, align: 'center' },
-                { label: '房间最大时间', name: 'InRoomMaxTime', width: 110, align: 'center' },
-                { label: '配置参数', name: 'AIText', width: 400, align: 'center' },
-                { label: '上桌率', name: 'PriorityTable', width: 80, align: 'center' }
+                { label: '分组名称', name: 'GroupName', width: 180, align: 'center' },
+                { label: '房间配置ID', name: 'RoomAIID', width: 80, align: 'center' },
+                { label: '游戏配置ID', name: 'GameAIID', width: 80, align: 'center' },
+                { label: '机器人数量', name: 'UserCount', width: 80, align: 'center' }
             ],
             pager: "#gridPager",
             sortname: 'ID desc',
@@ -35,48 +32,13 @@
             }).trigger('reloadGrid');
         });
     }
-    
-    function btn_add() {
-        $.modalOpen({
-            id: "Form",
-            title: "新增配置",
-            url: "/SystemConfig/RoomAi/Form",
-            width: "450px",
-            height: "460px",
-            callBack: function (iframeId) {
-                top.frames[iframeId].submitForm();
-            }
-        });
-    }
-    function btn_edit() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
-        $.modalOpen({
-            id: "Form",
-            title: "修改配置",
-            url: "/SystemConfig/RoomAi/Form?keyValue=" + keyValue,
-            width: "450px",
-            height: "460px",
-            callBack: function (iframeId) {
-                top.frames[iframeId].submitForm();
-            }
-        });
-    }
-    function btn_delete() {
-        $.deleteForm({
-            url: "/SystemConfig/RoomAi/DeleteForm",
-            param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
-            success: function () {
-                $.currentWindow().$("#gridList").resetSelection();
-                $.currentWindow().$("#gridList").trigger("reloadGrid");
-            }
-        })
-    }
+
     function btn_details() {
         var keyValue = $("#gridList").jqGridRowValue().F_Id;
         $.modalOpen({
             id: "Details",
             title: "查看配置",
-            url: "/SystemConfig/RoomAi/Details?keyValue=" + keyValue,
+            url: "/SystemConfig/TimeAi/Details?keyValue=" + keyValue,
             width: "450px",
             height: "460px",
             btn: null,
@@ -84,13 +46,18 @@
     }
 </script>
 
+
+
 <div class="topPanel">
     <div class="toolbar">
         <div class="btn-group">
             <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
         </div>
         <div class="btn-group">
-            <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>添加配置</a>
+            <a id="NF-addRobot" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_addrobot()"><i class="fa fa-plus"></i>生成机器人</a>
+        </div>
+        <div class="btn-group">
+            <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>生成分组</a>
         </div>
         <div class="operate">
             <ul class="nav nav-pills">
@@ -98,7 +65,7 @@
                 <li><a id="NF-edit" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改配置</a></li>
                 <li><a id="NF-delete" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除配置</a></li>
                 <li><a id="NF-Details" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看配置</a></li>
-                
+
             </ul>
             <a href="javascript:;" class="close"></a>
         </div>
@@ -123,3 +90,5 @@
     <table id="gridList"></table>
     <div id="gridPager"></div>
 </div>
+
+

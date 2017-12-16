@@ -7,7 +7,7 @@
     var keyValue = $.request("keyValue");
     var account = $.request('account');
     $(function () {
-        $("#F_Account").val(account);
+        $("#F_Account").val($.request('account'));
     });
     function submitForm() {
         if (!$('#form1').formValid()) {
@@ -17,10 +17,11 @@
         postData["num"] = $("#F_Gold").val();
         postData["keyValue"] = account;
         $.submitForm({
-            url: "/UserManage/User/SubmitModifyNickName",
+            url: "/UserManage/User/SubmitModifyJinBi",
             param: postData,
             success: function () {
                 $.loading(false);
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
             }
         })
     }

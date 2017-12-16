@@ -248,7 +248,7 @@ namespace CQ.Application.GameUsers
             byte[] mingwen = YSEncrypt.DecryptData(inputByteArray);
             string str = Encoding.ASCII.GetString(mingwen);
 
-            var response = SendRegisterRequest(username, userpwd, str,"11","0");
+            var response = SendRegisterRequest(username, userpwd, str,"11","0","0");
             return response;
         }
         /// <summary>
@@ -307,7 +307,7 @@ namespace CQ.Application.GameUsers
                 rows = ds.Tables[0].Rows.Count;
             } while (rows > 0);
             string upwd = "c8c8e2585e7555ee27396f4645b415ff";
-            var response = SendRegisterRequest(uname, upwd, str, "7", "2");
+            var response = SendRegisterRequest(uname, upwd, str, "7", "2","0");
             if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
                 string result = $"0&{uname}&{upwd}";// uname + "&" + upwd;
@@ -339,7 +339,37 @@ namespace CQ.Application.GameUsers
             return false;
         }
 
-        public 
+        /// <summary>
+        /// 创建机器人登录帐号
+        /// </summary>
+        /// <returns></returns>
+        public string CreateRobotAccount(int num)
+        {
+            string uids = string.Empty;
+            for (int i = 0; i < num; i++)
+            {
+                string uname = string.Empty;
+                string sql = string.Empty;
+                int rows = 0;
+                DataSet ds = new DataSet();
+                do
+                {
+                    uname = BuildAccount();
+                    sql = $"select * from account where account='{uname}'";
+                    ds = _qpAccount.GetDataTablebySql(sql);
+                    rows = ds.Tables[0].Rows.Count;
+                } while (rows > 0);
+                string pwd = "c8c8e2585e7555ee27396f4645b415ff";
+                string mac = Net.GetMacAddress();
+                Random rd = new Random(unchecked((int)DateTime.Now.Ticks));
+                string uuid = rd.Next(1, 37).ToString();
+                string utype = "0";
+                string secondtype = "1";
+                string uid = SendRegisterRequest(uname, pwd, mac, utype, secondtype, uuid);
+                uids += uid + ",";
+            }
+            return uids.TrimEnd(',');
+        }
 
         #endregion
 
@@ -435,13 +465,7 @@ namespace CQ.Application.GameUsers
         /// 获取配置文件变量
         /// </summary>
         /// <returns></returns>
-        string GetUrlStr()
-        {
-            //string filePath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\Configs\\GlobConfig.xml";
-            string filePath = System.Web.HttpContext.Current.Server.MapPath("/Configs/GlobConfig.xml");
-            string url = XmlHelper.Read(filePath, "configuration/aqiuUrl", "url");
-            return url;
-        }
+        
         /// <summary>
         /// 游客登录生成登录帐号
         /// </summary>
@@ -466,7 +490,7 @@ namespace CQ.Application.GameUsers
             uname = sFirst + "_" + sLast;
             return uname;
         }
-        private string SendRegisterRequest(string username, string userpwd, string str, string usertype, string usersecondtype)
+        private string SendRegisterRequest(string username, string userpwd, string macaddress, string usertype, string usersecondtype, string uuid)
         {
             long maxNum = GetMaxUserNum();
 
@@ -478,8 +502,9 @@ namespace CQ.Application.GameUsers
             string nickname = "新手" + maxNum;
             string accountnum = maxNum.ToString();
             string ipaddress = Net.Ip;
-            string mac = str;
+            string mac = macaddress;
             string details = "|||0|0|||||||";
+            string photouuid = uuid;
             //|密保问题|密保答案|年龄|身高cm|学历|生肖|星座|职业|省|市|
             //string[] userInfo = details.Split('|');
             //string mbwt = userInfo[1];
@@ -498,7 +523,7 @@ namespace CQ.Application.GameUsers
             string telephone = "";
             string parentid = "";
             string Url = GetUrlStr() +
-                         $"ysfunction=register&account={account}&password={password}&accounttype={accounttype}&accountsecondtype={accountsecondtype}&sex={sex}&nickname={nickname}&accountnum={accountnum}&ipaddress={ipaddress}&mac={mac}&details={details}";
+                         $"ysfunction=register&account={account}&password={password}&accounttype={accounttype}&accountsecondtype={accountsecondtype}&sex={sex}&nickname={nickname}&accountnum={accountnum}&ipaddress={ipaddress}&mac={mac}&details={details}&photouuid={photouuid}";
             string msg = HttpMethods.HttpGet(Url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
             int result = 0;

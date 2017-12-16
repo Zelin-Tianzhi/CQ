@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiTests\UserApiTests.cs" />
+    <Compile Include="ApplicationTests\RobotTest.cs" />
     <Compile Include="ApplicationTests\UserTest.cs" />
     <Compile Include="Repository\UnitTest1.cs" />
     <Compile Include="UnitTest1.cs" />
@@ -72,6 +73,10 @@
     <ProjectReference Include="..\CQ.Core\CQ.Core.csproj">
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>
       <Name>CQ.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQ.Domain\CQ.Domain.csproj">
+      <Project>{196a7834-6803-44c7-94f3-b4e6ec0d1e64}</Project>
+      <Name>CQ.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\CQ.Repository\CQ.Repository.csproj">
       <Project>{fe7f55dc-9fd3-4018-a519-8a94072329e6}</Project>

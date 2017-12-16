@@ -4,7 +4,9 @@
  * Description: Tz通用权限
 *********************************************************************************/
 using System;
+using System.Data;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml;
@@ -75,6 +77,32 @@ namespace CQ.Core
             XmlNodeReader xmlReader = new XmlNodeReader(xmlDoc.DocumentElement);
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             return (T)serializer.Deserialize(xmlReader);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objmodel"></param>
+        /// <param name="dtRow"></param>
+        /// <returns></returns>
+        public static T TableRowToModel<T>(T objmodel, DataRow dtRow)
+        {
+            foreach (PropertyInfo info in typeof(T).GetProperties())
+            {
+                string name = info.Name;
+                if (dtRow.Table.Columns.Contains(name))
+                {
+                    if (!info.PropertyType.IsGenericType)
+                    {
+                        info.SetValue(objmodel, string.IsNullOrEmpty(dtRow[name].ToString()) ? null : Convert.ChangeType(dtRow[name], info.PropertyType), null);
+                    }
+                    else if (info.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        info.SetValue(objmodel, string.IsNullOrEmpty(dtRow[name].ToString()) ? null : Convert.ChangeType(dtRow[name], Nullable.GetUnderlyingType(info.PropertyType)), null);
+                    }
+                }
+            }
+            return objmodel;
         }
     }
 }

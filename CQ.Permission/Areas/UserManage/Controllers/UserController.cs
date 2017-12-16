@@ -85,14 +85,14 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             string result = _userApp.RevisePassword(keyValue, "", "");
             return Success("");
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitModifyJinBi(string keyValue, string num = "0")
         {
             string result = _userApp.ModifyGold(num.ToInt(), keyValue);
-            return Success("");
+            return Success("操作成功。");
         }
         [HttpGet]
         [HandlerAjaxOnly]

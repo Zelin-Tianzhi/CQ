@@ -9,7 +9,7 @@ using CQ.Domain.Entity.QPRobot;
 
 namespace CQ.Permission.Areas.SystemConfig.Controllers
 {
-    public class RoomAiController : BaseController
+    public class RobotGroupController : BaseController
     {
         #region 属性
 
@@ -30,7 +30,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         {
             var data = new
             {
-                rows = _robotApp.GetRoomAiList(pagination, keyValue),
+                rows = _robotApp.GetGroupList(pagination, keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records

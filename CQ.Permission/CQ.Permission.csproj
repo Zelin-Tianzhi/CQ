@@ -160,7 +160,10 @@
     <Compile Include="Areas\ReportManage\Controllers\EchartsController.cs" />
     <Compile Include="Areas\ReportManage\Controllers\HighchartsController.cs" />
     <Compile Include="Areas\ReportManage\ReportManageAreaRegistration.cs" />
+    <Compile Include="Areas\SystemConfig\Controllers\GameAiController.cs" />
+    <Compile Include="Areas\SystemConfig\Controllers\RobotGroupController.cs" />
     <Compile Include="Areas\SystemConfig\Controllers\RoomAiController.cs" />
+    <Compile Include="Areas\SystemConfig\Controllers\TimeAiController.cs" />
     <Compile Include="Areas\SystemConfig\SystemConfigAreaRegistration.cs" />
     <Compile Include="Areas\SystemManage\Controllers\AreaController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\DutyController.cs" />
@@ -776,7 +779,6 @@
     <Folder Include="Areas\ReportManage\Views\Echarts\" />
     <Folder Include="Areas\ReportManage\Views\Shared\" />
     <Folder Include="Areas\SystemConfig\Models\" />
-    <Folder Include="Areas\SystemConfig\Views\Shared\" />
     <Folder Include="Areas\SystemManage\Models\" />
     <Folder Include="Areas\SystemManage\Views\RoleAuthorize\" />
     <Folder Include="Areas\SystemManage\Views\Shared\" />
@@ -943,6 +945,13 @@
     <Content Include="Areas\SystemConfig\Views\RoomAi\Form.cshtml" />
     <Content Include="Areas\SystemConfig\Views\RoomAi\Index.cshtml" />
     <Content Include="Areas\SystemConfig\Views\RoomAi\Details.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\GameAi\Form.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\GameAi\Details.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\GameAi\Index.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\TimeAi\Form.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\TimeAi\Details.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\TimeAi\Index.cshtml" />
+    <Content Include="Areas\SystemConfig\Views\RobotGroup\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

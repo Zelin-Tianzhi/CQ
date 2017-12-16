@@ -26,6 +26,18 @@
                 },
                 { label: '昵称', name: 'NickName', width: 100, align: 'center' },
                 {
+                    label: '金币', name: 'Gold', width: 100, align: 'center',
+                    formatter:function(cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '银行存款', name: 'GoldBank', width: 100, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    } 
+                },
+                {
                     label: '性别', name: 'Sex', width: 60, align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
                         if (cellvalue === true) {
@@ -48,9 +60,13 @@
                     }
                 },
                 {
-                    label: "启用状态", name: "UnfreezeDate", width: 60, align: "left",
+                    label: "启状态", name: "UnfreezeDate", width: 60, align: "left",
                     formatter: function (cellvalue) {
-                        return cellvalue == null ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        if (cellvalue == null) {
+                            return '<span class=\"label label-success\">正常</span>';
+                        } else {
+                            return '<span class=\"label label-default\">禁用</span>';
+                        }
                     }
                 }
             ],
@@ -64,6 +80,14 @@
             }).trigger('reloadGrid');
         });
     }
+
+    function format_number(n){  
+        var b=parseInt(n).toString();  
+        var len=b.length;  
+        if(len<=4){return b;}  
+        var r=len%4;  
+        return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{4}/g).join(","):b.slice(r,len).match(/\d{4}/g).join(",");  
+    }  
 
     function btn_add() {
         $.modalMsg("功能暂未开放", "warning");

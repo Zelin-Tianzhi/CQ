@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<script>
+    var keyValue = $.request("keyValue");
+    $(function () {
+        initControl();
+        if (!!keyValue) {
+            $.ajax({
+                url: "/SystemConfig/GameAi/GetFormJson",
+                data: { keyValue: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                }
+            });
+        }
+    });
+    function initControl() {
+        $("#GameName").bindSelect({
+            url: "/SystemConfig/GameAi/GetGameList",
+            id: "GameName",
+            text: "GameName"
+        });
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: "/SystemConfig/GameAi/SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">游戏</th>
+                <td class="formValue">
+                    <select id="GameName" name="GameName" class="form-control">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">配置名称</th>
+                <td class="formValue">
+                    <input id="Name" name="Name" type="text" class="form-control required" placeholder="登录比率" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">配置文本</th>
+                <td class="formValue">
+                    <input id="AIText" name="AIText" type="text" class="form-control required" placeholder="离开比率" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+

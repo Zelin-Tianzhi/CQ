@@ -46,6 +46,24 @@ namespace CQ.Repository.EntityFramework
                 cmd.Parameters.AddRange(cmdParms);
             }
         }
+        /// <summary>
+        /// 执行带参数的sql语句
+        /// </summary>
+        /// <param name="cmdText"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public int ExecuteSql(string cmdText, SqlParameter[] parameters)
+        {
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(cmdText, conn))
+                {
+                    cmd.Parameters.AddRange(parameters);
+                    conn.Open();
+                    return cmd.ExecuteNonQuery();//返回受影响行数
+                }
+            }
+        }
 
          /// <summary>
          ///  执行查询SQL语句，返回离线记录集

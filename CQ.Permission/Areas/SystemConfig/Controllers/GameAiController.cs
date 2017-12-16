@@ -9,11 +9,12 @@ using CQ.Domain.Entity.QPRobot;
 
 namespace CQ.Permission.Areas.SystemConfig.Controllers
 {
-    public class RoomAiController : BaseController
+    public class GameAiController : BaseController
     {
         #region 属性
 
         private readonly RobotApp _robotApp = new RobotApp();
+        private readonly GameApp _gameApp = new GameApp();
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         {
             var data = new
             {
-                rows = _robotApp.GetRoomAiList(pagination, keyValue),
+                rows = _robotApp.GetGameAiList(pagination, keyValue),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
@@ -41,16 +42,16 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = _robotApp.GetRoomAiForm(keyValue);
+            var data = _robotApp.GetGameAiForm(keyValue);
             return Content(data.ToJson());
         }
 
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(RobotRoomAI robotRoom, string keyValue)
+        public ActionResult SubmitForm(RobotGameAI robotGame, string keyValue)
         {
-            _robotApp.SubmitRoomAiForm(robotRoom, keyValue.ToInt());
+            _robotApp.SubmitGameAiForm(robotGame, keyValue.ToInt());
             return Success("操作成功。");
         }
         [HttpPost]
@@ -59,8 +60,15 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            _robotApp.DeleteRoomAiForm(keyValue.ToInt());
+            _robotApp.DeleteGameAiForm(keyValue.ToInt());
             return Success("删除成功。");
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        public ActionResult GetGameList()
+        {
+            var data = _gameApp.GetGameList();
+            return Content(data.ToJson());
         }
         #endregion
     }

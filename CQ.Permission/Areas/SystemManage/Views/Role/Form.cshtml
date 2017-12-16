@@ -19,9 +19,9 @@
         }
     })
     function initControl() {
-        $("#F_OrganizeId").bindSelect({
-            url: "/SystemManage/Organize/GetTreeSelectJson",
-        });
+        //$("#F_OrganizeId").bindSelect({
+        //    url: "/SystemManage/Organize/GetTreeSelectJson",
+        //});
         $("#F_Type").bindSelect({
             url: "/SystemManage/ItemsData/GetSelectJson",
             param: { enCode: "RoleType" }
@@ -85,12 +85,7 @@
                     </div>
                     <div class="panel-body" style="width: 98%;">
                         <table class="form">
-                            <tr>
-                                <th class="formTitle">归属组织</th>
-                                <td class="formValue">
-                                    <select id="F_OrganizeId" name="F_OrganizeId" class="form-control required"></select>
-                                </td>
-                            </tr>
+                           
                             <tr>
                                 <th class="formTitle">角色名称</th>
                                 <td class="formValue">
