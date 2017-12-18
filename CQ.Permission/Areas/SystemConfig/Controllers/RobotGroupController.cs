@@ -88,6 +88,12 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             int num = _robotApp.GetSpareRobotList(0)?.Rows.Count ?? 0;
             return Success(num.ToString());
         }
+
+        public ActionResult SubmitForm(string gameAi, string roomAi,string timeAi, string groupName,string num)
+        {
+
+            return Success("");
+        }
         #endregion
     }
 }

@@ -38,16 +38,31 @@
         });
     }
     function submitForm() {
-        if (!$('#form1').formValid()) {
-            return false;
-        }
-        $.submitForm({
-            url: "/SystemConfig/GameAi/SubmitForm?keyValue=" + keyValue,
-            param: $("#form1").formSerialize(),
-            success: function () {
-                $.currentWindow().$("#gridList").trigger("reloadGrid");
+        var gameAi = $("#GameAi").val();
+        var roomAi = $("#RoomAi").val();
+        var timeAi = $("#TimeAi").val();
+        var groupName = $("#GroupName").val();
+        var num = $("#Num").val();
+        $.ajax({
+            url: "/SystemConfig/RobotGroup/GetFormJson",
+            data: { gameAi: gameAi, roomAi: roomAi, timeAi: timeAi, groupName: groupName, num: num },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                $("#form1").formSerialize(data);
+                $("#F_UserPassword").val("******").attr('disabled', 'disabled');
             }
-        })
+        });
+        //if (!$('#form1').formValid()) {
+        //    return false;
+        //}
+        //$.submitForm({
+        //    url: "/SystemConfig/GameAi/SubmitForm?keyValue=" + keyValue,
+        //    param: $("#form1").formSerialize(),
+        //    success: function () {
+        //        $.currentWindow().$("#gridList").trigger("reloadGrid");
+        //    }
+        //})
     }
 </script>
 <form id="form1">
