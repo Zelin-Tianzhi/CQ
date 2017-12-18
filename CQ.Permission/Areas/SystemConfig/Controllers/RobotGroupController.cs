@@ -20,8 +20,12 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         #endregion
 
         #region 视图
-
-
+        [HttpGet]
+        [HandlerAuthorize]
+        public ActionResult Robot()
+        {
+            return View();
+        }
 
         #endregion
 
@@ -64,11 +68,25 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             _robotApp.DeleteRoomAiForm(keyValue.ToInt());
             return Success("删除成功。");
         }
-
-        public ActionResult SubmitCreateRobot()
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitCreateRobot(string count)
         {
-
-            return Success("");
+            int num = 500;
+            num = count.ToInt();
+            if (num <= 0) num = 500;
+            string uids = _usersApp.CreateRobotAccount(num);
+            string result =_robotApp.BuildRobot(uids);
+            return Success(result + "个操作成功。");
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetSpareCount()
+        {
+            int num = _robotApp.GetSpareRobotList(0)?.Rows.Count ?? 0;
+            return Success(num.ToString());
         }
         #endregion
     }

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Robot";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    function submitForm() {
+        var num = $("#Num").val();
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: "/SystemConfig/RobotGroup/SubmitCreateRobot?count=" + num,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.loading(false);
+                //$.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">数量</th>
+                <td class="formValue">
+                    <input id="Num" name="Num" type="text" class="form-control required" placeholder="生成机器人数量" />
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</form>
+

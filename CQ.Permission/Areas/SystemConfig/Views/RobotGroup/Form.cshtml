@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+   
+    $(function () {
+        initControl();
+    });
+    function initControl() {
+        $("#GameAi").bindSelect({
+            url: "/SystemConfig/GameAi/GetGameAiList",
+            id: "F_Id",
+            text: "Name"
+        });
+
+        $("#RoomAi").bindSelect({
+            url: "/SystemConfig/RoomAi/GetRoomAiList",
+            id: "F_Id",
+            text: "Name"
+        });
+
+        $("#TimeAi").bindSelect({
+            url: "/SystemConfig/TimeAi/GetTimeAiList",
+            id: "F_Id",
+            text: "Name"
+        });
+        $.ajax({
+            url: "/SystemConfig/RobotGroup/GetSpareCount",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.state == "success") {
+                    $("#UsableNum").val(data.message);
+                }
+            }
+        });
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: "/SystemConfig/GameAi/SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">可分配帐号</th>
+                <td class="formValue">
+                    <input id="UsableNum" name="UsableNum" readonly type="text" class="form-control required" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">游戏配置</th>
+                <td class="formValue">
+                    <select id="GameAi" name="GameAi" class="form-control"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">房间配置</th>
+                <td class="formValue">
+                    <select id="RoomAi" name="RoomAi" class="form-control"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">时间配置</th>
+                <td class="formValue">
+                    <select id="TimeAi" name="TimeAi" class="form-control"></select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">分组名称</th>
+                <td class="formValue">
+                    <input id="GroupName" name="GroupName" type="text" class="form-control required" placeholder="离开比率"/>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">分配数量</th>
+                <td class="formValue">
+                    <input id="Num" name="Num" type="text" class="form-control required" placeholder="离开比率" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+

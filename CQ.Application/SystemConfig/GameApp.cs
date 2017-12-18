@@ -24,7 +24,7 @@ namespace CQ.Application.SystemConfig
             {
                 list.Add(new
                 {
-                    F_Id = dr["ID"],
+                    F_Id = dr["GameID"],
                     GameName = dr["GameName"]
                 });
             }

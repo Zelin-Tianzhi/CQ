@@ -407,8 +407,13 @@ namespace CQ.Application.GameUsers
                     {
                         flag = true;
                     }
+                    else
+                    {
+                        Cache.Insert("MaxUserId",maxNum);
+                    }
 
                 } while (flag);
+                Id = maxNum.ToInt64();
             }
             catch (Exception e)
             {
@@ -528,7 +533,7 @@ namespace CQ.Application.GameUsers
             Regex rex = new Regex(@"(-\d+|\d+)<");
             int result = 0;
             string response = rex.Match(msg).Groups[1].Value;
-            return response;
+            return msg;
         }
         #endregion
     }

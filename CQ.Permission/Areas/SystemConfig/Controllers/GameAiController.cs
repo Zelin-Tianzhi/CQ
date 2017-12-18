@@ -63,11 +63,19 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             _robotApp.DeleteGameAiForm(keyValue.ToInt());
             return Success("删除成功。");
         }
-        [HttpPost]
+        [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGameList()
         {
             var data = _gameApp.GetGameList();
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetGameAiList()
+        {
+            var data = _robotApp.GetGameAiList();
             return Content(data.ToJson());
         }
         #endregion

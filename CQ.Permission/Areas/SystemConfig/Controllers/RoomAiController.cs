@@ -62,6 +62,13 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             _robotApp.DeleteRoomAiForm(keyValue.ToInt());
             return Success("删除成功。");
         }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetRoomAiList()
+        {
+            var data = _robotApp.GetRoomAiList();
+            return Content(data.ToJson());
+        }
         #endregion
     }
 }

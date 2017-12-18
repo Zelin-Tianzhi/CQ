@@ -5,6 +5,7 @@
 *********************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
@@ -45,6 +46,33 @@ namespace CQ.Repository.EntityFramework
             {
                 cmd.Parameters.AddRange(cmdParms);
             }
+        }
+        /// <summary>
+        /// 执行查询语句返回首行首列的值
+        /// </summary>
+        /// <param name="strSql"></param>
+        /// <param name="paras"></param>
+        /// <param name="cmdtype"></param>
+        /// <returns></returns>
+        public object GetObject(string strSql, SqlParameter[] paras, CommandType cmdtype = CommandType.Text)
+        {
+            object o = null;
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.CommandType = cmdtype;
+                if (paras != null)
+                {
+                    cmd.Parameters.AddRange(paras);
+
+                }
+
+                conn.Open();
+                o = cmd.ExecuteScalar();
+                conn.Close();
+            }
+            return o;
+
         }
         /// <summary>
         /// 执行带参数的sql语句
@@ -128,31 +156,45 @@ namespace CQ.Repository.EntityFramework
                     }
                 }
             }
-            //SqlConnection sqlconn = new SqlConnection(conn);
-            //SqlCommand cmd = new SqlCommand();
-            //cmd.Connection = sqlconn;
-            //cmd.CommandText = "Categoriestest5";
-            //cmd.CommandType = CommandType.StoredProcedure;
-            //// 创建参数
-            //IDataParameter[] parameters = {
-            //    new SqlParameter("@Id", SqlDbType.Int,4) ,
-            //    new SqlParameter("@CategoryName", SqlDbType.NVarChar,15) ,
-            //    new SqlParameter("rval", SqlDbType.Int,4)
-            //};
-            //// 设置参数类型
-            //parameters[0].Direction = ParameterDirection.Output;    // 设置为输出参数
-            //parameters[1].Value = "testCategoryName";         // 给输入参数赋值
-            //parameters[2].Direction = ParameterDirection.ReturnValue; // 设置为返回值
-            //// 添加参数
-            //cmd.Parameters.Add(parameters[0]);
-            //cmd.Parameters.Add(parameters[1]);
-            //cmd.Parameters.Add(parameters[2]);
-            //sqlconn.Open();
-            //// 执行存储过程并返回影响的行数
-            //Label1.Text = cmd.ExecuteNonQuery().ToString();
-            //sqlconn.Close();
-            //// 显示影响的行数，输出参数和返回值
-            //Label1.Text += "-" + parameters[0].Value.ToString() + "-" + parameters[2].Value.ToString();
+        }
+        /// <summary>
+        /// 执行多条sql语句， 实现数据库事务
+        /// </summary>
+        /// <param name="SQLStringList"></param>
+        /// <returns></returns>
+        public int ExecuteSqlTran(List<string> SQLStringList)
+        {
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                SqlTransaction tx = conn.BeginTransaction();
+                cmd.Transaction = tx;
+
+                try
+                {
+                    int count = 0;
+                    for (int n = 0; n < SQLStringList.Count; n++)
+                    {
+                        string strsql = SQLStringList[n];
+                        if (strsql.Trim().Length > 1)
+                        {
+                            cmd.CommandText = strsql;
+                            count += cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    tx.Commit();
+                    return count;
+                }
+                catch
+                {
+                    tx.Rollback();
+                    return 0;
+                }
+            }
+
         }
     }
 }

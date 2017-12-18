@@ -15,7 +15,7 @@ namespace CQ.Domain.Entity.QPRobot
 
         [Required]
         [StringLength(50)]
-        public string NikeName { get; set; }
+        public string NickName { get; set; }
 
         [StringLength(32)]
         public string PassWord { get; set; }

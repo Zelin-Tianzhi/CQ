@@ -70,6 +70,14 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             var data = _gameApp.GetGameList();
             return Content(data.ToJson());
         }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetTimeAiList()
+        {
+            var data = _robotApp.GetTimeAiList();
+            return Content(data.ToJson());
+        }
         #endregion
     }
 }

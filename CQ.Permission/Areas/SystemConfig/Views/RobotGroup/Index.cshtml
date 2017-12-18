@@ -33,15 +33,28 @@
         });
     }
 
-    function btn_details() {
-        var keyValue = $("#gridList").jqGridRowValue().F_Id;
+    function btn_add() {
         $.modalOpen({
-            id: "Details",
-            title: "查看配置",
-            url: "/SystemConfig/TimeAi/Details?keyValue=" + keyValue,
+            id: "Form",
+            title: "新增配置",
+            url: "/SystemConfig/RobotGroup/Form",
             width: "450px",
             height: "460px",
-            btn: null,
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_addrobot() {
+        $.modalOpen({
+            id: "Robot",
+            title: "机器人",
+            url: "/SystemConfig/RobotGroup/Robot",
+            width: "450px",
+            height: "180px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
         });
     }
 </script>
