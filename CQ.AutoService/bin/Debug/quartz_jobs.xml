@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains job definitions in schema version 2.0 format -->
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+  <schedule>
+    <!--北京福利彩票数据采集服务-->
+    <job>
+      <name>BeijingKL8Job</name>
+      <group>FYJobGroup</group>
+      <description>北京福利彩票快乐8玩法采集服务</description>
+      <job-type>FT.Task.BjklbCollectionJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BeijingKL8Trigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BeijingKL8Job</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>28 0/5 9-23 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--<job>
+      <name>BeijingKL8KcwJob</name>
+      <group>FYJobGroup</group>
+      <description>北京福利彩票快乐8玩法采集服务</description>
+      <job-type>FT.Task.BjklbKcwCollectionJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BeijingKL8KcwTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BeijingKL8KcwJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>36 0/5 9-23 * * ? *</cron-expression>
+      </cron>
+    </trigger>-->
+
+    <job>
+      <name>BeijingKL8BaseJob</name>
+      <group>FYJobGroup</group>
+      <description>北京福利彩票快乐8拓展基础数据生成服务</description>
+      <job-type>FT.Task.BjklbBaseDataJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BeijingKL8BaseTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BeijingKL8BaseJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 8 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--开奖数据自动归档-->
+    <job>
+      <name>DataArchiveJob</name>
+      <group>FYJobGroup</group>
+      <description>北京系列数据自动归档服务</description>
+      <job-type>FT.Task.DataArchiveTask, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>DataArchiveTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>DataArchiveJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 5 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <job>
+      <name>KoreaSeriesArchiveJob</name>
+      <group>FYJobGroup</group>
+      <description>韩国系列数据自动归档服务</description>
+      <job-type>FT.Task.KoreaSeriesArchiveJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>KoreaSeriesArchiveTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>KoreaSeriesArchiveJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 6 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <job>
+      <name>DjSeriesArchiveJob</name>
+      <group>FYJobGroup</group>
+      <description>东京系列系列数据自动归档服务</description>
+      <job-type>FT.Task.DjSeriesArchiveJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>DjSeriesArchiveTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>DjSeriesArchiveJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 30 7 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <job>
+      <name>JndSeriesArchiveJob</name>
+      <group>FYJobGroup</group>
+      <description>加拿大系列系列数据自动归档服务</description>
+      <job-type>FT.Task.JndSeriesArchiveJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>JndSeriesArchiveTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>JndSeriesArchiveJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 20 20 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    
+    <!--计算工资返佣-->
+    <job>
+      <name>LoseAwardJob</name>
+      <group>FYJobGroup</group>
+      <description>计算工资返佣</description>
+      <job-type>FT.Task.LoseAwardJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>LoseAwardTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>LoseAwardJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 7 ? * 2 *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算排行榜-->
+    <job>
+      <name>RankingAwardJob</name>
+      <group>FYJobGroup</group>
+      <description>计算排行榜</description>
+      <job-type>FT.Task.RankingAwardJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>RankingAwardTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>RankingAwardJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 6 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--北京PK系列基础数据生成服务-->
+    <job>
+      <name>BjpksBaseDataJob</name>
+      <group>FYJobGroup</group>
+      <description>PK系列玩法基础数据生成</description>
+      <job-type>FT.Task.BjpksBaseDataJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BjpksBaseDataTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BjpksBaseDataJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 8 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--北京福利彩票数据采集服务-->
+    <job>
+      <name>BeijingPK10Job</name>
+      <group>FYJobGroup</group>
+      <description>北京福利彩票PK10采集服务</description>
+      <job-type>FT.Task.BjpksCollectionJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BeijingPK10Trigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BeijingPK10Job</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>28 2/5 9-23 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--<job>
+      <name>BeijingPK10KcwJob</name>
+      <group>FYJobGroup</group>
+      <description>北京福利彩票PK10采集服务</description>
+      <job-type>FT.Task.BjpksKcwCollectionJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BeijingPK10KcwTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BeijingPK10KcwJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>36 2/5 9-23 * * ? *</cron-expression>
+      </cron>
+    </trigger>-->
+
+    <!--计算在线用户,30分钟一次-->
+    <job>
+      <name>STOnlineJob</name>
+      <group>FYJobGroup</group>
+      <description>计算在线用户</description>
+      <job-type>FT.Task.STOnlineJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STOnlineTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STOnlineJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0,30 * * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算资金变动,30分钟一次-->
+    <job>
+      <name>STAccountAmountJob</name>
+      <group>FYJobGroup</group>
+      <description>计算资金变动</description>
+      <job-type>FT.Task.STAccountAmountJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STAccountAmountTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STAccountAmountJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0,30 * * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算日平均在线用户,一天一次-->
+    <job>
+      <name>STOnlineDateJob</name>
+      <group>FYJobGroup</group>
+      <description>计算日平均在线用户</description>
+      <job-type>FT.Task.STOnlineDateJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STOnlineDateTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STOnlineDateJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 5 0 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算资金变动,一天一次-->
+    <job>
+      <name>STAccountAmountDateJob</name>
+      <group>FYJobGroup</group>
+      <description>计算排行榜</description>
+      <job-type>FT.Task.STAccountAmountDateJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STAccountAmountDateTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STAccountAmountDateJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 5 0 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--用户投注次数12点清零操作-->
+
+    <job>
+      <name>BetCountCleanJob</name>
+      <group>FYJobGroup</group>
+      <description>用户投注次数清零</description>
+      <job-type>FT.Task.CleanBetCountJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>BetCountCleanTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>BetCountCleanJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 0 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--根据ip获取省市，5分钟增量执行-->
+    <job>
+      <name>STGetAddrByIPJob</name>
+      <group>FYJobGroup</group>
+      <description>根据ip获取省市</description>
+      <job-type>FT.Task.STGetAddrByIPJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STGetAddrByIPTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STGetAddrByIPJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0/5 * * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算每日投注数量，每天2点执行-->
+    <job>
+      <name>STAvgBetCountJob</name>
+      <group>FYJobGroup</group>
+      <description>每日投注数量</description>
+      <job-type>FT.Task.STAvgBetCountJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STAvgBetCountTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STAvgBetCountJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 2 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算用户流失率，每天2点10执行-->
+    <job>
+      <name>STActiveUserCountJob</name>
+      <group>FYJobGroup</group>
+      <description>用户流失率</description>
+      <job-type>FT.Task.STActiveUserCountJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STActiveUserCountTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STActiveUserCountJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 10 2 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--生成活动奖励数据，次日到账的那种，每天6点执行-->
+    <job>
+      <name>ActivitySettleJob</name>
+      <group>FYJobGroup</group>
+      <description>活动奖励</description>
+      <job-type>FT.Task.ActivitySettleJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>ActivitySettleTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>ActivitySettleJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 6 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--东京快乐8系列基础数据生成服务--><!--
+    <job>
+      <name>DjklbBaseDataJob</name>
+      <group>FYJobGroup</group>
+      <description>东京快乐8系列玩法基础数据生成</description>
+      <job-type>FT.Task.JpklbBaseDataJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>DjklbBaseDataTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>DjklbBaseDataJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 30 7 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    --><!--东京快乐8系列游戏数据采集服务--><!--
+    <job>
+      <name>DjklbOneJob</name>
+      <group>FYJobGroup</group>
+      <description>东京快乐8系列游戏数据采集</description>
+      <job-type>FT.Task.DjklbCpkCollectionJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>DjklbOneTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>DjklbOneJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>15 0/3 0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+    <job>
+      <name>DjklbTwoJob</name>
+      <group>FYJobGroup</group>
+      <description>东京快乐8系列游戏数据采集</description>
+      <job-type>FT.Task.DjklbCpkCollectionJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>DjklbTwoTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>DjklbTwoJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>46 1/3 0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * ? *</cron-expression>
+      </cron>
+    </trigger>-->
+    <!--计算区域用户登录数，每天1点10执行-->
+    <job>
+      <name>STAreaLoginJob</name>
+      <group>FYJobGroup</group>
+      <description>区域用户登录数</description>
+      <job-type>FT.Task.STAreaLoginJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STAreaLoginTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STAreaLoginJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 10 1 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--计算区域用户注册数，每天1点15执行-->
+    <job>
+      <name>STAreaRegisterJob</name>
+      <group>FYJobGroup</group>
+      <description>区域用户注册数</description>
+      <job-type>FT.Task.STAreaRegisterJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STAreaRegisterTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STAreaRegisterJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 15 1 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--更新用户等级 每分钟执行-->
+    <job>
+      <name>UpdateUserLevelJob</name>
+      <group>FYJobGroup</group>
+      <description>计算用户等级</description>
+      <job-type>FT.Task.UserLevelJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>UpdateUserLevelTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>UpdateUserLevelJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0/1 * * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+
+    <!--每日流水汇总-->
+    <job>
+      <name>STPlatFinancialDetailByDayJob</name>
+      <group>FYJobGroup</group>
+      <description>计算用户等级</description>
+      <job-type>FT.Task.STPlatFinancialDetailByDayJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STPlatFinancialDetailByDayTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STPlatFinancialDetailByDayJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 5 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+
+
+    <!--每日流水汇总-->
+    <job>
+      <name>STGameBetByDayJob</name>
+      <group>FYJobGroup</group>
+      <description>计算用户等级</description>
+      <job-type>FT.Task.STGameBetByDayJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>STGameBetByDayTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>STGameBetByDayJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0 5 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <!--重庆时时彩相关服务-->
+    <job>
+      <name>CQCCSBaseDataJob</name>
+      <group>FYJobGroup</group>
+      <description>重庆时时彩基础数据生成服务</description>
+      <job-type>FT.Task.CQCCSBaseDataJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>CQCCSBaseTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>CQCCSBaseDataJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 33 23 * * ? </cron-expression>
+      </cron>
+    </trigger>
+    <job>
+      <name>CQSSCLotteryJob</name>
+      <group>FYJobGroup</group>
+      <description>重庆时时彩开奖数据采集服务白天场</description>
+      <job-type>FT.Task.CQSSCLotteryJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>CQSSCLotteryTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>CQSSCLotteryJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>30 1,11,21,31,41,51 10,11,12,13,14,15,16,17,18,19,20,21 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <job>
+      <name>CQSSCLotteryNightJob</name>
+      <group>FYJobGroup</group>
+      <description>重庆时时彩开奖数据采集服务夜间场</description>
+      <job-type>FT.Task.CQSSCLotteryJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>CQSSCLotteryNightTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>CQSSCLotteryNightJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>30 6,16,26,36,46,56 22,23,0,1 * * ? *</cron-expression>
+      </cron>
+    </trigger>
+    <job>
+      <name>SystemAccountJob</name>
+      <group>FYJobGroup</group>
+      <description>根据ip获取省市</description>
+      <job-type>FT.Task.SystemAccountJob, FT.Task</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>SystemAccountTrigger</name>
+        <group>FYJobGroup</group>
+        <job-name>SystemAccountJob</job-name>
+        <job-group>FYJobGroup</job-group>
+        <cron-expression>0 0/10 * * * ? *</cron-expression>
+      </cron>
+    </trigger>
+  </schedule>
+</job-scheduling-data>
