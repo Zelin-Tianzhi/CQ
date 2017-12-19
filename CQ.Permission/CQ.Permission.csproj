@@ -151,6 +151,7 @@
     <Compile Include="Areas\ContentManage\Controllers\ArticlesController.cs" />
     <Compile Include="Areas\ContentManage\Controllers\GamesController.cs" />
     <Compile Include="Areas\DataAnalysis\Controllers\GoldStatisticsController.cs" />
+    <Compile Include="Areas\DataAnalysis\Controllers\OnlineStatisticsController.cs" />
     <Compile Include="Areas\DataAnalysis\DataAnalysisAreaRegistration.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\BarCodeController.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\PrintController.cs" />
@@ -774,7 +775,7 @@
     <Folder Include="Areas\ContentManage\Models\" />
     <Folder Include="Areas\ContentManage\Views\Shared\" />
     <Folder Include="Areas\DataAnalysis\Models\" />
-    <Folder Include="Areas\DataAnalysis\Views\GoldStatistics\" />
+    <Folder Include="Areas\DataAnalysis\Views\OnlineStatistics\" />
     <Folder Include="Areas\DataAnalysis\Views\Shared\" />
     <Folder Include="Areas\ExampleManage\Models\" />
     <Folder Include="Areas\RechargeSystem\Controllers\" />
@@ -960,6 +961,7 @@
     <Content Include="Areas\SystemConfig\Views\RobotGroup\Robot.cshtml" />
     <Content Include="Areas\SystemConfig\Views\RobotGroup\Form.cshtml" />
     <Content Include="Areas\DataAnalysis\Views\web.config" />
+    <Content Include="Areas\DataAnalysis\Views\GoldStatistics\UserGameGold.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

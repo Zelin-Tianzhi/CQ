@@ -44,13 +44,12 @@
         var groupName = $("#GroupName").val();
         var num = $("#Num").val();
         $.ajax({
-            url: "/SystemConfig/RobotGroup/GetFormJson",
+            url: "/SystemConfig/RobotGroup/SubmitFormGroup",
             data: { gameAi: gameAi, roomAi: roomAi, timeAi: timeAi, groupName: groupName, num: num },
             dataType: "json",
             async: false,
             success: function (data) {
-                $("#form1").formSerialize(data);
-                $("#F_UserPassword").val("******").attr('disabled', 'disabled');
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
             }
         });
         //if (!$('#form1').formValid()) {

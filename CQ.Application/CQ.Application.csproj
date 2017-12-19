@@ -44,14 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoService\GoldStatisticsApp.cs" />
     <Compile Include="BaseApp.cs" />
     <Compile Include="BusinessData\ArticleApp.cs" />
     <Compile Include="BusinessData\ImageApp.cs" />
     <Compile Include="BusinessData\ProductApp.cs" />
+    <Compile Include="DataAnalusis\GoldApp.cs" />
     <Compile Include="GameUsers\UsersApp.cs" />
     <Compile Include="Infrastructure\BusinessType.cs" />
     <Compile Include="Infrastructure\DbLogType.cs" />
     <Compile Include="Infrastructure\ProcedureConfig.cs" />
+    <Compile Include="Infrastructure\TableNameEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemConfig\GameApp.cs" />
     <Compile Include="SystemConfig\RobotApp.cs" />

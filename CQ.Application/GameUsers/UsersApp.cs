@@ -6,11 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using CQ.Core;
 using CQ.Core.Security;
-using CQ.Domain.Entity.QPAccount;
-using CQ.Domain.IRepository.QPAccount;
 using CQ.Plugin.Cache;
 using CQ.Repository.EntityFramework;
-using CQ.Repository.QPAccount;
 
 namespace CQ.Application.GameUsers
 {

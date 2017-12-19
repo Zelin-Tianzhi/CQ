@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameGoldStatistics\GameAuto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -105,10 +106,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CQ.Application\CQ.Application.csproj">
-      <Project>{5835f58f-5da9-415c-b35b-69cbc6a13c23}</Project>
-      <Name>CQ.Application</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CQ.Core\CQ.Core.csproj">
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>
       <Name>CQ.Core</Name>
@@ -118,8 +115,6 @@
     <Content Include="bin\Debug\Configs\GlobConfig.xml" />
     <Content Include="bin\Debug\quartz_jobs.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

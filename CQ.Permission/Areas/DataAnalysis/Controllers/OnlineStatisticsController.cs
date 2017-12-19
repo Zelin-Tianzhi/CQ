@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace CQ.Permission.Areas.DataAnalysis.Controllers
 {
-    public class GoldStatisticsController : Controller
+    public class OnlineStatisticsController : Controller
     {
         #region 属性
 
@@ -16,19 +16,14 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
 
         #region 视图
 
-        public ActionResult UserGameGold()
-        {
-            return View();
-        }
+
 
         #endregion
 
-        #region Ajax请求
+        #region 方法
 
         
 
         #endregion
-
-
     }
 }

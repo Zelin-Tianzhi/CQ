@@ -89,10 +89,10 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             return Success(num.ToString());
         }
 
-        public ActionResult SubmitForm(string gameAi, string roomAi,string timeAi, string groupName,string num)
+        public ActionResult SubmitFormGroup(string gameAi, string roomAi,string timeAi, string groupName,string num)
         {
-
-            return Success("");
+            string rows = _robotApp.CreateGroup(gameAi, roomAi, num.ToInt(), groupName, timeAi);
+            return Success("创建成功。");
         }
         #endregion
     }

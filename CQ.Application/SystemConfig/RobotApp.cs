@@ -431,7 +431,7 @@ namespace CQ.Application.SystemConfig
             return num.ToString();
         }
 
-        public string CreateGroup(int gameid,int roomid, int count, string groupname, string timeid)
+        public string CreateGroup(string gameid,string roomid, int count, string groupname, string timeid)
         {
             DataTable dt = GetSpareRobotList(count);
             int notInAccount = 0;
@@ -483,10 +483,10 @@ namespace CQ.Application.SystemConfig
             }
             else
             {
-                Log.Info("没有可用的机器人帐号");
+                Log.Info("没有可用的机器人帐号。");
                 return "-1";
             }
-            Log.Info($"RobotAccount已经存在的帐号[{inRobotAccount}],Account中不存在的帐号[{notInAccount}]");
+            Log.Info($"RobotAccount已经存在的帐号[{inRobotAccount}],Account中不存在的帐号[{notInAccount}]。");
             return rows.ToString();
         }
 

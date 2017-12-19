@@ -53,6 +53,7 @@
     <Compile Include="ApiTests\UserApiTests.cs" />
     <Compile Include="ApplicationTests\RobotTest.cs" />
     <Compile Include="ApplicationTests\UserTest.cs" />
+    <Compile Include="AutoService\GoldTests.cs" />
     <Compile Include="Repository\UnitTest1.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
