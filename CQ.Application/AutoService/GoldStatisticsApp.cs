@@ -60,9 +60,9 @@ namespace CQ.Application.AutoService
             string yearMon = time.ToString("yyyyMM");
             var helper = new DbHelper("QPLog" + dbname);
             string sql =
-                $"SELECT AccountID,RoomID,SUM(GoldWin) AS win,SUM(ABS(GoldWin)) AS allwin, SUM(GoldTax) AS Tax FROM[Item_{yearMon}] WHERE CreationDate >= '{time}' AND CreationDate< '{time.AddDays(1)}' GROUP BY RoomID,AccountID ";
+                $"SELECT AccountID,RoomID,SUM(GoldWin) AS win,SUM(ABS(GoldWin)) AS allwin, SUM(GoldTax) AS Tax,SUM(CASE WHEN GoldWin>0 THEN GoldWin ELSE 0 END) AS goldWin FROM Item_{yearMon} WHERE CreationDate >= '{time}' AND CreationDate< '{time.AddDays(1)}' GROUP BY RoomID,AccountID ";
             DataTable oneGameList = helper.GetDataTablebySql(sql).Tables[0];
-
+            
         }
 
         #endregion
