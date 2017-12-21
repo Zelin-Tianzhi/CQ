@@ -1,8 +1,9 @@
 ﻿using System;
 using CQ.Application.AutoService;
+using CQ.Core;
 using Quartz;
 
-namespace CQ.Task.GoldStstistics
+namespace CQ.Task
 {
     public class WinOrLoseSta : BaseJob, IJob
     {
@@ -18,12 +19,14 @@ namespace CQ.Task.GoldStstistics
             GoldStatisticsApp goldApp = new GoldStatisticsApp();
             try
             {
-                DateTime yeesterdayZero = DateTime.Today.AddDays(-1);
+                var yeesterdayZero = DateTime.Today.AddDays(-1);
 
-                var curTime = goldApp.GetTop1LogDay();
-                if (curTime == null)
+                var curTime = goldApp.GetTop1LogDay()?.ToDate();
+                if (curTime == null || curTime < yeesterdayZero)
                 {
-                    
+                    Log.Info("统计开始。。。时间：" + DateTime.Now);
+                    goldApp.GoldStaStart(yeesterdayZero);
+                    Log.Info("统计结束。。。时间：" + DateTime.Now);
                 }
             }
             catch (Exception e)

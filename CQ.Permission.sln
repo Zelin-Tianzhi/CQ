@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQ.Permission", "CQ.Permission\CQ.Permission.csproj", "{7168AE73-C6B4-469F-BB2B-5F267375F6D9}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -47,7 +47,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQ.AutoService", "CQ.AutoSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQ.Task", "CQ.Task\CQ.Task.csproj", "{83656662-24D9-418D-BE13-CAE6CB14F25D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "安装部署程序", "安装部署程序", "{9C5430F6-8A09-4074-A21C-01F55849253E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TxGameService", "TxGameService\TxGameService.vdproj", "{02F5344D-69E3-41D2-9286-6DF515CD865B}"
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -105,6 +112,8 @@ Global
 		{83656662-24D9-418D-BE13-CAE6CB14F25D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83656662-24D9-418D-BE13-CAE6CB14F25D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83656662-24D9-418D-BE13-CAE6CB14F25D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F5344D-69E3-41D2-9286-6DF515CD865B}.Debug|Any CPU.ActiveCfg = Debug
+		{02F5344D-69E3-41D2-9286-6DF515CD865B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,8 +132,18 @@ Global
 		{09EF159A-19B2-4447-BCEC-6AA3189EF5DA} = {58CFE8D7-DA5F-4B74-8C19-B2CDC68AFC83}
 		{052668E2-ED72-4D3A-B4CF-E23589C6FAD1} = {A98BE20A-F9A7-4FBA-AC35-86AFC8E4CF06}
 		{83656662-24D9-418D-BE13-CAE6CB14F25D} = {A98BE20A-F9A7-4FBA-AC35-86AFC8E4CF06}
+		{02F5344D-69E3-41D2-9286-6DF515CD865B} = {9C5430F6-8A09-4074-A21C-01F55849253E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA6FE4FC-2663-4AD6-9475-7FA231CDB2A9}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

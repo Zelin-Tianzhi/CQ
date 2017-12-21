@@ -10,12 +10,14 @@ using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using CQ.Core.Log;
 
 namespace CQ.Repository.EntityFramework
 {
     public class DbHelper
     {
         private string connstring = string.Empty;
+        private Log Log => LogFactory.GetLogger(this.GetType().ToString());
         public DbHelper()
         {
             connstring = ConfigurationManager.ConnectionStrings["CqDbContext"].ConnectionString;
@@ -115,6 +117,7 @@ namespace CQ.Repository.EntityFramework
                      catch (SqlException ex)
                      {
                          conn.Close();//出异常,关闭数据源连接
+                         Log.Error(ex);
                          throw new Exception($"执行{strSql}失败:{ex.Message}");
                      }
                  }
@@ -151,7 +154,7 @@ namespace CQ.Repository.EntityFramework
                     catch (SqlException ex)
                     {
                         conn.Close();
-
+                        Log.Error(ex);
                         throw new Exception($"执行{sqlText}失败:{ex.Message}");
                     }
                 }
@@ -175,9 +178,8 @@ namespace CQ.Repository.EntityFramework
                 try
                 {
                     int count = 0;
-                    for (int n = 0; n < SQLStringList.Count; n++)
+                    foreach (string strsql in SQLStringList)
                     {
-                        string strsql = SQLStringList[n];
                         if (strsql.Trim().Length > 1)
                         {
                             cmd.CommandText = strsql;
@@ -188,8 +190,9 @@ namespace CQ.Repository.EntityFramework
                     tx.Commit();
                     return count;
                 }
-                catch
+                catch(SqlException ex)
                 {
+                    Log.Error(ex);
                     tx.Rollback();
                     return 0;
                 }

@@ -1,0 +1,13 @@
+{
+  "components": [
+    {
+      "type": "CQ.Plugin.Cache.AspNet.NetCache, CQ.Plugin.Cache.AspNet",
+      "services": [
+        {
+          "type": "CQ.Plugin.Cache.ICache, CQ.Plugin.Cache"
+        }
+      ],
+      "injectProperties": true
+    }
+  ]
+}
