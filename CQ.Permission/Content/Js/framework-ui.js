@@ -118,7 +118,7 @@ $.modalConfirm = function (content, callBack) {
     }, function () {
         callBack(true);
     }, function () {
-        callBack(false)
+        callBack(false);
     });
 }
 $.modalAlert = function (content, type) {

@@ -11,7 +11,7 @@ namespace CQ.WebSiteTests.ApplicationTests
         public void TestMethod1()
         {
             GoldStatisticsApp app = new GoldStatisticsApp();
-            app.GoldStaStart(DateTime.Today.AddDays(-1));
+            app.GoldStaStart(DateTime.Today.AddDays(-6));
         }
     }
 }
