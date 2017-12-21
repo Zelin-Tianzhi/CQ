@@ -250,7 +250,6 @@
     <Content Include="Content\Img\signet.gif" />
     <Content Include="Content\Img\wechat.jpg" />
     <Content Include="Content\Img\weipayimg.png" />
-    <Content Include="Content\Img\weixin_nfine.png" />
     <Content Include="Content\Js\bootstrap\bootstrap-theme.css" />
     <Content Include="Content\Js\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Content\Js\bootstrap\bootstrap.css" />

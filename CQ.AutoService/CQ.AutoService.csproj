@@ -154,6 +154,10 @@
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>
       <Name>CQ.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CQ.Task\CQ.Task.csproj">
+      <Project>{83656662-24d9-418d-be13-cae6cb14f25d}</Project>
+      <Name>CQ.Task</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="bin\Debug\Configs\GlobConfig.xml" />

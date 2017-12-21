@@ -21,7 +21,7 @@
         <group>TxJobGroup</group>
         <job-name>TxUserGoldServiceJob</job-name>
         <job-group>TxJobGroup</job-group>
-        <cron-expression>28 0/5 9-23 * * ? *</cron-expression>
+        <cron-expression>0 20 4 * * ? *</cron-expression>
       </cron>
     </trigger>
 
