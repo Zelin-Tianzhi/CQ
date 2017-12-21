@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceProcess;
+using CQ.Core;
 using CQ.Core.Log;
 using Quartz;
 using Quartz.Impl;
@@ -22,9 +23,12 @@ namespace CQ.AutoService
         {
             try
             {
-                Log.Debug("棋牌自动化服务开始运行......");
+                Log.Debug("自动化服务开始运行......");
                 XMLSchedulingDataProcessor processor = new XMLSchedulingDataProcessor(new SimpleTypeLoadHelper());
                 ISchedulerFactory factory = new StdSchedulerFactory();
+                sched = factory.GetScheduler();
+                processor.ProcessFileAndScheduleJobs(FileHelper.MapPath("/quartz_jobs.xml"), sched);
+                sched.Start();
             }
             catch (Exception e)
             {
@@ -34,7 +38,7 @@ namespace CQ.AutoService
 
         protected override void OnStop()
         {
-            // TODO: 在此处添加代码以执行停止服务所需的关闭操作。
+            Log.Debug("自动化服务停止运行......");
         }
     }
 }
