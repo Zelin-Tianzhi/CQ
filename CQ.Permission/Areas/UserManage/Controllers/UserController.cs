@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using CQ.Application;
 using CQ.Application.GameUsers;
+using CQ.Application.SystemSecurity;
 using CQ.Core;
+using CQ.Domain.Entity.SystemSecurity;
 
 namespace CQ.Permission.Areas.UserManage.Controllers
 {
@@ -14,6 +17,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         #region 属性
 
         private readonly UsersApp _userApp = new UsersApp();
+        private readonly OperLogApp _operLogApp = new OperLogApp();
 
         #endregion
 
@@ -92,6 +96,15 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         public ActionResult SubmitModifyJinBi(string keyValue, string num = "0")
         {
             string result = _userApp.ModifyGold(num.ToInt(), keyValue);
+            //记录操作日志
+            OperLogEntity entity = new OperLogEntity
+            {
+                F_Account = keyValue,
+                F_TextValue = num,
+                F_Type = OperLogType.Gold.ToInt() + "",
+                F_Description = "管理员金币操作。"
+            };
+            _operLogApp.WriteLog(entity);
             return Success("操作成功。");
         }
         [HttpGet]

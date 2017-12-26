@@ -74,6 +74,7 @@
     <Compile Include="SystemSecurity\DbBackupApp.cs" />
     <Compile Include="SystemSecurity\FilterIPApp.cs" />
     <Compile Include="SystemSecurity\LogApp.cs" />
+    <Compile Include="SystemSecurity\OperLogApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CQ.Cache.AspNet\CQ.Plugin.Cache.AspNet.csproj">

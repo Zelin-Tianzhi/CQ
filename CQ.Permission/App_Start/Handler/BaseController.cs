@@ -41,5 +41,7 @@ namespace CQ.Permission
         {
             return Content(new AjaxResult { state = ResultType.error.ToString(), message = message }.ToJson());
         }
+
+
     }
 }

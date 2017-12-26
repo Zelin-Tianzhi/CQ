@@ -406,7 +406,6 @@ namespace CQ.Application.SystemConfig
                     GroupName = dr["GroupName"],
                     RoomAIID = dr["RoomAIID"],
                     GameAIID = dr["GameAIID"],
-                    gameroomconfigid = dr["gameroomconfigid"],
                     UserCount = dr["UserCount"]
                 });
             }

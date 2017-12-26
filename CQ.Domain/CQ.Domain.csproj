@@ -133,6 +133,7 @@
     <Compile Include="04 IRepository\SystemSecurity\IDbBackupRepository.cs" />
     <Compile Include="04 IRepository\SystemSecurity\IFilterIPRepository.cs" />
     <Compile Include="04 IRepository\SystemSecurity\ILogRepository.cs" />
+    <Compile Include="04 IRepository\SystemSecurity\IOperLogRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

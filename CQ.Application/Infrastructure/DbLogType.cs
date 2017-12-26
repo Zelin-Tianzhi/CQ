@@ -28,4 +28,12 @@ namespace CQ.Application
         [Description("异常")]
         Exception = 8,
     }
+
+    public enum OperLogType
+    {
+        [Description("增减金币")]
+        Gold = 1,
+        [Description("增减元宝")]
+        YuanBao = 2
+    }
 }

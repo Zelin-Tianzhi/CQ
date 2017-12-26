@@ -9,7 +9,7 @@ namespace CQ.Repository.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(CQ.Repository.EntityFramework.CqDbContext context)
