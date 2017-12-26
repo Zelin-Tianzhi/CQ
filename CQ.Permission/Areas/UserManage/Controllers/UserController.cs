@@ -45,7 +45,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
 
         #endregion
 
-        #region Ajac请求
+        #region Ajax请求
 
         [HttpGet]
         [HandlerAjaxOnly]
