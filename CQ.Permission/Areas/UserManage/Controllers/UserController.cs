@@ -102,7 +102,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
                 F_Account = keyValue,
                 F_TextValue = num,
                 F_Type = OperLogType.Gold.ToInt() + "",
-                F_Description = "管理员金币操作。"
+                F_Description = "管理员金币操作。操作值：[" + num + "]"
             };
             _operLogApp.WriteLog(entity);
             return Success("操作成功。");
