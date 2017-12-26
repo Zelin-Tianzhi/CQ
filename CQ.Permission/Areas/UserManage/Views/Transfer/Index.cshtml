@@ -7,7 +7,6 @@
 <script>
     $(function() {
         gridList();
-        initControl();
     });
 
     function gridList() {
@@ -18,7 +17,6 @@
             height: $(window).height() - 158,
             colModel: [
                 { label: '主键', name: 'F_Id', hidden: true },
-                { label: '标识', name: 'F_Id', width: 60, align: 'center' },
                 {
                     label: '转出帐号', name: 'OutUser', width: 100, align: 'left',
                     formatter: function (cellvalue) {
@@ -52,12 +50,13 @@
                 { label: '转账类型', name: 'TransferType', width: 80, align: 'center' },
                 { label: '操作时间', name: 'OperTime', width: 80, align: 'center' }
             ],
-            rpager: "#gridPager",
+            pager: '#gridPager',
             footerrow: true,
-            sortname: 'ID desc',
+            sortname: 'Id desc',
             viewrecords: true
         });
-        $("#btn_search").click(function() {
+        $("#btn_search").click(function () {
+
             $gridList.jqGrid('setGridParam',
                 {
                     postData: {
@@ -69,14 +68,7 @@
                 }).trigger('reloadGrid');
         });
     }
-
-    function initControl() {
-        $("#drop_gamename").bindSelect({
-            url: "/SystemConfig/GameAi/GetGameList",
-            id: "F_Id",
-            text: "GameName"
-        });
-    }
+    
     function btn_details(account) {
         $.modalOpen({
             id: "DisableUser",
@@ -104,7 +96,6 @@
         <div class="btn-group">
             <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
         </div>
-        <script>$('.toolbar').authorizeButton()</script>
     </div>
     <div class="search">
         <table>
