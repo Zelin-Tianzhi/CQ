@@ -1,51 +1,38 @@
 ﻿
 @{
-    ViewBag.Title = "UserGameGold";
+    ViewBag.Title = "OnlineUser";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 
 <script>
-    $(function() {
+    $(function () {
         gridList();
-        initControl();
     });
 
     function gridList() {
         var $gridList = $("#gridList");
 
         $gridList.dataGrid({
-            url: "/DataAnalysis/GoldStatistics/GetGridJson",
+            url: "/DataAnalysis/OnlineStatistics/GetRealTimeUserJson",
             height: $(window).height() - 128,
             colModel: [
-                { label: '主键', name: 'AccountId', hidden: true },
-                { label: '标识', name: 'AccountId', width: 60, align: 'center' },
-                {
-                    label: '用户帐号', name: 'Account', width: 100, align: 'left',
-                    formatter: function (cellvalue) {
-                        return "<a href='#' onclick='btn_details(\"" + cellvalue + "\")'>" + cellvalue + "</a>";
-                    }
-                },
-                { label: '用户输赢', name: 'WinGold', width: 80, align: 'center' },
-                { label: '中奖额', name: 'Profit', width: 80, align: 'center' }
+                { label: '主键', name: 'F_Id', hidden: true },
+                { label: '时间', name: 'CurTime', width: 180, align: 'center' },
+                { label: '活跃用户', name: 'ActiveUser', width: 80, align: 'center' },
+                { label: '内部用户', name: 'InsideUser', width: 80, align: 'center' },
+                { label: '普通用户', name: 'OrdinaryUser', width: 80, align: 'center' },
+                { label: '总用户数', name: 'TotalUser', width: 80, align: 'center' }
             ],
             rowNum: -1,
             footerrow: true,
             sortname: 'ID desc',
             viewrecords: true
         });
-        $("#btn_search").click(function() {
+        $("#btn_search").click(function () {
             $gridList.jqGrid('setGridParam',
                 {
-                    postData: { keyword: $("#txt_keyword").val(), begintime: $("#txt_begintime").val(), endtime: $("#txt_endtime").val() },
+                    postData: { keyword: $("#txt_keyword").val() },
                 }).trigger('reloadGrid');
-        });
-    }
-
-    function initControl() {
-        $("#drop_gamename").bindSelect({
-            url: "/SystemConfig/GameAi/GetGameList",
-            id: "F_Id",
-            text: "GameName"
         });
     }
     function btn_details(account) {
@@ -61,8 +48,6 @@
 
 </script>
 
-
-
 <div class="topPanel">
     <div class="toolbar">
         <div class="btn-group">
@@ -70,7 +55,7 @@
         </div>
         <script>$('.toolbar').authorizeButton()</script>
     </div>
-    <div class="search">
+    @*<div class="search">
         <table>
             <tr>
                 <td>时间：</td>
@@ -95,10 +80,10 @@
                         </span>
                     </div>
                 </td>
-                
+
             </tr>
         </table>
-    </div>
+    </div>*@
 </div>
 <div class="gridPanel">
     <table id="gridList"></table>

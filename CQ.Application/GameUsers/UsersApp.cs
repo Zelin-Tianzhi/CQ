@@ -156,15 +156,9 @@ namespace CQ.Application.GameUsers
         /// <returns></returns>
         public string ModifyGold(int gold, string keyValue)
         {
-            string func = string.Empty;
-            if (gold > 0)
-            {
-                func = $"ysfunction=chongzhijinbi&account={keyValue}&values={gold}&nosendmail={1}";
-            }
-            else
-            {
-                 func = $"ysfunction=kouchujinbi&account={keyValue}&values={gold}&nosendmail={1}";
-            }
+            var func = gold > 0
+                ? $"ysfunction=chongzhijinbi&account={keyValue}&values={gold}&nosendmail={1}"
+                : $"ysfunction=kouchujinbi&account={keyValue}&values={gold}&nosendmail={1}";
             string url = GetUrlStr() + func;
             string msg = HttpMethods.HttpGet(url);
             Regex rex = new Regex(@"(-\d+|\d+)<");

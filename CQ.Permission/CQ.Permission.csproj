@@ -184,6 +184,7 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Areas\UserManage\Controllers\TransferController.cs" />
     <Compile Include="Areas\UserManage\Controllers\UserController.cs" />
     <Compile Include="Areas\UserManage\UserManageAreaRegistration.cs" />
     <Compile Include="Content\Js\FileUpload\UploadFile.ashx.cs">
@@ -774,7 +775,6 @@
     <Folder Include="Areas\ContentManage\Models\" />
     <Folder Include="Areas\ContentManage\Views\Shared\" />
     <Folder Include="Areas\DataAnalysis\Models\" />
-    <Folder Include="Areas\DataAnalysis\Views\OnlineStatistics\" />
     <Folder Include="Areas\DataAnalysis\Views\Shared\" />
     <Folder Include="Areas\ExampleManage\Models\" />
     <Folder Include="Areas\RechargeSystem\Controllers\" />
@@ -961,6 +961,8 @@
     <Content Include="Areas\SystemConfig\Views\RobotGroup\Form.cshtml" />
     <Content Include="Areas\DataAnalysis\Views\web.config" />
     <Content Include="Areas\DataAnalysis\Views\GoldStatistics\UserGameGold.cshtml" />
+    <Content Include="Areas\DataAnalysis\Views\OnlineStatistics\OnlineUser.cshtml" />
+    <Content Include="Areas\UserManage\Views\Transfer\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

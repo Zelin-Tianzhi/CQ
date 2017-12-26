@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 using CQ.Core;
 using CQ.Repository.EntityFramework;
 
@@ -18,7 +20,7 @@ namespace CQ.Application.DataAnalusis
 
         #region 公共方法
 
-        public void UserGoldStatis(DateTime begintime, DateTime endtime, string gameid)
+        public List<object> UserGoldStatis(DateTime begintime, DateTime endtime, string gameid)
         {
             string tableName = "LogDayGame" + begintime.ToString("yyyyMM");
 
@@ -27,9 +29,34 @@ namespace CQ.Application.DataAnalusis
             sql += $" where CurrentDay >= '{begintime}' and CurrentDay < '{endtime}' ";
             if (!string.IsNullOrEmpty(gameid))
             {
-                sql += $" and GameId={gameid}";
+                sql += $" and GameId={gameid} ";
             }
+            sql += " group by AccountID ";
             DataTable dt = _qpLogStatis.GetDataTablebySql(sql).Tables[0];
+            string uids = string.Join(",",(from r in dt.AsEnumerable() select r.Field<int>("AccountID")).ToArray());
+            DataTable userDt = new DataTable();
+            if (uids.Length > 1)
+            {
+                string userSql = $"select AccountID,Account from Account where AccountID in ({uids})";
+                userDt = _qpAccount.GetDataTablebySql(userSql).Tables[0];
+            }
+            List<object> list = new List<object>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                string userName = userDt.Select($"AccountID={dr["AccountID"].ToString()}")[0]["Account"].ToString();
+                list.Add(new
+                {
+                    Account = userName,
+                    AccountId = dr["AccountID"].ToString(),
+                    WinGold = dr["gold"].ToInt64(),
+                    AllGold = dr["AllGold"].ToInt64(),
+                    Profit = dr["GoldWin"].ToInt64()
+                });
+            }
+            //pagination.records = dt.Rows.Count;
+            //pagination.rows = dt.Rows.Count;
+            
+            return list;
         }
 
         #endregion

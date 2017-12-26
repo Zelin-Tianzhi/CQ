@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CQ.Application.DataAnalusis;
+using CQ.Core;
 
 namespace CQ.Permission.Areas.DataAnalysis.Controllers
 {
-    public class GoldStatisticsController : Controller
+    public class GoldStatisticsController : BaseController
     {
         #region 属性
 
-
+        private GoldApp _app = new GoldApp();
 
         #endregion
 
@@ -24,8 +26,27 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         #endregion
 
         #region Ajax请求
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetGridJson(string begintime, string endtime, string keyword)
+        {
 
-        
+            var btime = string.IsNullOrEmpty(begintime) ? DateTime.Today.AddDays(-1) : begintime.ToDate();
+            var etime = string.IsNullOrEmpty(endtime) ? DateTime.Today : endtime.ToDate();
+            if (etime.Month != btime.Month)
+            {
+                return Content("暂时不支持跨月度查询。");
+            }
+            var list = _app.UserGoldStatis(btime, etime, keyword);
+            var data = new
+            {
+                rows = list,
+                total = 1,
+                page = 1,
+                records = list.Count
+            };
+            return Content(data.ToJson());
+        }
 
         #endregion
 

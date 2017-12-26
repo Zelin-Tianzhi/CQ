@@ -113,6 +113,7 @@
     <Compile Include="03 Entity\SystemSecurity\DbBackupEntity.cs" />
     <Compile Include="03 Entity\SystemSecurity\FilterIPEntity.cs" />
     <Compile Include="03 Entity\SystemSecurity\LogEntity.cs" />
+    <Compile Include="03 Entity\SystemSecurity\OperLogEntity.cs" />
     <Compile Include="04 IRepository\BusinessData\IArticleRepository.cs" />
     <Compile Include="04 IRepository\BusinessData\IImagesRepository.cs" />
     <Compile Include="04 IRepository\BusinessData\IProductRepository.cs" />

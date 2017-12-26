@@ -70,6 +70,7 @@
     <Compile Include="EntityFramework\ModelMapping\SystemSecurity\DbBackupMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\SystemSecurity\FilterIPMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\SystemSecurity\LogMap.cs" />
+    <Compile Include="EntityFramework\ModelMapping\SystemSecurity\OperLogMap.cs" />
     <Compile Include="EntityFramework\RepositoryBase.cs" />
     <Compile Include="EntityFramework\RepositoryBase.T.cs" />
     <Compile Include="Migrations\201711290744089_CreateDataBase.cs" />
