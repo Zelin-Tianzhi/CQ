@@ -52,6 +52,8 @@
     <Compile Include="DataAnalusis\GoldApp.cs" />
     <Compile Include="DataAnalusis\OnlineUserApp.cs" />
     <Compile Include="GameUsers\GoldOperApp.cs" />
+    <Compile Include="GameUsers\PropApp.cs" />
+    <Compile Include="GameUsers\RechargeOrderApp.cs" />
     <Compile Include="GameUsers\UsersApp.cs" />
     <Compile Include="Infrastructure\BusinessType.cs" />
     <Compile Include="Infrastructure\DbLogType.cs" />

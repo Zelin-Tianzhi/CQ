@@ -51,6 +51,7 @@
     <Compile Include="BusinessData\ArticleRepository.cs" />
     <Compile Include="BusinessData\ImageRepository.cs" />
     <Compile Include="BusinessData\ProductRepository.cs" />
+    <Compile Include="BusinessData\RechargeOrderRepository.cs" />
     <Compile Include="EntityFramework\CqDbContext.cs" />
     <Compile Include="EntityFramework\DbHelper.cs" />
     <Compile Include="EntityFramework\EntityInterfaceExtensions.cs" />

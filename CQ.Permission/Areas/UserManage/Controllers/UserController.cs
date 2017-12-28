@@ -93,15 +93,15 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitModifyJinBi(string keyValue, string num = "0")
+        public ActionResult SubmitModifyJinBi(string keyValue, string keyword, string num = "0")
         {
             string result = _userApp.ModifyGold(num.ToInt(), keyValue);
             //记录操作日志
             OperLogEntity entity = new OperLogEntity
             {
-                F_Account = keyValue,
+                F_Account = keyword,
                 F_TextValue = num,
-                F_Type = OperLogType.Gold.ToInt() + "",
+                F_Type = (int)OperLogType.Gold,
                 F_Description = "管理员金币操作。操作值：[" + num + "]"
             };
             _operLogApp.WriteLog(entity);

@@ -6,7 +6,8 @@ namespace CQ.Domain.Entity.BusinessData
     public class RechargeOrderEntity : IEntity<RechargeOrderEntity>, ICreationAudited
     {
         public int F_Id { get; set; }
-        public long F_AccountId { get; set; }
+        [StringLength(50)]
+        public string F_Account { get; set; }
         [StringLength(50)]
         public string F_OrderNo { get; set; }
         public long F_Amounts { get; set; }

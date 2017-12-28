@@ -10,8 +10,7 @@ namespace CQ.Domain.Entity.SystemSecurity
         public string F_Account { get; set; }
         [StringLength(100)]
         public string F_TextValue { get; set; }
-        [StringLength(50)]
-        public string F_Type { get; set; }
+        public int F_Type { get; set; }
         [StringLength(50)]
         public string F_IpAddress { get; set; }
         public string F_Description { get; set; }

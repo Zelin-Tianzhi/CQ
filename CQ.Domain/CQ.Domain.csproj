@@ -118,6 +118,7 @@
     <Compile Include="04 IRepository\BusinessData\IArticleRepository.cs" />
     <Compile Include="04 IRepository\BusinessData\IImagesRepository.cs" />
     <Compile Include="04 IRepository\BusinessData\IProductRepository.cs" />
+    <Compile Include="04 IRepository\BusinessData\IRechargeOrderRepository.cs" />
     <Compile Include="04 IRepository\IRepositoryBase.cs" />
     <Compile Include="04 IRepository\IRepositoryBase.T.cs" />
     <Compile Include="04 IRepository\QPAccount\IAccountRepository.cs" />

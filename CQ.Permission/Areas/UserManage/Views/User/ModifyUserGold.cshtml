@@ -16,6 +16,7 @@
         var postData = $("#form1").formSerialize();
         postData["num"] = $("#F_Gold").val();
         postData["keyValue"] = account;
+        postData["keyword"] = keyValue;
         $.submitForm({
             url: "/UserManage/User/SubmitModifyJinBi",
             param: postData,
