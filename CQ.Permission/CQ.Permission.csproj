@@ -184,6 +184,7 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Areas\UserManage\Controllers\RechargeController.cs" />
     <Compile Include="Areas\UserManage\Controllers\TransferController.cs" />
     <Compile Include="Areas\UserManage\Controllers\UserController.cs" />
     <Compile Include="Areas\UserManage\UserManageAreaRegistration.cs" />
@@ -963,6 +964,7 @@
     <Content Include="Areas\DataAnalysis\Views\GoldStatistics\UserGameGold.cshtml" />
     <Content Include="Areas\DataAnalysis\Views\OnlineStatistics\OnlineUser.cshtml" />
     <Content Include="Areas\UserManage\Views\Transfer\Index.cshtml" />
+    <Content Include="Areas\UserManage\Views\Recharge\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

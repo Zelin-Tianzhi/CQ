@@ -66,6 +66,7 @@
     <Compile Include="03 Entity\BusinessData\ArticleEntity.cs" />
     <Compile Include="03 Entity\BusinessData\ImageEntity.cs" />
     <Compile Include="03 Entity\BusinessData\ProductEntity.cs" />
+    <Compile Include="03 Entity\BusinessData\RechargeOrderEntity.cs" />
     <Compile Include="03 Entity\QPAccount\Account.cs" />
     <Compile Include="03 Entity\QPAccount\AccountFreeze.cs" />
     <Compile Include="03 Entity\QPAccount\AccountLastLogin.cs" />

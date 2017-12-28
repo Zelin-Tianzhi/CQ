@@ -57,6 +57,7 @@
     <Compile Include="EntityFramework\ModelMapping\BusinessData\ArticleMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\BusinessData\ImageMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\BusinessData\ProduceMap.cs" />
+    <Compile Include="EntityFramework\ModelMapping\BusinessData\RechargeOrderMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\SystemManage\AreaMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\SystemManage\ItemsDetailMap.cs" />
     <Compile Include="EntityFramework\ModelMapping\SystemManage\ItemsMap.cs" />
