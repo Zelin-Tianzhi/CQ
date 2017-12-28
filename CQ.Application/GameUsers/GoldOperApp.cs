@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CQ.Core;
+using CQ.Domain.Entity.SystemSecurity;
 using CQ.Repository.EntityFramework;
 
 namespace CQ.Application.GameUsers
@@ -18,7 +19,8 @@ namespace CQ.Application.GameUsers
 
         #region 公共方法
 
-        public List<object> GetTransferList(Pagination pagination,string begintime, string endtime, string outusernum, string inusernum)
+        public List<object> GetTransferList(Pagination pagination, string begintime, string endtime, string outusernum,
+            string inusernum)
         {
             const string sysTable = @"Transfer";
             const string sysKey = @"Id";
@@ -38,7 +40,7 @@ namespace CQ.Application.GameUsers
             }
             if (!string.IsNullOrEmpty(outusernum))
             {
-                sysWhere += $" and SrcAccountID={GetIdByNum(outusernum,0)} ";
+                sysWhere += $" and SrcAccountID={GetIdByNum(outusernum, 0)} ";
             }
             if (!string.IsNullOrEmpty(inusernum))
             {
@@ -55,8 +57,8 @@ namespace CQ.Application.GameUsers
                 new SqlParameter("@sys_Begin", sysBegin),
                 new SqlParameter("@sys_PageIndex", sysPageIndex),
                 new SqlParameter("@sys_PageSize", sysPageSize),
-                new SqlParameter("@PCount",SqlDbType.Int),
-                new SqlParameter("@RCount",SqlDbType.Int),
+                new SqlParameter("@PCount", SqlDbType.Int),
+                new SqlParameter("@RCount", SqlDbType.Int),
             };
             parameters[8].Direction = ParameterDirection.Output;
             parameters[9].Direction = ParameterDirection.Output;
@@ -67,8 +69,8 @@ namespace CQ.Application.GameUsers
                 list.Add(new
                 {
                     F_Id = dr["Id"].ToInt64(),
-                    OutUser = GetIdByNum(dr["SrcAccountID"].ToString(),1),
-                    ReceiveUser = GetIdByNum(dr["DstAccountID"].ToString(),1),
+                    OutUser = GetIdByNum(dr["SrcAccountID"].ToString(), 1),
+                    ReceiveUser = GetIdByNum(dr["DstAccountID"].ToString(), 1),
                     OutGold = dr["SrcGold"].ToInt64(),
                     ReceiveGold = dr["DstGold"].ToInt64(),
                     Tax = dr["SrcGold"].ToInt64() - dr["DstGold"].ToInt64(),
@@ -94,6 +96,9 @@ namespace CQ.Application.GameUsers
                     break;
                 case 1:
                     sql = $"select Account from Account where AccountID={account}";
+                    break;
+                case 2:
+                    sql = $"select Account from Account where AccountNum={account}";
                     break;
             }
             var obj = _qpAccount.GetObject(sql, null);
