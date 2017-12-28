@@ -66,13 +66,13 @@ namespace CQ.Application.GameUsers
                 list.Add(new
                 {
                     F_Id = dr["Id"].ToInt64(),
+                    F_Manage = dr["ProviderAccountID"].ToInt64(),
                     F_Account = GetIdByNum(dr["SrcAccountID"].ToString(), 1),
                     F_PropName = GetIdByNum(dr["DstAccountID"].ToString(), 1),
                     F_Count = dr["SrcGold"].ToInt64(),
                     F_Price = dr["DstGold"].ToInt64(),
                     F_Type = dr["SrcGold"].ToInt64() - dr["DstGold"].ToInt64(),
-                    TransferType = GetTransferType(dr["OperateType"].ToString()),
-                    OperTime = dr["Date"].ToString()
+                    F_OperTime = dr["Date"].ToString()
                 });
             }
             pagination.records = parameters[9].Value.ToInt();
