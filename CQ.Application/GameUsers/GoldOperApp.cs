@@ -81,12 +81,7 @@ namespace CQ.Application.GameUsers
             pagination.records = parameters[9].Value.ToInt();
             return list;
         }
-
-        #endregion
-
-        #region 私有方法
-
-        private string GetIdByNum(string account, int type)
+        public string GetIdByNum(string account, int type)
         {
             var sql = string.Empty;// 
             switch (type)
@@ -104,6 +99,12 @@ namespace CQ.Application.GameUsers
             var obj = _qpAccount.GetObject(sql, null);
             return obj?.ToString() ?? "0";
         }
+
+        #endregion
+
+        #region 私有方法
+
+
 
         private string GetTransferType(string type)
         {

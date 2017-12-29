@@ -4,7 +4,12 @@
 ******************************/
 $(function() {
 	initwdWidth(); //窗口大小变化
-	onwdresize(); //窗口大小变化
+    onwdresize(); //窗口大小变化
+    $("#amountList_child li").on("click", function () {
+        $("#amountList_child li span").removeClass('select');
+        $(this).children('span').addClass('select');
+        return false;
+    })
 })
 
 window.prop = 1000;//定义充值比例
@@ -69,11 +74,7 @@ function ShowPayType(name){
 }	
 
 function ShowPayVal(Payval){
-	$("#amountList_child li").on("click",function(){
-		$("#amountList_child li span").removeClass('select');
-		$(this).children('span').addClass('select');
-		return false;
-	})
+	
 	$('#pay_center_submit_amount').html('￥'+Payval);
 	$('#pay_center_submit_getjb').html(Payval*prop);
 }

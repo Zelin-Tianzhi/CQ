@@ -35,10 +35,10 @@
                 <tr>
                     <th align="right" width="110" style="height: 45px; line-height: 45px;">充值ID：</th>
                     <td id="pay_center_input" style="height: 45px; line-height: 45px;">
-                        <input id="userName" name="userName" type="text" class="input" style="margin-top: 5px;" onblur="paytool.change_pay_user_submit2();">
-                        <button type="button" class="sure_btn" onclick="paytool.change_pay_user_submit2();">确认</button>
-                        <span style="color: red">*请确认游戏ID</span>
-                        <p style="color:red;font-weight:bold;">*充值ID即游戏ID</p>
+                        <input id="userName" name="userName" type="text" class="input" style="margin-top: 5px;" >
+                        <button type="button" class="sure_btn" onclick="checkuser();">确认</button>
+                        <span  style="color: red">*请确认游戏ID</span>
+                        <p class="uaccount" style="color:red;font-weight:bold;">*充值ID即游戏ID</p>
                     </td>
                 </tr>
                 <tr>
@@ -49,43 +49,7 @@
                         <div class="pruneShow">
                             <div class="simRadio">
                                 <ul class="bankSelect clearfix">
-                                    @*<li class="ZHIFUBAO select"><span>支付宝</span></li>*@
-                                    <!--<li class="WEIXIN"><span>微信</span></li>-->
-                                    <!--网上银行-->
-                                    <li class="ICBC"><span>工商银行</span></li>
-                                    <li class="BOC"><span>中国银行</span></li>
-                                    <li class="ABC"><span>农业银行</span></li>
-                                    <li class="CCB"><span>建设银行</span></li>
-                                    <li class="PSBC"><span>邮政银行</span></li>
-                                    <li class="BCOM"><span>交通银行</span></li>
-                                    <li class="CMB"><span>招商银行</span></li>
-                                    <li class="CIB"><span>兴业银行</span></li>
-                                    <li class="CMBC"><span>民生银行</span></li>
-                                    <li class="CITIC"><span>中信银行</span></li>
-                                    <li class="CEB"><span>光大银行</span></li>
-                                    <li class="PAB"><span>平安银行</span></li>
-                                    <li class="HXB"><span>华夏银行</span></li>
-                                    <li class="GDB"><span>广发银行</span></li>
-                                    <li class="SDB"><span>深发银行</span></li>
-                                    <li class="SPDB"><span>浦发银行</span></li>
-                                    <li class="SHB"><span>上海银行</span></li>
-                                    <!--/网上银行-->
-                                    <!--游戏点卡-->
-                                    <!--<li class="JUNKA"><span>骏网卡</span></li>
-                                    <li class="SHENDA"><span>盛大卡</span></li>
-                                    <li class="WANGYI"><span>网易卡</span></li>
-                                    <li class="WANMEI"><span>完美卡</span></li>
-                                    <li class="JIUYOU"><span>久游卡</span></li>
-                                    <li class="SHOUHU"><span>搜狐卡</span></li>
-                                    <li class="ZHENTU"><span>征途卡</span></li>
-                                    <li class="QQ"><span>Q币卡</span></li>-->
-                                    <!--/游戏点卡-->
-                                    <!--手机充值卡-->
-                                    <!--<li class="MOBILE"><span>中国移动</span></li>
-                                    <li class="UNICOM"><span>中国联通</span></li>
-                                    <li class="TELECOM"><span>中国电信</span></li>-->
-                                    <!--/手机充值卡-->
-
+                                    <li class="ZHIFUBAO select"><span>支付宝</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -124,8 +88,9 @@
                     <th align="right" width="110" style="padding-top: 10px;">图片验证码：</th>
                     <td>
                         <input id="vcode" name="vcode" type="text" class="input">&nbsp;
-                        <img src="images/temp/yzm.jpg" style="height:32px; cursor: pointer; border: 1px solid #333333;vertical-align: middle;" title="点击更换验证码图片!">
-                        <a href="javascript:void(0)" class="ll" id="ImageCheck2">看不清楚？ 换一个</a>
+                        <input type="hidden" id="checktoken" value="@ViewBag.Token" />
+                        <img id="imgcode" src="/Recharge/GetAuthCode?token=@ViewBag.Token" style="height:32px; cursor: pointer; border: 1px solid #333333;vertical-align: middle;" title="点击更换验证码图片!">
+                        <a href="javascript:void(0)" class="ll" id="switchCode">看不清楚？ 换一个</a>
                     </td>
                 </tr>
                 <tr>
@@ -150,11 +115,27 @@
 <script>
     $(function () {
         $(".confirm_btn").on("click", ConfirmCZ);
-
+        $("#switchCode").click(function () {
+            $("#imgcode").attr("src", "/Recharge/GetAuthCode/?token=@ViewBag.Token" + "&time=" + Math.random());
+        });
     });
     function ConfirmCZ(a,b,c,d) {
         var userName = $("#userName").val();
         var czType = $(".bankSelect li").filter(".select").text();
+    }
+    function checkuser() {
+        var keyValue = $("#userName").val();
+        $.ajax({
+            url: "/Recharge/CheckUser",
+            data: { keyValue: keyValue },
+            async: false,
+            success: function (data) {
+                $(".uaccount").text(data);
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            }
+        })
     }
 </script>
 
