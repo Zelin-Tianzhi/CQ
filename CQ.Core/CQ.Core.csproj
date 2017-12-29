@@ -73,6 +73,7 @@
     <Compile Include="Common\SystemConstant.cs" />
     <Compile Include="Configs\Configs.cs" />
     <Compile Include="Configs\DBConnection.cs" />
+    <Compile Include="Enum\EnumHelper.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Excel\NPOIExcel.cs" />
     <Compile Include="Extend\Ext.Convert.cs" />

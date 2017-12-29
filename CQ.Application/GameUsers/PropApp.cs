@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CQ.Core;
@@ -12,6 +13,7 @@ namespace CQ.Application.GameUsers
 
         private readonly DbHelper _qpAccount = new DbHelper("QpAccount");
         private readonly DbHelper _qpLogTotal = new DbHelper("QPLogTotal");
+        private readonly DbHelper _qpProp = new DbHelper("QPProp");
 
         #endregion
 
@@ -67,11 +69,11 @@ namespace CQ.Application.GameUsers
                 {
                     F_Id = dr["Id"].ToInt64(),
                     F_Manage = dr["ProviderAccountID"].ToInt64(),
-                    F_Account = GetIdByNum(dr["SrcAccountID"].ToString(), 1),
-                    F_PropName = GetIdByNum(dr["DstAccountID"].ToString(), 1),
-                    F_Count = dr["SrcGold"].ToInt64(),
-                    F_Price = dr["DstGold"].ToInt64(),
-                    F_Type = dr["SrcGold"].ToInt64() - dr["DstGold"].ToInt64(),
+                    F_Account = GetIdByNum(dr["ReceiverAccountID"].ToString(), 1),
+                    F_PropName = GetProNameById(dr["PropID"].ToString()),
+                    F_Count = dr["Amount"].ToInt64(),
+                    F_Price = dr["Price"].ToInt64(),
+                    F_Type = EnumHelper.GetEnumDescription((PropType)Enum.ToObject(typeof(PropType),dr["Operate"].ToInt())),
                     F_OperTime = dr["Date"].ToString()
                 });
             }
@@ -101,6 +103,16 @@ namespace CQ.Application.GameUsers
             var obj = _qpAccount.GetObject(sql, null);
             return obj?.ToString() ?? "0";
         }
+
+        private string GetProNameById(string propid)
+        {
+            var sql = string.Empty;// 
+            sql = $"select [name] from Prop where PropID={propid}";
+            var obj = _qpProp.GetObject(sql, null);
+            return obj?.ToString() ?? "";
+        }
+
+
 
         #endregion
     }

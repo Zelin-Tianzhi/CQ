@@ -11,30 +11,30 @@
     function gridList() {
         var $gridList = $("#gridList");
         $gridList.dataGrid({
-            url: "/UserManage/Transfer/GetGridJson",
+            url: "/UserManage/Prop/GetGridJson",
             height: $(window).height() - 128,
             colModel: [
                 { label: '主键', name: 'F_Id', hidden: true },
                 {
-                    label: '日期', name: 'F_CreatorTime', width: 120, align: 'left',
+                    label: '日期', name: 'F_OperTime', width: 150, align: 'center',
                     formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
                 },
-                { label: '管理员', name: 'F_CreatorUserId', width: 80, align: 'left' },
+                { label: '类型', name: 'F_Type', width: 150, align: 'center' },
                 {
-                    label: '操作类型', name: 'F_Type', width: 80, align: 'left',
-                    formatter: function (cellvalue) {
-                        return cellvalue == 1 ? "金币增减" : "元宝增减";
-                    }
-                },
-                {
-                    label: '用户帐号', name: 'F_Account', width: 100, align: 'left',
+                    label: '玩家帐号', name: 'F_Account', width: 100, align: 'left',
                     formatter: function (cellvalue) {
                         return "<a href='#' onclick='btn_details(\"" + cellvalue + "\")'>" + cellvalue + "</a>";
                     }
                 },
-                { label: '转账金额', name: 'F_TextValue', width: 100, align: 'left' },
-                { label: 'IP地址', name: 'F_IpAddress', width: 100, align: 'left' },
-                { label: '日志内容', name: 'F_Description', width: 300, align: 'left' }
+                { label: '管理员', name: 'F_Manage', width: 100, align: 'left' },
+                { label: '道具名称', name: 'F_PropName', width: 150, align: 'left' },
+                { label: '道具数量', name: 'F_Count', width: 100, align: 'left' },
+                {
+                    label: '总价值', name: 'F_Price', width: 100, align: 'left',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                }
             ],
             pager: "#gridPager",
             sortname: 'F_CreatorTime desc',
@@ -49,6 +49,23 @@
             $gridList.jqGrid('setGridParam', {
                 postData: { queryJson: JSON.stringify(queryJson) },
             }).trigger('reloadGrid');
+        });
+    }
+    function format_number(n) {
+        var b = parseInt(n).toString();
+        var len = b.length;
+        if (len <= 4) { return b; }
+        var r = len % 4;
+        return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{4}/g).join(",") : b.slice(r, len).match(/\d{4}/g).join(",");
+    }
+    function btn_details(account) {
+        $.modalOpen({
+            id: "DisableUser",
+            title: '用户信息',
+            url: '/UserManage/User/Details?keyValue=' + account + "&account=" + escape(account),
+            width: "600px",
+            height: "460px",
+            btn: null
         });
     }
 </script>

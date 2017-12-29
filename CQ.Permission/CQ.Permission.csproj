@@ -213,7 +213,9 @@
     <Content Include="App_Data\CQBase2017-11-25.sql" />
     <Content Include="App_Data\CQBase_Change2017-11-10.sql" />
     <Content Include="App_Data\用户信息查询2017-12-2.sql" />
-    <Content Include="Configs\GlobConfig.xml" />
+    <Content Include="Configs\GlobConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Css\framework-about.css" />
     <Content Include="Content\Css\framework-font.css" />
     <Content Include="Content\Css\framework-login.css" />
@@ -801,7 +803,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configs\autofac.json" />
+    <Content Include="Configs\autofac.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CQ.Application\CQ.Application.csproj">
@@ -845,11 +849,17 @@
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configs\database.config" />
-    <Content Include="Configs\system.config" />
+    <Content Include="Configs\database.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\system.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configs\log4net.config" />
+    <Content Include="Configs\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Default.cshtml" />
