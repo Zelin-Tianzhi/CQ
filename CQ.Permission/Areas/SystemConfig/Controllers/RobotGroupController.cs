@@ -51,23 +51,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             return Content(data.ToJson());
         }
 
-        [HttpPost]
-        [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(RobotRoomAI robotRoom, string keyValue)
-        {
-            _robotApp.SubmitRoomAiForm(robotRoom, keyValue.ToInt());
-            return Success("操作成功。");
-        }
-        [HttpPost]
-        [HandlerAjaxOnly]
-        [HandlerAuthorize]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
-        {
-            _robotApp.DeleteRoomAiForm(keyValue.ToInt());
-            return Success("删除成功。");
-        }
+        
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]

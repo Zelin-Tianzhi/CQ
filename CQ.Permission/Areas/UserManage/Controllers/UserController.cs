@@ -71,23 +71,23 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             var data = _userApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitModifyNickName(string nickName, string keyValue)
         {
             string result = _userApp.ModifyNickName(nickName, keyValue);
-            return Success("");
+            return Success("操作成功。");
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitRevisePassword(string keyValue)
         {
             string result = _userApp.RevisePassword(keyValue, "", "");
-            return Success("");
+            return Success("操作成功。");
         }
         [HttpPost]
         [HandlerAjaxOnly]
@@ -107,41 +107,47 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             _operLogApp.WriteLog(entity);
             return Success("操作成功。");
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitReviseBankPassword(string keyValue)
         {
             string result = _userApp.ReviseBankPassword(keyValue);
-            return Success("");
+            return Success("操作成功。");
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitGetOut(string keyValue)
         {
             string result = _userApp.GetOutGame(keyValue, 1);
-            return Success("");
+            return Success("操作成功。");
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitEnabled(string keyValue)
         {
             string result = _userApp.LockUser(keyValue, 0, "");
-            return Success("");
+            return Success("操作成功。");
         }
-        [HttpGet]
+        [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitDisabled(string keyValue, string hj, string message)
         {
             string result = _userApp.LockUser(keyValue, hj.ToInt64(), message);
-            return Success("");
+            return Success("操作成功。");
+        }
+
+        public ActionResult SubmitRechange()
+        {
+
+            return Success("操作成功。");
         }
         #endregion
     }

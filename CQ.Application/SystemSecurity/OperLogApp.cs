@@ -28,13 +28,13 @@ namespace CQ.Application.SystemSecurity
             }
             if (!queryParam["begintime"].IsEmpty())
             {
-                var begintime = queryParam["begintime"].ToString();
-                expression = expression.And(t=> t.F_CreatorTime >= begintime.ToDate());
+                var begintime = queryParam["begintime"].ToString().ToDate();
+                expression = expression.And(t=> t.F_CreatorTime >= begintime);
             }
             if (!queryParam["endtime"].IsEmpty())
             {
-                var endtime = queryParam["endtime"].ToString();
-                expression = expression.And(t => t.F_CreatorTime <= endtime.ToDate());
+                var endtime = queryParam["endtime"].ToString().ToDate();
+                expression = expression.And(t => t.F_CreatorTime <= endtime);
             }
             return service.FindList(expression, pagination);
         }

@@ -8,7 +8,7 @@ using CQ.Core;
 
 namespace CQ.Permission.Areas.DataAnalysis.Controllers
 {
-    public class OnlineStatisticsController : Controller
+    public class OnlineStatisticsController : BaseController
     {
         #region 属性
 
@@ -17,6 +17,11 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         #endregion
 
         #region 视图
+
+        public ActionResult RoomOnlineUser()
+        {
+            return View();
+        }
 
         public ActionResult OnlineUser()
         {
@@ -31,6 +36,21 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         public ActionResult GetRealTimeUserJson()
         {
             var list = _userApp.GetOnlineUserCount();
+            var data = new
+            {
+                rows = list,
+                total = 1,
+                page = 1,
+                records = list.Count
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetRoomUserCount()
+        {
+            var list = _userApp.GetRoomOnlineUser();
             var data = new
             {
                 rows = list,

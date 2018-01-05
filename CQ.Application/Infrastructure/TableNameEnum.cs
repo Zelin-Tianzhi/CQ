@@ -23,5 +23,10 @@ namespace CQ.Application
         [Description("百人牛牛|HundredOx")]
         HundredOx = 85,
 
+        [Description("21点|BlackJack")]
+        BlackJack = 66,
+
+        [Description("斗地主|LandCrazy")]
+        LandCrazy = 12
     }
 }

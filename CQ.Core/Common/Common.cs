@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace CQ.Core
@@ -127,6 +128,16 @@ namespace CQ.Core
             str = str.Substring(0, str.Length - Length);
             return str;
         }
+        #endregion
+
+        #region 时间戳
+
+        public static long GetCurrentTimeUnix()
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            return ts.TotalMilliseconds.ToInt64(); //精确到毫秒
+        }
+
         #endregion
     }
 }

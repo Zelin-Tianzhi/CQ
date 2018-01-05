@@ -11,8 +11,35 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
 {
     public class UserController : BaseController
     {
+        #region 属性
+
         private readonly UserApp _userApp = new UserApp();
         private readonly UserLogOnApp _userLogOnApp = new UserLogOnApp();
+
+
+        #endregion
+
+        #region 视图
+
+        [HttpGet]
+        public ActionResult RevisePassword()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Info()
+        {
+            return View();
+        }
+
+        public ActionResult ModifyPassword()
+        {
+            return View();
+        }
+
+
+        #endregion
 
         [HttpGet]
         [HandlerAjaxOnly]
@@ -52,11 +79,6 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             _userApp.DeleteForm(keyValue.ToInt());
             return Success("删除成功。");
         }
-        [HttpGet]
-        public ActionResult RevisePassword()
-        {
-            return View();
-        }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
@@ -93,17 +115,6 @@ namespace CQ.Permission.Areas.SystemManage.Controllers
             };
             _userApp.UpdateForm(userEntity);
             return Success("账户启用成功。");
-        }
-
-        [HttpGet]
-        public ActionResult Info()
-        {
-            return View();
-        }
-
-        public ActionResult ModifyPassword()
-        {
-            return View();
         }
     }
 }

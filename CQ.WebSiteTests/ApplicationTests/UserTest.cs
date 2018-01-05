@@ -9,8 +9,8 @@ namespace CQ.WebSiteTests.ApplicationTests
         [TestMethod]
         public void UsersGetUrlTest()
         {
-            UsersApp app = new UsersApp();
-            var num = app.IsSpecialNum(111111);
+            RechargeOrderApp app = new RechargeOrderApp();
+            app.GetNewOrderNo("121634");
         }
     }
 }

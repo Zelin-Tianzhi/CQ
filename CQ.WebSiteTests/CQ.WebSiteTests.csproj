@@ -64,7 +64,16 @@
     <None Include="bin\Debug\Configs\autofac.json" />
     <None Include="bin\Debug\Configs\database.config" />
     <None Include="bin\Debug\Configs\log4net.config" />
+    <None Include="Configs\autofac.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Configs\database.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Configs\log4net.config" />
+    <None Include="Configs\system.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -100,19 +100,18 @@ namespace CQ.Application.SystemConfig
                 new SqlParameter("@AIText",robotRoom.AIText),
                 new SqlParameter("@PriorityTable",robotRoom.PriorityTable),
                 new SqlParameter("@RoomName",robotRoom.RoomName),
-                new SqlParameter("@Config",robotRoom.Config),
                 new SqlParameter("@ID",keyValue),
             };
             if (keyValue > 0)
             {
                 string sql =
-                    $"update RobotRoomAI set LoginRoomRate=@LoginRoomRate,LeaveRoomRate=@LeaveRoomRate,InRoomMinTime=@InRoomMinTime,InRoomMaxTime=@InRoomMaxTime,AIText=@AIText,PriorityTable=@PriorityTable,RoomName=@RoomName,Config=@Config where ID=@ID";
+                    $"update RobotRoomAI set LoginRoomRate=@LoginRoomRate,LeaveRoomRate=@LeaveRoomRate,InRoomMinTime=@InRoomMinTime,InRoomMaxTime=@InRoomMaxTime,AIText=@AIText,PriorityTable=@PriorityTable,RoomName=@RoomName where ID=@ID";
                 _qpRobot.ExecuteSql(sql, parameters);
             }
             else
             {
                 string sql =
-                    $"insert into RobotRoomAI(LoginRoomRate,LeaveRoomRate,InRoomMinTime,InRoomMaxTime,AIText,PriorityTable,RoomName,Config) values(@LoginRoomRate,@LeaveRoomRate,@InRoomMinTime,@InRoomMaxTime,@AIText,@PriorityTable,@RoomName,@Config)";
+                    $"insert into RobotRoomAI(LoginRoomRate,LeaveRoomRate,InRoomMinTime,InRoomMaxTime,AIText,PriorityTable,RoomName) values(@LoginRoomRate,@LeaveRoomRate,@InRoomMinTime,@InRoomMaxTime,@AIText,@PriorityTable,@RoomName)";
                 _qpRobot.ExecuteSql(sql, parameters);
             }
         }

@@ -978,6 +978,7 @@
     <Content Include="Areas\UserManage\Views\Transfer\SysTransfer.cshtml" />
     <Content Include="Areas\UserManage\Views\Recharge\Index.cshtml" />
     <Content Include="Areas\UserManage\Views\Prop\Index.cshtml" />
+    <Content Include="Areas\DataAnalysis\Views\OnlineStatistics\RoomOnlineUser.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

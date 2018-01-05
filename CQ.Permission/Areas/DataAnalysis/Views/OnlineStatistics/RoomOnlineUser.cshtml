@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "RoomOnlineUser";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<script>
+    $(function () {
+        gridList();
+    });
+
+    function gridList() {
+        var $gridList = $("#gridList");
+
+        $gridList.dataGrid({
+            url: "/DataAnalysis/OnlineStatistics/GetRoomUserCount",
+            height: $(window).height() - 128,
+            colModel: [
+                { label: '主键', name: 'F_Id', hidden: true },
+                { label: '游戏', name: 'F_GameName', width: 180, align: 'center' },
+                { label: '活跃用户', name: 'RobotCount', width: 80, align: 'center' },
+                { label: '内部用户', name: 'InternalCount', width: 80, align: 'center' },
+                { label: '普通用户', name: 'NormalCount', width: 80, align: 'center' },
+                { label: '总用户数', name: 'Total', width: 80, align: 'center' }
+            ],
+            rowNum: -1,
+            footerrow: true,
+            sortname: 'ID desc',
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam',
+                {
+                    postData: { keyword: $("#txt_keyword").val() },
+                }).trigger('reloadGrid');
+        });
+    }
+
+</script>
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <script>$('.toolbar').authorizeButton()</script>
+    </div>
+    @*<div class="search">
+            <table>
+                <tr>
+                    <td>时间：</td>
+                    <td>
+                        <div class="input-group">
+                            <input id="txt_begintime" type="text" class="form-control" onclick="WdatePicker()" placeholder="开始时间" style="width: 160px; border-radius: 5px;">-
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="txt_endtime" type="text" class="form-control" onclick="WdatePicker()" placeholder="结束时间" style="width: 160px; border-radius: 5px;">
+                        </div>
+                    </td>
+                    <td style="padding-left: 5px;">游戏名称：</td>
+                    <td>
+                        <div class="input-group">
+                            <select id="drop_gamename" name="drop_gamename" class="form-control required">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary" style="margin-left: 8px;"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </div>*@
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+
