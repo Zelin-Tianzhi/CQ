@@ -12,7 +12,7 @@ namespace CQ.WebSite.Controllers
 {
     public class RechargeController : BaseController
     {
-        GoldOperApp _goldOperApp = new GoldOperApp();
+        public readonly RechargeOrderApp App = new RechargeOrderApp();
         // GET: Recharge
         public ActionResult Index()
         {
@@ -21,11 +21,45 @@ namespace CQ.WebSite.Controllers
             return View();
         }
 
-        [HandlerAjaxOnly]
-        public ActionResult Chongzhi()
+        public ActionResult UploadHeader()
         {
-
-            return Content("success");
+            return View();
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        public ActionResult ChongzhiYB(string queryJson)
+        {
+            var queryParam = queryJson.ToJObject();
+            if (queryParam["userName"].IsEmpty() || queryParam["czType"].IsEmpty()|| queryParam["amount"].IsEmpty())
+            {
+                return Error("参数错误。");
+            }
+            if (queryParam["yzm"].IsEmpty() || queryParam["token"].IsEmpty())
+            {
+                return Error("验证码错误。");
+            }
+            var userName = queryParam["userName"].ToString();
+            var account = App.GetIdByNum(userName, 2);
+            if (account == null || account == "0")
+            {
+                return Error("游戏账户错误。");
+            }
+            var czType = queryParam["czType"].ToString();
+            var yzm = queryParam["yzm"].ToString();
+            var tokne = queryParam["token"].ToString();
+            var amounts = queryParam["amount"].ToInt64();
+            var verifyCode = Cache.Get(tokne);
+            if (verifyCode.IsEmpty() || !verifyCode.Equals(Md5.md5(yzm,16)))
+            {
+                return Error("验证码错误。");
+            }
+            var result = App.SubmitEntity(userName, amounts, czType, userName);
+            if (result == 0)
+            {
+                Cache.Remove(tokne);
+                return Success("充值完成。");
+            }
+            return Error("系统错误，请重试。");
         }
 
         [HttpGet]
@@ -40,8 +74,13 @@ namespace CQ.WebSite.Controllers
 
         public ActionResult CheckUser(string keyValue)
         {
-            string account = _goldOperApp.GetIdByNum(keyValue, 2);
-            return Content(account);
+            string account = App.GetIdByNum(keyValue, 2);
+            string data = account;
+            if (account == null || account == "0")
+            {
+                data = "用户不存在。";
+            }
+            return Content(data);
         }
     }
 }

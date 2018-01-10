@@ -30,75 +30,76 @@
         </ul>
     </div>
     <div id="pay_right" class="pay_right">
+        
         <table class="paymentTable">
             <tbody>
-                <tr>
-                    <th align="right" width="110" style="height: 45px; line-height: 45px;">充值ID：</th>
-                    <td id="pay_center_input" style="height: 45px; line-height: 45px;">
-                        <input id="userName" name="userName" type="text" class="input" style="margin-top: 5px;" >
-                        <button type="button" class="sure_btn" onclick="checkuser();">确认</button>
-                        <span  style="color: red">*请确认游戏ID</span>
-                        <p class="uaccount" style="color:red;font-weight:bold;">*充值ID即游戏ID</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th align="right" width="110" style="padding-top: 9px;">
-                        充值类型：
-                    </th>
-                    <td>
-                        <div class="pruneShow">
-                            <div class="simRadio">
-                                <ul class="bankSelect clearfix">
-                                    <li class="ZHIFUBAO select"><span>支付宝</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th align="right" width="110" style="padding-top: 12px;">
-                        <div>
-                            充值金额：
-                        </div>
-                    </th>
-                    <td>
-                        <div id="amountList" class="simRadio">
-                            <ul id="amountList_child" class="recharge clearfix">
-                                <li onclick="ShowPayVal('10.00');"><span class="select">10元</span></li>
-                                <li onclick="ShowPayVal('20.00');"><span class="unChoose">20元</span></li>
-                                <li onclick="ShowPayVal('30.00');"><span class="unChoose">30元</span></li>
-                                <li onclick="ShowPayVal('50.00');"><span class="unChoose">50元</span></li>
-                                <li onclick="ShowPayVal('100.00');"><span class="unChoose">100元</span></li>
-                                <li onclick="ShowPayVal('200.00');"><span class="unChoose">200元</span></li>
-                                <li onclick="ShowPayVal('500.00');"><span class="unChoose">500元</span></li>
-                                <li onclick="ShowPayVal('1000.00');"><span class="unChoose">1000元</span></li>
+            <tr>
+                <th align="right" width="110" style="height: 45px; line-height: 45px;">充值ID：</th>
+                <td id="pay_center_input" style="height: 45px; line-height: 45px;">
+                    <input id="userName" name="userName" type="text" class="input" style="margin-top: 5px;">
+                    <button type="button" class="sure_btn" onclick="checkuser();">确认</button>
+                    <span style="color: red">*请确认游戏ID</span>
+                    <p class="uaccount" style="color: red; font-weight: bold;">*充值ID即游戏ID</p>
+                </td>
+            </tr>
+            <tr>
+                <th align="right" width="110" style="padding-top: 9px;">
+                    充值类型：
+                </th>
+                <td>
+                    <div class="pruneShow">
+                        <div class="simRadio">
+                            <ul class="bankSelect clearfix">
+                                <li class="ZHIFUBAO select"><span data-value="1001">支付宝</span></li>
                             </ul>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th align="right" width="110" style="padding-top: 10px;">
-                        总计需支付：
-                    </th>
-                    <td>
-                        <em class="amount" id="pay_center_submit_amount">￥10.00</em>元 获赠<em class="amount" id="pay_center_submit_getjb">1000</em>豆
-                    </td>
-                </tr>
-                <tr>
-                    <th align="right" width="110" style="padding-top: 10px;">图片验证码：</th>
-                    <td>
-                        <input id="vcode" name="vcode" type="text" class="input">&nbsp;
-                        <input type="hidden" id="checktoken" value="@ViewBag.Token" />
-                        <img id="imgcode" src="/Recharge/GetAuthCode?token=@ViewBag.Token" style="height:32px; cursor: pointer; border: 1px solid #333333;vertical-align: middle;" title="点击更换验证码图片!">
-                        <a href="javascript:void(0)" class="ll" id="switchCode">看不清楚？ 换一个</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th align="right" width="110" style="padding-top: 10px;"></th>
-                    <td>
-                        <input type="submit" class="confirm_btn" value="下一步">
-                    </td>
-                </tr>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th align="right" width="110" style="padding-top: 12px;">
+                    <div>
+                        充值金额：
+                    </div>
+                </th>
+                <td>
+                    <div id="amountList" class="simRadio">
+                        <ul id="amountList_child" class="recharge clearfix">
+                            <li onclick="ShowPayVal('10.00');"><span data-value="10" class="unChoose select">10元</span></li>
+                            <li onclick="ShowPayVal('20.00');"><span data-value="20" class="unChoose">20元</span></li>
+                            <li onclick="ShowPayVal('30.00');"><span data-value="30" class="unChoose">30元</span></li>
+                            <li onclick="ShowPayVal('50.00');"><span data-value="50" class="unChoose">50元</span></li>
+                            <li onclick="ShowPayVal('100.00');"><span data-value="100" class="unChoose">100元</span></li>
+                            <li onclick="ShowPayVal('200.00');"><span data-value="200" class="unChoose">200元</span></li>
+                            <li onclick="ShowPayVal('500.00');"><span data-value="500" class="unChoose">500元</span></li>
+                            <li onclick="ShowPayVal('1000.00');"><span data-value="1000" class="unChoose">1000元</span></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th align="right" width="110" style="padding-top: 10px;">
+                    总计需支付：
+                </th>
+                <td>
+                    <em class="amount" id="pay_center_submit_amount">￥10.00</em>元 获赠<em class="amount" id="pay_center_submit_getjb">10</em>元宝
+                </td>
+            </tr>
+            <tr>
+                <th align="right" width="110" style="padding-top: 10px;">图片验证码：</th>
+                <td>
+                    <input id="vcode" name="vcode" type="text" class="input">&nbsp;
+                    <input type="hidden" id="checktoken" value="@ViewBag.Token"/>
+                    <img id="imgcode" src="/Recharge/GetAuthCode?token=@ViewBag.Token" style="height: 32px; cursor: pointer; border: 1px solid #333333; vertical-align: middle;" title="点击更换验证码图片!">
+                    <a href="javascript:void(0)" class="ll" id="switchCode">看不清楚？ 换一个</a>
+                </td>
+            </tr>
+            <tr>
+                <th align="right" width="110" style="padding-top: 10px;"></th>
+                <td>
+                    <input type="submit" class="confirm_btn" value="下一步">
+                </td>
+            </tr>
             </tbody>
         </table>
         <div class="recharge_tip">
@@ -111,17 +112,42 @@
         </div>
     </div>
 </div>
-
 <script>
-    $(function () {
+    $(function() {
         $(".confirm_btn").on("click", ConfirmCZ);
-        $("#switchCode").click(function () {
+        $("#switchCode").click(function() {
             $("#imgcode").attr("src", "/Recharge/GetAuthCode/?token=@ViewBag.Token" + "&time=" + Math.random());
         });
     });
-    function ConfirmCZ(a,b,c,d) {
-        var userName = $("#userName").val();
-        var czType = $(".bankSelect li").filter(".select").text();
+    function ConfirmCZ(a, b, c, d) {
+        var queryJosn = {
+            userName: $("#userName").val(),
+            czType: $(".bankSelect li").filter(".select").text(),
+            yzm: $("#vcode").val(),
+            token: $("#checktoken").val(),
+            amount: $(".recharge span").filter(".select").attr("data-value"),
+    };
+        $.ajax({
+            url: "/Recharge/ChongzhiYB",
+            type: "POST",
+            data: { queryJson: JSON.stringify(queryJosn) },
+            dataType: "json",
+            async: false,
+            success: function(data) {
+                if (data.state == "success") {
+                    $.modalMsg(data.message, data.state);
+                    $("#userName").val("");
+                    $("#vcode").val("");
+                    $("#switchCode").onClick();
+                } else {
+                    $.modalMsg(data.message, data.state);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $.modalMsg(errorThrown, "error");
+            }
+        });
+
     }
     function checkuser() {
         var keyValue = $("#userName").val();
@@ -129,13 +155,15 @@
             url: "/Recharge/CheckUser",
             data: { keyValue: keyValue },
             async: false,
-            success: function (data) {
+            success: function(data) {
                 $(".uaccount").text(data);
             },
-            error: function (msg) {
+            error: function(msg) {
                 alert(msg.statusText);
             }
-        })
+        });
     }
+
+
 </script>
 

@@ -1,4 +1,5 @@
-﻿using CQ.Core;
+﻿using System;
+using CQ.Core;
 using CQ.Core.Log;
 
 namespace CQ.Application
@@ -11,8 +12,8 @@ namespace CQ.Application
 
         protected string GetUrlStr()
         {
-            //string filePath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\Configs\\GlobConfig.xml";
-            string filePath = System.Web.HttpContext.Current.Server.MapPath("/Configs/GlobConfig.xml");
+            string filePath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\Configs\\GlobConfig.xml";
+            //string filePath = System.Web.HttpContext.Current.Server.MapPath("/Configs/GlobConfig.xml");
             string url = XmlHelper.Read(filePath, "configuration/aqiuUrl", "url");
             return url;
         }

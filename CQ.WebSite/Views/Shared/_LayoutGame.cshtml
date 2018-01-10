@@ -14,7 +14,8 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="favicon.ico" />
     <script type="text/javascript" src="/Content/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/Content/js/base.js"></script>
+    <script type="text/javascript" src="~/Content/Js/dialog/dialog.js"></script>
+    <script type="text/javascript" src="/Content/js/base.js?v=@ViewBag.Version"></script>
     <!--[if lt IE 7]>
     <script src="/Content/js/DD_belatedPNG.js"></script>
     <script>
@@ -50,6 +51,7 @@
         @RenderPage("~/Views/Shared/_Header.cshtml", new { param = ViewContext.RouteData.Values["controller"].ToString().ToLower() })
         <div class="banner clearfix"></div>
         @RenderBody()
+        @Html.AntiForgeryToken()
         @RenderPage("~/Views/Shared/_Footer.cshtml")
     </div>
 </body>

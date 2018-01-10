@@ -49,12 +49,6 @@
                             <option value="false">禁用</option>
                         </select>
                     </td>
-                    <th class="formTitle" rowspan="3">图片</th>
-                    <td class="formValue" rowspan="3">
-                        <input id="F_CreatorTime" name="F_CreatorTime" type="text" class="form-control input-wdatepicker" onfocus="WdatePicker()" />
-                    </td>
-                </tr>
-                <tr>
                     <th class="formTitle">热门游戏</th>
                     <td class="formValue">
                         <select id="F_IsHot" name="F_IsHot" class="form-control">
@@ -63,12 +57,40 @@
                         </select>
                     </td>
                 </tr>
+                <tr class="imgpack" style="height: 100px;">
+                    <th class="formTitle">ICO图片</th>
+                    <td class="formValue">
+                        <div>
+                            <button id="btn_header" type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-import" aria-hidden="true"></span>选择
+                            </button>
+                        </div>
+
+                        <div class="modal fade" id="myHeadModal" tabindex="-1" role="dialog" aria-labelledby="myHeadModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myHeadModalLabel">请选择图片文件</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="file" name="txt_headfile" id="txt_headfile" multiple class="file-loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td id="imgheadbox" colspan="2">
+                        
+                    </td>
+                    
+                </tr>
                 <tr>
                     <th class="formTitle">图片展示</th>
                     <td class="formValue" colspan="3">
                         <div>
                             <button id="btn_import" type="button" class="btn btn-default">
-                                <span class="glyphicon glyphicon-import" aria-hidden="true"></span>导入
+                                <span class="glyphicon glyphicon-import" aria-hidden="true"></span>选择
                             </button>
                         </div>
 
@@ -114,6 +136,7 @@
             </table>
         </div>
     </div>
+    <input type="hidden" id="headimg" name="headimg"/>
 </form>
 <script type="text/javascript">
     var ue = UE.getEditor('ueditor');
@@ -135,11 +158,20 @@
         }
         //1.初始化input控件
         var oFileInput = new FileInput();
-        oFileInput.Init("txt_file", "/ContentManage/Games/UploadImg");
+        oFileInput.Init("txt_file", "/ContentManage/Games/UploadImg", "txt_file", "myModal", "imgbox", "F_Remark");
 
         //2.注册导入按钮的事件
         $("#btn_import").click(function () {
             $("#myModal").modal();
+        });
+
+        //1.初始化input控件
+        var headFileInput = new HeadFileInput();
+        headFileInput.Init("txt_headfile", "/ContentManage/Games/UploadImg", "txt_headfile", "myHeadModal", "imgheadbox", "headimg");
+
+        //2.注册导入按钮的事件
+        $("#btn_header").click(function () {
+            $("#myHeadModal").modal();
         });
     });
     function submitForm() {
@@ -162,7 +194,7 @@
         var oFile = new Object();
 
         //初始化fileinput控件（第一次初始化）
-        oFile.Init = function (ctrlName, uploadUrl) {
+        oFile.Init = function (ctrlName, uploadUrl, fileName, modalName, imgbox,imgList) {
             var control = $('#' + ctrlName);
 
             //初始化上传控件的样式
@@ -182,16 +214,55 @@
             });
 
             //导入文件上传完成之后的事件
-            $("#txt_file").on("fileuploaded", function (event, data, previewId, index) {
-                $("#myModal").modal("hide");
+            $("#" + fileName).on("fileuploaded", function (event, data, previewId, index) {
+                $("#" + modalName).modal("hide");
                 var result = data.response;
                 if (result.Success == true) {
-                    $("#imgbox").append('<td><img src="' + result.ImgPaht + '" /></td>');
-                    var imgVal = $("#F_Remark").val();
-                    $("#F_Remark").val(imgVal + result.ImgPaht + ",");
+                    $("#" + imgbox).append('<td><img src="' + result.ImgPaht + '" /></td>');
+                    var imgVal = $("#" + imgList).val();
+                    $("#" + imgList).val(imgVal + result.ImgPaht + ",");
                 }
             });
-            $("#txt_file").on("fileerror", function (event, data, msg) {
+            $("#" + fileName).on("fileerror", function (event, data, msg) {
+                //Console.write("123");
+            })
+        }
+        return oFile;
+    };
+    //初始化fileinput
+    var HeadFileInput = function () {
+        var oFile = new Object();
+
+        //初始化fileinput控件（第一次初始化）
+        oFile.Init = function (ctrlName, uploadUrl, fileName, modalName, imgbox,imgList) {
+            var control = $('#' + ctrlName);
+
+            //初始化上传控件的样式
+            control.fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: uploadUrl, //上传的地址
+                allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
+                showUpload: true, //是否显示上传按钮
+                showCaption: false,//是否显示标题
+                browseClass: "btn btn-primary", //按钮样式
+                maxFileCount: 100,
+                enctype: 'multipart/form-data',
+                validateInitialCount: true,
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+
+                msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            });
+
+            //导入文件上传完成之后的事件
+            $("#" + fileName).on("fileuploaded", function (event, data, previewId, index) {
+                $("#" + modalName).modal("hide");
+                var result = data.response;
+                if (result.Success == true) {
+                    $("#" + imgbox).append('<img src="' + result.ImgPaht + '" />');
+                    $("#" + imgList).val(result.ImgPaht);
+                }
+            });
+            $("#" + fileName).on("fileerror", function (event, data, msg) {
                 //Console.write("123");
             })
         }

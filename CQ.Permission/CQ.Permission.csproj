@@ -796,7 +796,7 @@
     <Folder Include="Areas\UserManage\Models\" />
     <Folder Include="Areas\UserManage\Views\Shared\" />
     <Folder Include="Content\Js\ueditor\net\upload\image\" />
-    <Folder Include="Upload\" />
+    <Folder Include="Upload\2018-01-10\" />
     <Folder Include="Views\ClientsData\" />
   </ItemGroup>
   <ItemGroup>

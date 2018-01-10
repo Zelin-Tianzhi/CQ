@@ -12,7 +12,7 @@ $(function() {
     })
 })
 
-window.prop = 1000;//定义充值比例
+window.prop = 1;//定义充值比例
 
 //充值
 function ShowPayType(name){
@@ -92,8 +92,48 @@ function onloadObj(){
 	})
 	
 }
+$.reload = function () {
+    location.reload();
+    return false;
+}
 
+$.modalMsg = function (content, type) {
+    if (type != undefined) {
+        var icon = "";
+        if (type == 'success') {
+            icon = "fa-check-circle";
+        }
+        if (type == 'error') {
+            icon = "fa-times-circle";
+        }
+        if (type == 'warning') {
+            icon = "fa-exclamation-circle";
+        }
+        top.layer.msg(content, { icon: icon, time: 4000, shift: 5 });
+        top.$(".layui-layer-msg").find('i.' + icon).parents('.layui-layer-msg').addClass('layui-layer-msg-' + type);
+    } else {
+        top.layer.msg(content);
+    }
+}
 
+$.modalAlert = function (content, type) {
+    var icon = "";
+    if (type == 'success') {
+        icon = "fa-check-circle";
+    }
+    if (type == 'error') {
+        icon = "fa-times-circle";
+    }
+    if (type == 'warning') {
+        icon = "fa-exclamation-circle";
+    }
+    top.layer.alert(content, {
+        icon: icon,
+        title: "系统提示",
+        btn: ['确认'],
+        btnclass: ['btn btn-primary'],
+    });
+}
 
 //窗口宽度
 function initwdWidth(){
