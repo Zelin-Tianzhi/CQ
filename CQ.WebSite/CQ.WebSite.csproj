@@ -187,7 +187,11 @@
     <Content Include="Content\Css\base.css" />
     <Content Include="Content\Css\bootstrap.css" />
     <Content Include="Content\Css\bootstrap.min.css" />
+    <Content Include="Content\Css\framework-about.css" />
     <Content Include="Content\Css\framework-font.css" />
+    <Content Include="Content\Css\framework-login.css" />
+    <Content Include="Content\Css\framework-theme.css" />
+    <Content Include="Content\Css\framework-ui.css" />
     <Content Include="Content\Css\idangerous.swiper.css" />
     <Content Include="Content\Css\index.css" />
     <Content Include="Content\Css\login.css" />
