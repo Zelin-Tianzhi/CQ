@@ -120,10 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="bin\Debug\Configs\autofac.json" />
-    <EmbeddedResource Include="bin\Debug\Configs\database.config" />
-    <EmbeddedResource Include="bin\Debug\Configs\log4net.config" />
-    <EmbeddedResource Include="bin\Debug\Configs\system.config" />
     <None Include="bin\Debug\卸载.bat" />
     <None Include="bin\Debug\安装.bat" />
     <Content Include="Configs\autofac.json">
@@ -160,10 +156,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="bin\Debug\Configs\GlobConfig.xml" />
-    <EmbeddedResource Include="bin\Debug\quartz_jobs.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 和 x64%29</ProductName>
@@ -182,6 +174,9 @@
     <Content Include="quartz_jobs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\Configs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
