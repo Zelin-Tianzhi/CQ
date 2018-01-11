@@ -76,9 +76,9 @@
 </div>	
 <script>
     $(function () {
-        GetArticleList();
+        GetArticleList(0);
     });
-    function GetArticleList() {
+    function GetArticleList(type) {
         var keyValue = 0;
         $.ajax({
             url: "/News/GetArticleEntitys",

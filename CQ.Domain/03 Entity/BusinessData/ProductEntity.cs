@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ namespace CQ.Domain.Entity.BusinessData
         public int F_Id { get; set; }
         public string F_ProductName { get; set; }
         public bool F_IsHot { get; set; }
-        public string F_ProductImg { get; set; }
+        [StringLength(200)]
+        public string F_IcoImg { get; set; }
         public string F_Explain { get; set; }
         [Column(TypeName = "text")]
         public string F_Rule { get; set; }

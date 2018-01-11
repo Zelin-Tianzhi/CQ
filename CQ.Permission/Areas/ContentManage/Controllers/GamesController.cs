@@ -58,9 +58,9 @@ namespace CQ.Permission.Areas.ContentManage.Controllers
             return Success("删除成功。");
         }
 
-        public JsonResult UploadImg()
+        public JsonResult UploadImg(string keyvalue)
         {
-            var oFile = Request.Files["txt_file"];
+            var oFile = Request.Files[keyvalue];
             string imgPath = string.Empty;
             var oStream = oFile.InputStream;
             var result = false;

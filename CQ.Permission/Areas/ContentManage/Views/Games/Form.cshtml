@@ -57,9 +57,9 @@
                         </select>
                     </td>
                 </tr>
-                <tr class="imgpack" style="height: 100px;">
+                <tr>
                     <th class="formTitle">ICO图片</th>
-                    <td class="formValue">
+                    <td class="formValue" colspan="2">
                         <div>
                             <button id="btn_header" type="button" class="btn btn-default">
                                 <span class="glyphicon glyphicon-import" aria-hidden="true"></span>选择
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </td>
-                    <td id="imgheadbox" colspan="2">
+                    <td id="imgheadbox">
                         
                     </td>
                     
@@ -136,7 +136,7 @@
             </table>
         </div>
     </div>
-    <input type="hidden" id="headimg" name="headimg"/>
+    <input type="hidden" id="F_IcoImg" name="F_IcoImg"/>
 </form>
 <script type="text/javascript">
     var ue = UE.getEditor('ueditor');
@@ -158,7 +158,7 @@
         }
         //1.初始化input控件
         var oFileInput = new FileInput();
-        oFileInput.Init("txt_file", "/ContentManage/Games/UploadImg", "txt_file", "myModal", "imgbox", "F_Remark");
+        oFileInput.Init("txt_file", "/ContentManage/Games/UploadImg?keyvalue=txt_file", "txt_file", "myModal", "imgbox", "F_Remark");
 
         //2.注册导入按钮的事件
         $("#btn_import").click(function () {
@@ -167,7 +167,7 @@
 
         //1.初始化input控件
         var headFileInput = new HeadFileInput();
-        headFileInput.Init("txt_headfile", "/ContentManage/Games/UploadImg", "txt_headfile", "myHeadModal", "imgheadbox", "headimg");
+        headFileInput.Init("txt_headfile", "/ContentManage/Games/UploadImg?keyvalue=txt_headfile", "txt_headfile", "myHeadModal", "imgheadbox", "F_IcoImg");
 
         //2.注册导入按钮的事件
         $("#btn_header").click(function () {
@@ -205,7 +205,7 @@
                 showUpload: true, //是否显示上传按钮
                 showCaption: false,//是否显示标题
                 browseClass: "btn btn-primary", //按钮样式
-                maxFileCount: 100,
+                maxFileCount: 10,
                 enctype: 'multipart/form-data',
                 validateInitialCount: true,
                 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
@@ -245,7 +245,7 @@
                 showUpload: true, //是否显示上传按钮
                 showCaption: false,//是否显示标题
                 browseClass: "btn btn-primary", //按钮样式
-                maxFileCount: 100,
+                maxFileCount: 10,
                 enctype: 'multipart/form-data',
                 validateInitialCount: true,
                 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
@@ -258,7 +258,7 @@
                 $("#" + modalName).modal("hide");
                 var result = data.response;
                 if (result.Success == true) {
-                    $("#" + imgbox).append('<img src="' + result.ImgPaht + '" />');
+                    $("#" + imgbox).html('<img style="height:100px;width:100px;" src="' + result.ImgPaht + '" />');
                     $("#" + imgList).val(result.ImgPaht);
                 }
             });

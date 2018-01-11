@@ -8,7 +8,7 @@
         <h3><i class="icon-title icon-event"></i>游戏中心</h3>
     </div>
     <div class="game-app clearfix">
-        <ul>
+        <ul id="GameList">
             <li>
                 <a href="showgame.html" title="" class="app-icons">
                     <img src="/Content/Img/temp/game-img.jpg" alt="">
@@ -60,12 +60,36 @@
         </ul>
     </div>
 
-    <div class="page">
-        <span class="num">1</span>
-        <a class="num" href="###">2</a>
-        <a class="num" href="###">3</a>
-        <a class="num" href="###">下一页</a>
-    </div>
 
 </div>
+<script>
+    $(function() {
+        GetList();
+    });
+
+    function GetList() {
+        $.ajax({
+            url: "/Game/GetListJson",
+            data: { keyValue: keyValue },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var _html = "";
+                $.each(data, function (i, o) {
+                    _html += '<li>';
+                    _html += '  <a href="/Game/Game?keyValue=' + o.F_Id + '" title="' + o.F_ProductName + '" class="app-icons">';
+                    _html += '    <img src="'+o.F_IcoImg+'" alt="">';
+                    _html += '    <h4>' + o.F_ProductName + '</h4>';
+                    _html += '  </a>';
+                    _html += '</li>';
+                });
+                $("#GameList").prepend(_html);
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            }
+        });
+    }
+
+</script>
 

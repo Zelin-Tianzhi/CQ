@@ -10,6 +10,7 @@ namespace CQ.Repository.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(CQ.Repository.EntityFramework.CqDbContext context)

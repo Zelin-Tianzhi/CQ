@@ -41,7 +41,7 @@ namespace CQ.Application.BusinessData
                 page = 1,
                 rows = 20,
                 sord = "desc",
-                sidx = "F_PublishTime desc"
+                sidx = "F_PublishTime,F_Id desc"
 
             };
             return service.FindList(expression, pagination);

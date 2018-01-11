@@ -24,10 +24,9 @@ namespace CQ.WebSite.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult GetGameEntitys()
+        public ActionResult GetListJson()
         {
-            List<ProductEntity> productEntitys = new List<ProductEntity>();
-            productEntitys = productApp.GetList();
+            var productEntitys = productApp.GetList();
             return Content(productEntitys.ToJson());
         }
         [HttpGet]

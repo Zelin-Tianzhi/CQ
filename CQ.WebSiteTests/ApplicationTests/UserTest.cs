@@ -10,7 +10,7 @@ namespace CQ.WebSiteTests.ApplicationTests
         public void UsersGetUrlTest()
         {
             RechargeOrderApp app = new RechargeOrderApp();
-            app.Chongzhi();
+            //app.Chongzhi();
         }
     }
 }
