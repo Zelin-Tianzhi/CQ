@@ -41,37 +41,6 @@
 
     <div class="text-li">
         <div class="text-title">基本规则</div>
-        <p>一、基本规则：</p>
-        <p style="padding: 0 0 30px 35px;">
-            每桌3-5个玩家游戏，使用一副扑克54张牌，首先给每个玩家依次发三张牌，以先发牌者为先，依次进行下注每个玩家至少要跟平上一个玩家（或全下所有筹码），
-            亦可以选择放弃。如果本轮玩家下注相等（或已全下）则再发一张牌，继续重复下注，发满五张牌之后进行最后一轮下注，最后按照斗牛的牌型大小进行比牌，最大
-            的人获胜。首轮下注限制为底注的20倍。
-        </p>
-        <p>二、牌型及大小：</p>
-        <p style="padding: 5px 0 5px 35px; color: #6c1b06;">1.组牌规则</p>
-        <p style="padding: 0 0 10px 35px;">
-            玩家把5张牌分为两组， 第一组必须拿且只拿3张牌组成10、20、30的整数（加法运算）数字A-10的扑克牌数字代表其大小，JQK和大小王统一以10计算。若玩家
-            有三张牌能凑成10或20或30的整数，我们称之为有牛若有人无法使用3张牌凑成10或20或30的整数，我们称之为没牛。<br />
-            第二组牌则把剩下的两张牌按照加法计算，10的整数倍数最大，1最小，若大于10小于20则取个位数计算。第2组牌数字为1，我们称之为牛一；若第2组数字为10或
-            20，我们称之为牛牛，其他以牛二、牛三等名称称呼。
-        </p>
-        <p style="padding: 5px 0 5px 35px; color: #6c1b06;">2.特殊牌型</p>
-        <p style="padding: 0 0 10px 35px;">
-            四炸：5张牌中有4张一样的牌（无需有牛），若都是四炸牌型，则比较4张一样的牌的大小；<br />
-            五花牛：5张牌全为JQK及大小王的特殊牛牛牌型；<br />
-            五小牛：5张牌点数都<5，且牌点总数≤10；
-        </p>
-        <p style="padding: 5px 0 5px 35px; color: #6c1b06;">3.比牌规则</p>
-        <p style="padding: 0 0 0px 35px;">
-            牌型大小顺序为：无牛&lt;牛一&lt;牛二&lt;…&lt;牛九&lt;牛牛&lt;四炸&lt;五花牛&lt;五小牛；<br />
-            当两名玩家牌型大小相同时，按照五张牌中最大的单张牌点数决定输赢，单张牌大王最大，A最小；<br />
-            当单张牌点数大小相同时，按照花色大小决定输赢，黑桃&gt;红桃&gt;梅花&gt;方块；
-        </p>
-        <div class="text-title">逃跑处理</div>
-        <p style="padding: 0 0 30px 35px;">
-            玩家在游戏开始后点击 退出 按钮后选择 强退，视为逃跑。<br />
-            任何一名玩家逃跑，按游戏当局基数*32扣除，扣除的金币50%给另一名玩家，50%的金币系统回收。
-        </p>
 
 
     </div>
@@ -88,11 +57,16 @@
                 dataType: "json",
                 async: false,
                 success: function (data) {
-                    if (data != null && data != "") {
-                        
-                        $("#GameName").text(data.F_ProductName);
-                        $("#notify").text(data.F_Explain);
-                        $(".text-li").append(data.F_Rule);
+                    if (data != null && data !== "") {
+                        $("#GameName").text(data.GameModel.F_ProductName);
+                        $("#notify").text(data.GameModel.F_Explain);
+                        $(".text-li").append(data.GameModel.F_Rule);
+                        var _html = "";
+                        $.each(data.ImgList,
+                            function(i, o) {
+                                _html += '<div class="swiper-slide"><img src="' + o.F_Img + '"></div>';
+                            });
+                        $(".swiper-wrapper").html(_html);
                     }
                 },
                 error: function (msg) {

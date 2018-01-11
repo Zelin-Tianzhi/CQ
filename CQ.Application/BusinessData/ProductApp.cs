@@ -35,6 +35,20 @@ namespace CQ.Application.BusinessData
             };
             return service.FindList(expression, pagination);
         }
+
+        public List<ProductEntity> GetTopList(int top)
+        {
+            var expression = ExtLinq.True<ProductEntity>();
+            Pagination pagination = new Pagination
+            {
+                page = 1,
+                rows = top,
+                sord = "desc",
+                sidx = "F_CreatorTime,F_Id desc"
+            };
+            expression = expression.And(t => t.F_IsHot == true);
+            return service.FindList(expression, pagination);
+        }
         public ProductEntity GetForm(string keyValue)
         {
             return service.FindEntity(keyValue.ToInt());
@@ -48,6 +62,10 @@ namespace CQ.Application.BusinessData
             if (keyValue > 0)
             {
                 produceEntity.F_Id = keyValue;
+            }
+            else
+            {
+                produceEntity.Create();
             }
             List<ImageEntity> imageEntitys = new List<ImageEntity>();
             foreach (string item in imgPaths)

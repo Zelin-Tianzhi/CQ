@@ -13,6 +13,7 @@ namespace CQ.Domain.Entity.BusinessData
         public int F_FId { get; set; }
         public string F_Thumb { get; set; }
         public string F_Img { get; set; }
+        public bool F_EnableMark { get; set; }
         public DateTime? F_CreatorTime { get; set; }
         public int? F_CreatorUserId { get; set; }
     }

@@ -12,6 +12,7 @@ namespace CQ.WebSite.Controllers
     public class GameController : BaseController
     {
         ProductApp productApp = new ProductApp();
+        ImageApp imageApp = new ImageApp();
 
         // GET: Game
         public ActionResult Index()
@@ -32,8 +33,15 @@ namespace CQ.WebSite.Controllers
         [HttpGet]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = productApp.GetForm(keyValue);
+            var game = productApp.GetForm(keyValue);
+            var imgList = imageApp.GetList(keyValue.ToInt());
+            var data = new
+            {
+                GameModel = game,
+                ImgList = imgList
+            };
             return Content(data.ToJson());
         }
+
     }
 }

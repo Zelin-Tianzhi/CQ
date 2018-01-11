@@ -68,6 +68,7 @@
     });
 
     function GetList() {
+        var keyValue = 0;
         $.ajax({
             url: "/Game/GetListJson",
             data: { keyValue: keyValue },
@@ -78,7 +79,7 @@
                 $.each(data, function (i, o) {
                     _html += '<li>';
                     _html += '  <a href="/Game/Game?keyValue=' + o.F_Id + '" title="' + o.F_ProductName + '" class="app-icons">';
-                    _html += '    <img src="'+o.F_IcoImg+'" alt="">';
+                    _html += '    <img src="http://115.238.87.114:11010'+o.F_IcoImg+'" alt="">';
                     _html += '    <h4>' + o.F_ProductName + '</h4>';
                     _html += '  </a>';
                     _html += '</li>';
