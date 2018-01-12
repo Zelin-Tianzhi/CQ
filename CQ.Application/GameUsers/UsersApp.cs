@@ -17,6 +17,7 @@ namespace CQ.Application.GameUsers
 
         private readonly DbHelper _qpAccount = new DbHelper("QpAccount");
         private readonly DbHelper _qpLogTotal = new DbHelper("QPLogTotal");
+        private readonly DbHelper _qpWebLog = new DbHelper("QPWebLog");
 
         #endregion
 
@@ -134,6 +135,92 @@ namespace CQ.Application.GameUsers
             }
             return data;
         }
+
+
+        public List<object> GetMacList(Pagination pagination, string keyValue)
+        {
+            const string sysTable = @"BindMachine";
+            const string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "Id desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
+            sysWhere += $" and  AccountID={GetIdByNum(keyValue,3)} ";
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _qpLogTotal.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    OperateType = dr["OperateType"],
+                    MacAddress = dr["MACAddress"].ToString().Split(',')[0],
+                    CreateTime = dr["CreateTime"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+        }
+        public List<object> GetLoginLogList(Pagination pagination, string keyValue)
+        {
+            const string sysTable = @"LoginLog";
+            const string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "Id desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
+            sysWhere += $" and  AccountID={GetIdByNum(keyValue, 3)} ";
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _qpLogTotal.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    LoginIp = dr["LoginIP"],
+                    LoginMac = dr["LoginMac"],
+                    LoginType = dr["LoginType"],
+                    LoginTime = dr["LoginTime"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+        }
+
         /// <summary>
         /// 修改昵称
         /// </summary>
@@ -142,6 +229,7 @@ namespace CQ.Application.GameUsers
         /// <returns></returns>
         public string ModifyNickName(string nickname, string keyValue)
         {
+            nickname = ConvertToGb2312(nickname);
             string url = GetUrlStr()+ $"ysfunction=changenicheng&account={keyValue}&nicheng={nickname}";
             string msg = HttpMethods.HttpGet(url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
@@ -211,7 +299,7 @@ namespace CQ.Application.GameUsers
 
         public string LockUser(string keyValue, long minute, string message)
         {
-            string url = GetUrlStr() + $"ysfunction=tuser&account={keyValue}&minutes={minute}&message={message}";
+            string url = GetUrlStr() + $"ysfunction=lockuser&account={keyValue}&minutes={minute}&message={message}";
             string msg = HttpMethods.HttpGet(url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
             string response = rex.Match(msg).Groups[1].Value;
@@ -362,11 +450,83 @@ namespace CQ.Application.GameUsers
             return uids.TrimEnd(',');
         }
 
+        public List<object> ComplaintRecord(Pagination pagination, string queryJson)
+        {
+            const string sysTable = @"View_Complaint";
+            const string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "Id desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
+            var queryParam = queryJson.ToJObject();
+            if (!queryParam["begintime"].IsEmpty())
+            {
+                sysWhere += $" and Date>='{queryParam["begintime"]}' ";
+            }
+            if (!queryParam["endtime"].IsEmpty())
+            {
+                sysWhere += $" and Date<='{queryParam["endtime"]}' ";
+            }
+            if (!queryParam["outaccount"].IsEmpty())
+            {
+                sysWhere += $" and SrcAccountID={GetIdByNum(queryParam["outaccount"].ToString(),0)} ";
+            }
+            if (!queryParam["receiveaccount"].IsEmpty())
+            {
+                sysWhere += $" and DstAccountID={GetIdByNum(queryParam["receiveaccount"].ToString(),0)} ";
+            }
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _qpWebLog.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    SrcAccount = dr["Src"],
+                    DstAccount = dr["Dst"],
+                    GameName = dr["GameName"],
+                    RoomName = dr["RoomName"],
+                    CreateTime = dr["CreateTime"],
+                    Reason = dr["Reason"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+        }
+
         #endregion
 
         #region 私有方法
-        
-        
+
+        public string ConvertToGb2312(string str)
+        {
+            String m_Start = str;
+            //把unicode的转换为GB2312 
+            UnicodeEncoding unicode = new UnicodeEncoding();
+            Encoding gb2312 = Encoding.GetEncoding("GB2312");
+            byte[] m = unicode.GetBytes(m_Start);
+
+            byte[] s;
+            s = Encoding.Convert(unicode, gb2312, m);
+            return System.Web.HttpUtility.UrlEncode(s);
+        }
         long GetMaxUserNum()
         {
             bool flag = false;
@@ -525,6 +685,28 @@ namespace CQ.Application.GameUsers
             int result = 0;
             string response = rex.Match(msg).Groups[1].Value;
             return msg;
+        }
+
+        private string GetIdByNum(string account, int type)
+        {
+            var sql = string.Empty;// 
+            switch (type)
+            {
+                case 0:
+                    sql = $"select AccountID from Account where Accountnum={account}";
+                    break;
+                case 1:
+                    sql = $"select Account from Account where AccountID={account}";
+                    break;
+                case 2:
+                    sql = $"select Account from Account where AccountNum={account}";
+                    break;
+                case 3:
+                    sql = $"select AccountID from Account where Account='{account}'";
+                    break;
+            }
+            var obj = _qpAccount.GetObject(sql, null);
+            return obj?.ToString() ?? "0";
         }
         #endregion
     }

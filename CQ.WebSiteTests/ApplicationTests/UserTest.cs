@@ -9,8 +9,10 @@ namespace CQ.WebSiteTests.ApplicationTests
         [TestMethod]
         public void UsersGetUrlTest()
         {
-            RechargeOrderApp app = new RechargeOrderApp();
+            //RechargeOrderApp app = new RechargeOrderApp();
             //app.Chongzhi();
+            UsersApp app = new UsersApp();
+            //app.tousurecord();
         }
     }
 }

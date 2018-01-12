@@ -36,7 +36,7 @@ namespace CQ.Application.GameUsers
             }
             if (!string.IsNullOrEmpty(endtime))
             {
-                sysWhere += $" and Date<='{begintime}' ";
+                sysWhere += $" and Date<='{endtime}' ";
             }
             if (!string.IsNullOrEmpty(outusernum))
             {

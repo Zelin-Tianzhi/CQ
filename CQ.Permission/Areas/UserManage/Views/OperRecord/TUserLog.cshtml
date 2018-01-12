@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "SysTransfer";
+    ViewBag.Title = "TUserLog";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 
@@ -11,7 +11,7 @@
     function gridList() {
         var $gridList = $("#gridList");
         $gridList.dataGrid({
-            url: "/UserManage/Transfer/GetGridJson",
+            url: "/UserManage/OperRecord/GetTUserJson",
             height: $(window).height() - 128,
             colModel: [
                 { label: '主键', name: 'F_Id', hidden: true },
@@ -23,7 +23,7 @@
                 {
                     label: '操作类型', name: 'F_Type', width: 80, align: 'left',
                     formatter: function (cellvalue) {
-                        return cellvalue == 1 ? "金币增减" : "元宝增减";
+                        return "踢出游戏";
                     }
                 },
                 {
@@ -32,7 +32,6 @@
                         return "<a href='#' onclick='btn_details(\"" + cellvalue + "\")'>" + cellvalue + "</a>";
                     }
                 },
-                { label: '转账金额', name: 'F_TextValue', width: 100, align: 'left' },
                 { label: 'IP地址', name: 'F_IpAddress', width: 100, align: 'left' },
                 { label: '日志内容', name: 'F_Description', width: 300, align: 'left' }
             ],
@@ -68,7 +67,7 @@
         <div class="btn-group">
             <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
         </div>
-        
+
     </div>
     <div class="search">
         <table>
@@ -102,4 +101,3 @@
     <table id="gridList"></table>
     <div id="gridPager"></div>
 </div>
-

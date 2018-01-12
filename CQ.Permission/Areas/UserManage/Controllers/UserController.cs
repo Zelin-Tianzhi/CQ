@@ -60,6 +60,33 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             };
             return Content(data.ToJson());
         }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetMacGridJson(Pagination pagination, string keyword)
+        {
+            var data = new
+            {
+                rows = _userApp.GetMacList(pagination, keyword),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetLgoinLogGridJson(Pagination pagination, string keyword)
+        {
+            var data = new
+            {
+                rows = _userApp.GetLoginLogList(pagination, keyword),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
 
         public ActionResult GetFormJson(string keyValue)
         {
@@ -99,7 +126,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             //记录操作日志
             OperLogEntity entity = new OperLogEntity
             {
-                F_Account = keyword,
+                F_Account = keyValue,
                 F_TextValue = num,
                 F_Type = (int)OperLogType.Gold,
                 F_Description = "管理员金币操作。操作值：[" + num + "]"
@@ -122,7 +149,16 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitGetOut(string keyValue)
         {
-            string result = _userApp.GetOutGame(keyValue, 1);
+            string result = _userApp.GetOutGame(keyValue, 0);
+            //记录操作日志
+            OperLogEntity entity = new OperLogEntity
+            {
+                F_Account = keyValue,
+                F_TextValue = "0",
+                F_Type = (int)OperLogType.Tuser,
+                F_Description = "管理员踢人操作。"
+            };
+            _operLogApp.WriteLog(entity);
             return Success("操作成功。");
         }
         [HttpPost]

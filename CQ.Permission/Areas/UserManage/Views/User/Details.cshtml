@@ -3,6 +3,12 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+@section JqGrid
+{
+    <script src="~/Content/js/jqgrid/jqgrid.min.js"></script>
+    <link href="~/Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <script src="~/Content/js/jqgrid/grid.locale-cn.js"></script>
+}
 <script>
     var keyValue = $.request("keyValue");
     $(function () {
@@ -16,24 +22,85 @@
                 $("#AccountNum").val(data.F_ID + "(游戏ID:" + data.AccountNum + ")");
                 if (data.UnfreezeDate) {
                     $("#F_EnabledMark").val("false");
-                } 
+                }
                 $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
                 $("#form1").find('div.ckbox label').attr('for', '');
                 $("#F_UserPassword").val("******");
             }
         });
+
+        gridList(1);
     });
+    function gridList(n) {
+        var $gridList = $("#gridList3");
+        var postData = { keyword: keyValue };
+        $gridList.jqGrid({
+            url: "/UserManage/User/GetMacGridJson?keyword=" + keyValue,
+            height:300,
+            datatype: "json",
+            autowidth: true,
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            postData: postData,
+            colModel: [
+                { label: '主键', name: 'F_ID', hidden: true },
+                { label: '绑定时间', name: 'CreateTime', width: 180, align: 'center' },
+                { label: 'Mac地址', name: 'MacAddress', width: 400, align: 'center' }
+            ],
+            pager: "#gridPager3",
+            sortname: 'F_ID desc',
+            viewrecords: true,
+            repeatitems:false
+        });
+        $("#gridList2").jqGrid({
+            url: "/UserManage/User/GetLgoinLogGridJson?keyword=" + keyValue,
+            height:300,
+            datatype: "json",
+            autowidth: true,
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            postData: postData,
+            colModel: [
+                { label: '主键', name: 'F_ID', hidden: true },
+                { label: '登录时间', name: 'LoginTime', width: 160, align: 'center' },
+                { label: '登录IP地址', name: 'LoginIp', width: 160, align: 'center' },
+                { label: '登录Mac地址', name: 'LoginMac', width: 160, align: 'center' },
+                {
+                    label: '类型', name: 'LoginType', width: 100, align: 'center',
+                    formatter: function (cellvalue) {
+                        if (cellvalue == 0) {
+                            return "登录";
+                        }
+                        else if (cellvalue == 1) {
+                            return "退出";
+                        }
+                        else if (cellvalue == 4) {
+                            return "重连";
+                        }
+                    }
+                }
+            ],
+            pager: "#gridPager2",
+            sortname: 'F_ID desc',
+            viewrecords: true,
+            repeatitems:false
+        });
+    }
 
 </script>
 <form id="form1">
     <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#">基本信息</a></li>
-            <li><a href="javascript:void()">扩展信息</a></li>
-            <li><a href="javascript:void()">登录日志</a></li>
-            <li><a href="javascript:void()">操作日志</a></li>
+            <li><a href="javascript:void(0)">登录日志</a></li>
+            <li><a href="javascript:void(0)">Mac日志</a></li>
         </ul>
-        <div style="padding-top: 20px; margin-right: 30px;">
+    </div>
+    <div class="txt_info">
+
+        <div class="content-div" style="padding-top: 20px; margin-right: 30px; ">
             <table class="form">
                 <tr>
                     <th class="formTitle">用户标识</th>
@@ -48,11 +115,11 @@
                 <tr>
                     <th class="formTitle">账户</th>
                     <td class="formValue">
-                        <input id="AccountName" name="AccountName" type="text" class="form-control"/>
+                        <input id="AccountName" name="AccountName" type="text" class="form-control" />
                     </td>
                     <th class="formTitle">昵称</th>
                     <td class="formValue">
-                        <input id="NickName" name="NickName" type="text" class="form-control"/>
+                        <input id="NickName" name="NickName" type="text" class="form-control" />
                     </td>
                 </tr>
                 <tr>
@@ -68,7 +135,7 @@
                 <tr>
                     <th class="formTitle">姓名</th>
                     <td class="formValue">
-                        <input id="RealName" name="RealName" type="text" class="form-control"/>
+                        <input id="RealName" name="RealName" type="text" class="form-control" />
                     </td>
                     <th class="formTitle">性别</th>
                     <td class="formValue">
@@ -81,11 +148,11 @@
                 <tr>
                     <th class="formTitle">手机</th>
                     <td class="formValue">
-                        <input id="F_MobilePhone" name="F_MobilePhone" type="text" class="form-control"/>
+                        <input id="F_MobilePhone" name="F_MobilePhone" type="text" class="form-control" />
                     </td>
                     <th class="formTitle">状态</th>
                     <td class="formValue">
-                        <input id="F_Birthday" name="F_Birthday" type="text" class="form-control"/>
+                        <input id="F_Birthday" name="F_Birthday" type="text" class="form-control" />
                     </td>
                 </tr>
                 <tr>
@@ -114,6 +181,39 @@
                 </tr>
             </table>
         </div>
+        <div  class="content-div" style="padding-top: 20px; margin-left: 10px; display: none;">
+            <div class="gridPanel">
+                <table id="gridList2"></table>
+                <div id="gridPager2"></div>
+            </div>
+        </div>
+        <div  class="content-div" style="padding-top: 20px; margin-left: 10px; display: none;">
+            <div class="gridPanel">
+                <table id="gridList3"></table>
+                <div id="gridPager3"></div>
+            </div>
+            
+        </div>
+
     </div>
 </form>
+<script>
+    var keyValue = $.request("keyValue");
+    $(".nav-tabs li").click(function() {
+        var obj = $(this);
+        var index = 0;
+        obj.parent().children("li").each(function(i, o) {
+            $(o).removeClass("active");
+            if ($(o).text() === obj.text()) index = i;
+        });
+        obj.addClass("active");
+        $(".txt_info .content-div").each(function(i, o) {
+            $(o).hide();
+            if (i === index) {
+                $(o).show();
+
+            }
+        });
+    });
+</script>
 

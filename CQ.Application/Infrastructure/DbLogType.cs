@@ -34,6 +34,8 @@ namespace CQ.Application
         [Description("增减金币")]
         Gold = 1,
         [Description("增减元宝")]
-        YuanBao = 2
+        YuanBao = 2,
+        [Description("管理员踢出游戏")]
+        Tuser = 5,
     }
 }

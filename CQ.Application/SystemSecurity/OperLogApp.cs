@@ -17,7 +17,7 @@ namespace CQ.Application.SystemSecurity
 
         #region 公共方法
 
-        public List<OperLogEntity> GetList(Pagination pagination, string queryJson)
+        public List<OperLogEntity> GetList(Pagination pagination, string queryJson,int type)
         {
             var expression = ExtLinq.True<OperLogEntity>();
             var queryParam = queryJson.ToJObject();
@@ -35,6 +35,14 @@ namespace CQ.Application.SystemSecurity
             {
                 var endtime = queryParam["endtime"].ToString().ToDate();
                 expression = expression.And(t => t.F_CreatorTime <= endtime);
+            }
+            if (type == 1)
+            {
+                expression = expression.And(t => t.F_Type == 1 || t.F_Type == 2);
+            }
+            if (type == 2)
+            {
+                expression = expression.And(t => t.F_Type == 5);
             }
             return service.FindList(expression, pagination);
         }
