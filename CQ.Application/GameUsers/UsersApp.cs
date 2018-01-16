@@ -423,7 +423,6 @@ namespace CQ.Application.GameUsers
             }
             return false;
         }
-
         /// <summary>
         /// 创建机器人登录帐号
         /// </summary>
@@ -559,6 +558,8 @@ namespace CQ.Application.GameUsers
 
             return msg;
         }
+
+        
 
         #endregion
 

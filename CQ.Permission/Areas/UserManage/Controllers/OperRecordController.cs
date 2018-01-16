@@ -15,6 +15,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
 
         private readonly OperLogApp _operLogApp = new OperLogApp();
         private readonly UsersApp _userApp = new UsersApp();
+        private readonly OperRecordApp _recordApp = new OperRecordApp();
 
         #endregion
 
@@ -32,6 +33,11 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         }
 
         public ActionResult Broad()
+        {
+            return View();
+        }
+
+        public ActionResult Extract()
         {
             return View();
         }
@@ -74,6 +80,20 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             var data = new
             {
                 rows = _operLogApp.GetList(pagination, queryJson, 3),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetExtractJson(Pagination pagination, string queryJson)
+        {
+            var data = new
+            {
+                rows = _recordApp.GetExtractList(pagination, queryJson),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
