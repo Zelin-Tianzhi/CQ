@@ -43,6 +43,16 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             return View();
         }
 
+        public ActionResult SendMessage()
+        {
+            return View();
+        }
+
+        public ActionResult SendBroad()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Ajax请求
@@ -183,6 +193,45 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         public ActionResult SubmitRechange()
         {
 
+            return Success("操作成功。");
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitSendMsg(string F_Account,string F_Type, string F_Message)
+        {
+            if (string.IsNullOrEmpty(F_Message))
+            {
+                return Error("发送内容不能为空。");
+            }
+            if (string.IsNullOrEmpty(F_Type))
+            {
+                return Error("消息类型不能为空。");
+            }
+            _userApp.SendMessage(F_Account, F_Type, F_Message);
+            return Success("操作成功。");
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitSendBroad(string opendlg, string opengo, string serverid, string broadcast)
+        {
+            if (string.IsNullOrEmpty(broadcast))
+            {
+                return Error("发送内容不能为空。");
+            }
+            var result = _userApp.SendBroad(opendlg, opengo, serverid, broadcast);
+            //记录操作日志
+            OperLogEntity entity = new OperLogEntity
+            {
+                F_Account = serverid,
+                F_TextValue = "",
+                F_Type = (int)OperLogType.Broad,
+                F_Description = $"发送系统广播。内容：【{broadcast}】"
+            };
+            _operLogApp.WriteLog(entity);
             return Success("操作成功。");
         }
         #endregion

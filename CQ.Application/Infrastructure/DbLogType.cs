@@ -37,5 +37,7 @@ namespace CQ.Application
         YuanBao = 2,
         [Description("管理员踢出游戏")]
         Tuser = 5,
+        [Description("系统广播")]
+        Broad = 9,
     }
 }

@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Broad";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<script>
+    $(function () {
+        gridList();
+    })
+    function gridList() {
+        var $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: "/UserManage/OperRecord/GetBroadJson",
+            height: $(window).height() - 128,
+            colModel: [
+                { label: '主键', name: 'F_Id', hidden: true },
+                {
+                    label: '日期', name: 'F_CreatorTime', width: 120, align: 'left',
+                    formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                },
+                { label: '管理员', name: 'F_CreatorUserId', width: 80, align: 'left' },
+                {
+                    label: '操作类型', name: 'F_Type', width: 80, align: 'left',
+                    formatter: function (cellvalue) {
+                        return "系统广播";
+                    }
+                },
+                {
+                    label: '房间ID', name: 'F_Account', width: 100, align: 'left'
+                },
+                { label: 'IP地址', name: 'F_IpAddress', width: 100, align: 'left' },
+                { label: '日志内容', name: 'F_Description', width: 300, align: 'left' }
+            ],
+            pager: "#gridPager",
+            sortname: 'F_CreatorTime desc',
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            var queryJson = {
+                keyword: $("#txt_user").val(),
+                begintime: $("#txt_begintime").val(),
+                endtime: $("#txt_endtime").val(),
+            }
+            $gridList.jqGrid('setGridParam', {
+                postData: { queryJson: JSON.stringify(queryJson) },
+            }).trigger('reloadGrid');
+        });
+    }
+</script>
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>时间：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_begintime" type="text" class="form-control" onclick="WdatePicker()" placeholder="开始时间" style="width: 160px; border-radius: 5px;">-
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_endtime" type="text" class="form-control" onclick="WdatePicker()" placeholder="结束时间" style="width: 160px; border-radius: 5px;">
+                    </div>
+                </td>
+                <td style="padding-left: 5px;">玩家帐号：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_user" type="text" class="form-control" placeholder="用户游戏ID" style="width: 120px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+
+

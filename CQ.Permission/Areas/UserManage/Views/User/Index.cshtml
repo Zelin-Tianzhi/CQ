@@ -35,7 +35,7 @@
                     label: '银行存款', name: 'GoldBank', width: 100, align: 'center',
                     formatter: function (cellvalue) {
                         return format_number(cellvalue);
-                    } 
+                    }
                 },
                 {
                     label: '性别', name: 'Sex', width: 60, align: 'center',
@@ -81,13 +81,13 @@
         });
     }
 
-    function format_number(n){  
-        var b=parseInt(n).toString();  
-        var len=b.length;  
-        if(len<=4){return b;}  
-        var r=len%4;  
-        return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{4}/g).join(","):b.slice(r,len).match(/\d{4}/g).join(",");  
-    }  
+    function format_number(n){
+        var b=parseInt(n).toString();
+        var len=b.length;
+        if(len<=4){return b;}
+        var r=len%4;
+        return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{4}/g).join(","):b.slice(r,len).match(/\d{4}/g).join(",");
+    }
 
     function btn_add() {
         $.modalMsg("功能暂未开放", "warning");
@@ -205,6 +205,31 @@
             btn: null
         });
     }
+    function btn_send() {
+        $.modalOpen({
+            id: "SendMessage",
+            title: '发送站内信',
+            url: '/UserManage/User/SendMessage',
+            width: "500px",
+            height: "350px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+
+    function btn_broad() {
+        $.modalOpen({
+            id: "SendMessage",
+            title: '系统广播',
+            url: '/UserManage/User/SendBroad',
+            width: "500px",
+            height: "370px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
 </script>
 
 <div class="topPanel">
@@ -214,6 +239,14 @@
         </div>
         <div class="btn-group">
             <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>添加用户</a>
+        </div>
+        <div class="btn-group">
+
+            <a id="NF-send" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_send()"><i class="fa fa-comment"></i>发送站内信</a>
+        </div>
+        <div class="btn-group">
+
+            <a id="NF-broad" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_broad()"><i class="fa fa-bullhorn"></i>系统广播</a>
         </div>
         <div class="operate">
             <ul class="nav nav-pills">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using CQ.Core;
 using CQ.Domain.Entity.SystemSecurity;
 using CQ.Domain.IRepository.SystemSecurity;
@@ -40,9 +41,13 @@ namespace CQ.Application.SystemSecurity
             {
                 expression = expression.And(t => t.F_Type == 1 || t.F_Type == 2);
             }
-            if (type == 2)
+            else if (type == 2)
             {
                 expression = expression.And(t => t.F_Type == 5);
+            }
+            else if (type == 3)
+            {
+                expression = expression.And(t => t.F_Type == 9);
             }
             return service.FindList(expression, pagination);
         }

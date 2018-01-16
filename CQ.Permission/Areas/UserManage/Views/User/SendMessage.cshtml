@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "SendMessage";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<script>
+    $(function () {
+
+    });
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        var postData = $("#form1").formSerialize();
+        $.submitForm({
+            url: "/UserManage/User/SubmitSendMsg",
+            param: postData,
+            success: function () {
+                $.loading(false);
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<form id="form1">
+    <div style="padding-top: 30px; margin-right: 40px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">玩家帐号</th>
+                <td class="formValue">
+                    <input id="F_Account" name="F_Account" type="text" class="form-control" placeholder="不填写则发送给全部玩家" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">消息类型</th>
+                <td class="formValue">
+                    <select id="F_Type" name="F_Type" class="form-control">
+                        <option value="0">活动信息</option>
+                        <option value="1">维护信息</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">发送内容</th>
+                <td class="formValue">
+                    <textarea id="F_Message" name="F_Message" class="form-control" style="height: 110px;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+

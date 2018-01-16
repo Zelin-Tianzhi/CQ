@@ -70,6 +70,13 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             var data = _gameApp.GetGameList();
             return Content(data.ToJson());
         }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetRoomList(string game)
+        {
+            var data = _gameApp.GetRoomList(game);
+            return Content(data.ToJson());
+        }
 
         [HttpGet]
         [HandlerAjaxOnly]

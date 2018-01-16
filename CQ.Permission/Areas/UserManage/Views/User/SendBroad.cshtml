@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "SendBroad";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<script>
+    $(function () {
+        gamelist();
+    });
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        var postData = $("#form1").formSerialize();
+        $.submitForm({
+            url: "/UserManage/User/SubmitSendBroad",
+            param: postData,
+            success: function() {
+                $.loading(false);
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        });
+    }
+
+    function gamelist() {
+        $("#game").bindSelect({
+            url: "/SystemConfig/GameAi/GetGameList",
+            id: "F_Id",
+            text: "GameName"
+        });
+    }javascript:;
+
+    function roomlist() {
+        $("#serverid").html('<option value="0">---请选择---</option>');
+        $("#serverid").bindSelect({
+            url: "/SystemConfig/GameAi/GetRoomList?game="+$("#game").val(),
+            id: "F_Id",
+            text: "RoomName"
+        });
+    }
+
+
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 40px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">游戏</th>
+                <td class="formValue">
+                    <select id="game" name="game" class="form-control" onchange="roomlist()">
+                        <option value="0">---请选择---</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">房间</th>
+                <td class="formValue">
+                    <select id="serverid" name="serverid" class="form-control">
+                        <option value="0">---请选择---</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle" style="height: 35px;">选项</th>
+                <td class="formValue" style="padding-top: 1px;">
+                    <div class="ckbox">
+                        <input id="opendlg" name="opendlg" type="checkbox"><label for="opendlg">弹窗</label>
+                    </div>
+                    <div class="ckbox">
+                        <input id="opengo" name="opengo" type="checkbox"><label for="opengo">跑马灯</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">发送内容</th>
+                <td class="formValue">
+                    <textarea id="broadcast" name="broadcast" class="form-control" style="height: 110px;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+

@@ -31,6 +31,23 @@ namespace CQ.Application.SystemConfig
             return list;
         }
 
+        public List<object> GetRoomList(string gameid)
+        {
+            string sql = $"select RoomID,RoomName from GameRoomName where GameID = {gameid}";
+            DataSet ds = _qpGameName.GetDataTablebySql(sql);
+            DataTable dt = ds.Tables[0];
+            var list = new List<object>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                list.Add(new
+                {
+                    F_Id = dr["RoomID"],
+                    RoomName = dr["RoomName"]
+                });
+            }
+            return list;
+        }
+
         #endregion
 
         #region 私有方法

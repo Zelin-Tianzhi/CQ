@@ -31,6 +31,11 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             return View();
         }
 
+        public ActionResult Broad()
+        {
+            return View();
+        }
+
         #endregion
 
 
@@ -55,6 +60,20 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             var data = new
             {
                 rows = _userApp.ComplaintRecord(pagination, queryJson),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetBroadJson(Pagination pagination, string queryJson)
+        {
+            var data = new
+            {
+                rows = _operLogApp.GetList(pagination, queryJson, 3),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records

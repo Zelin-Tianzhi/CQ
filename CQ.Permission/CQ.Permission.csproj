@@ -985,6 +985,9 @@
     <Content Include="Areas\DataAnalysis\Views\OnlineStatistics\RoomOnlineUser.cshtml" />
     <Content Include="Areas\UserManage\Views\OperRecord\TUserLog.cshtml" />
     <Content Include="Areas\UserManage\Views\OperRecord\Complaint.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\SendMessage.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\SendBroad.cshtml" />
+    <Content Include="Areas\UserManage\Views\OperRecord\Broad.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

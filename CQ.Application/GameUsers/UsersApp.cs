@@ -296,7 +296,13 @@ namespace CQ.Application.GameUsers
             string response = rex.Match(msg).Groups[1].Value;
             return response;
         }
-
+        /// <summary>
+        /// 锁定用户
+        /// </summary>
+        /// <param name="keyValue"></param>
+        /// <param name="minute"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public string LockUser(string keyValue, long minute, string message)
         {
             string url = GetUrlStr() + $"ysfunction=lockuser&account={keyValue}&minutes={minute}&message={message}";
@@ -449,7 +455,12 @@ namespace CQ.Application.GameUsers
             }
             return uids.TrimEnd(',');
         }
-
+        /// <summary>
+        /// 投诉记录
+        /// </summary>
+        /// <param name="pagination"></param>
+        /// <param name="queryJson"></param>
+        /// <returns></returns>
         public List<object> ComplaintRecord(Pagination pagination, string queryJson)
         {
             const string sysTable = @"View_Complaint";
@@ -509,6 +520,44 @@ namespace CQ.Application.GameUsers
             }
             pagination.records = parameters[9].Value.ToInt();
             return list;
+        }
+        /// <summary>
+        /// 站内信
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="type"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public string SendMessage(string account, string type, string message)
+        {
+            message = ConvertToGb2312(message);
+            string url = GetUrlStr() + $"ysfunction=sendzhanneixin&typedefine={type}&message={message}";
+            if (!string.IsNullOrEmpty(account))
+            {
+                var accountId = GetIdByNum(account, 3);
+                url = GetUrlStr() + $"ysfunction=sendzhanneixintouser&account={account}&message={message}&bonusid=0";
+            }
+            string msg = HttpMethods.HttpGet(url);
+
+            return msg;
+        }
+        /// <summary>
+        /// 系统广播
+        /// </summary>
+        /// <param name="opendlg">是否弹窗</param>
+        /// <param name="opengo">是否开启跑马灯</param>
+        /// <param name="serverid">房间id</param>
+        /// <param name="broadcast">消息内容</param>
+        /// <returns></returns>
+        public string SendBroad(string opendlg, string opengo, string serverid, string broadcast)
+        {
+            var tc = opendlg == "true" ? 1: 0;
+            var pmd = opengo == "true" ? 1 : 0;
+            broadcast = ConvertToGb2312(broadcast);
+            string url = GetUrlStr() + $"ysfunction=broadinfo&opendlg={tc}&opengo={pmd}&serverid={serverid}&broadcast={broadcast}";
+            string msg = HttpMethods.HttpGet(url);
+
+            return msg;
         }
 
         #endregion
