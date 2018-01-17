@@ -132,7 +132,7 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitModifyJinBi(string keyValue, string keyword, string num = "0")
         {
-            string result = _userApp.ModifyGold(num.ToInt(), keyValue);
+            string result = _userApp.ModifyGold(num.ToInt64(), keyValue);
             //记录操作日志
             OperLogEntity entity = new OperLogEntity
             {

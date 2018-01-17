@@ -167,7 +167,6 @@
     <Compile Include="Areas\ReportManage\Controllers\HighchartsController.cs" />
     <Compile Include="Areas\ReportManage\ReportManageAreaRegistration.cs" />
     <Compile Include="Areas\SystemConfig\Controllers\GameAiController.cs" />
-    <Compile Include="Areas\SystemConfig\Controllers\IpConfigController.cs" />
     <Compile Include="Areas\SystemConfig\Controllers\RobotGroupController.cs" />
     <Compile Include="Areas\SystemConfig\Controllers\RoomAiController.cs" />
     <Compile Include="Areas\SystemConfig\Controllers\TimeAiController.cs" />
@@ -188,6 +187,7 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Areas\UserManage\Controllers\IpConfigController.cs" />
     <Compile Include="Areas\UserManage\Controllers\OperRecordController.cs" />
     <Compile Include="Areas\UserManage\Controllers\PropController.cs" />
     <Compile Include="Areas\UserManage\Controllers\RechargeController.cs" />
@@ -991,6 +991,7 @@
     <Content Include="Areas\UserManage\Views\User\SendBroad.cshtml" />
     <Content Include="Areas\UserManage\Views\OperRecord\Broad.cshtml" />
     <Content Include="Areas\UserManage\Views\OperRecord\Extract.cshtml" />
+    <Content Include="Areas\UserManage\Views\IpConfig\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

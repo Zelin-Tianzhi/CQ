@@ -52,6 +52,7 @@
     <Compile Include="DataAnalusis\GoldApp.cs" />
     <Compile Include="DataAnalusis\OnlineUserApp.cs" />
     <Compile Include="GameUsers\GoldOperApp.cs" />
+    <Compile Include="GameUsers\IpConfigApp.cs" />
     <Compile Include="GameUsers\OperRecordApp.cs" />
     <Compile Include="GameUsers\PropApp.cs" />
     <Compile Include="GameUsers\RechargeOrderApp.cs" />

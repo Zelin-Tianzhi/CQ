@@ -242,7 +242,7 @@ namespace CQ.Application.GameUsers
         /// <param name="gold"></param>
         /// <param name="keyValue"></param>
         /// <returns></returns>
-        public string ModifyGold(int gold, string keyValue)
+        public string ModifyGold(long gold, string keyValue)
         {
             var func = gold > 0
                 ? $"ysfunction=chongzhijinbi&account={keyValue}&values={gold}&nosendmail={1}"

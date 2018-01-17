@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CQ.Permission.Areas.SystemConfig.Controllers
+namespace CQ.Permission.Areas.UserManage.Controllers
 {
     public class IpConfigController : BaseController
     {
@@ -22,7 +22,11 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
 
         #region Ajax请求
 
-        
+        public ActionResult GetIpGridJson(string keyword, string type)
+        {
+            
+            return Content("");
+        }
 
         #endregion
     }
