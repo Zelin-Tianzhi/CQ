@@ -22,6 +22,10 @@
                     }
                 },
                 {
+                    label: '日期', name: 'CreateTime', width: 180, align: 'left',
+                    formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                },
+                {
                     label: '元宝', name: 'GYBValue', width: 180, align: 'left',
                     formatter: function (cellvalue) {
                         return format_number(cellvalue);
