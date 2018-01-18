@@ -11,29 +11,15 @@
     function gridList() {
         var $gridList = $("#gridList");
         $gridList.dataGrid({
-            url: "/UserManage/OperRecord/GetTUserJson",
+            url: "/UserManage/IpConfig/GetIpGridJson",
             height: $(window).height() - 128,
             colModel: [
                 { label: '主键', name: 'F_Id', hidden: true },
                 {
-                    label: '日期', name: 'F_CreatorTime', width: 120, align: 'left',
+                    label: '日期', name: 'CreateTime', width: 180, align: 'left',
                     formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
                 },
-                { label: '管理员', name: 'F_CreatorUserId', width: 80, align: 'left' },
-                {
-                    label: '操作类型', name: 'F_Type', width: 80, align: 'left',
-                    formatter: function (cellvalue) {
-                        return "踢出游戏";
-                    }
-                },
-                {
-                    label: '用户帐号', name: 'F_Account', width: 100, align: 'left',
-                    formatter: function (cellvalue) {
-                        return "<a href='#' onclick='btn_details(\"" + cellvalue + "\")'>" + cellvalue + "</a>";
-                    }
-                },
-                { label: 'IP地址', name: 'F_IpAddress', width: 100, align: 'left' },
-                { label: '日志内容', name: 'F_Description', width: 300, align: 'left' }
+                { label: 'IP(MAC)地址', name: 'Ip', width: 180, align: 'left' }
             ],
             pager: "#gridPager",
             sortname: 'F_CreatorTime desc',
@@ -44,20 +30,23 @@
                 keyword: $("#txt_user").val(),
                 begintime: $("#txt_begintime").val(),
                 endtime: $("#txt_endtime").val(),
-            }
+                iptype: $("#ip_type").val()
+        }
             $gridList.jqGrid('setGridParam', {
                 postData: { queryJson: JSON.stringify(queryJson) },
             }).trigger('reloadGrid');
         });
     }
-    function btn_details(account) {
+    function btn_add() {
         $.modalOpen({
-            id: "DisableUser",
-            title: '用户信息',
-            url: '/UserManage/User/Details?keyValue=' + account + "&account=" + escape(account),
-            width: "600px",
-            height: "460px",
-            btn: null
+            id: "Form",
+            title: "添加",
+            url: "/UserManage/IpConfig/Form",
+            width: "440px",
+            height: "280px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
         });
     }
 </script>
@@ -67,7 +56,9 @@
         <div class="btn-group">
             <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
         </div>
-
+        <div class="btn-group">
+            <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>添加Ip名单</a>
+        </div>
     </div>
     <div class="search">
         <table>
@@ -83,10 +74,19 @@
                         <input id="txt_endtime" type="text" class="form-control" onclick="WdatePicker()" placeholder="结束时间" style="width: 160px; border-radius: 5px;">
                     </div>
                 </td>
-                <td style="padding-left: 5px;">玩家帐号：</td>
+                <td>黑/白名单：</td>
                 <td>
                     <div class="input-group">
-                        <input id="txt_user" type="text" class="form-control" placeholder="用户游戏ID" style="width: 120px;">
+                        <select id="ip_type" name="ip_type" class="form-control">
+                            <option value="0">白名单</option>
+                            <option value="1">黑名单</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="padding-left: 5px;">IP：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_user" type="text" class="form-control" placeholder="IP地址" style="width: 120px;">
                         <span class="input-group-btn">
                             <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
                         </span>

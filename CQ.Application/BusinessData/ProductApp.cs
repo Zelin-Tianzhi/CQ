@@ -62,10 +62,12 @@ namespace CQ.Application.BusinessData
             if (keyValue > 0)
             {
                 produceEntity.F_Id = keyValue;
+                service.Update(produceEntity);
             }
             else
             {
                 produceEntity.Create();
+                service.Insert(produceEntity);
             }
             List<ImageEntity> imageEntitys = new List<ImageEntity>();
             foreach (string item in imgPaths)
@@ -74,6 +76,7 @@ namespace CQ.Application.BusinessData
                 imageEntity.F_Img = item;
                 imageEntity.F_FId = produceEntity.F_Id;
                 imageEntitys.Add(imageEntity);
+                imageEntity.Create();
             }
             service.SubmitForm(produceEntity, imageEntitys, keyValue);
         }

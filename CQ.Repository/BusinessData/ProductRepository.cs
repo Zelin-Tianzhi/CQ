@@ -30,14 +30,6 @@ namespace CQ.Repository.BusinessData
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
-                if (keyValue > 0)
-                {
-                    db.Update(productEntity);
-                }
-                else
-                {
-                    db.Insert(productEntity);
-                }
                 db.Delete<ImageEntity>(t => t.F_FId == productEntity.F_Id);
                 db.Insert(imageEntitys);
                 db.Commit();

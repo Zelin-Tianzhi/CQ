@@ -58,7 +58,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="formTitle">ICO图片</th>
+                    <th class="formTitle">Logo图片</th>
                     <td class="formValue" colspan="2">
                         <div>
                             <button id="btn_header" type="button" class="btn btn-default">
@@ -152,6 +152,8 @@
                     $("#form1").formSerialize(data);
                     var value = $("#F_Rule").val();
                     $("#ueditor").html(value);
+                    $("#imgheadbox")
+                        .html('<img style="height:100px;width:100px;" src="' + $("#F_IcoImg").val() + '" />');
 
                 }
             });
