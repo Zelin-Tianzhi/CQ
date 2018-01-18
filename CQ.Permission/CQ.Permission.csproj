@@ -993,6 +993,10 @@
     <Content Include="Areas\UserManage\Views\OperRecord\Extract.cshtml" />
     <Content Include="Areas\UserManage\Views\IpConfig\Index.cshtml" />
     <Content Include="Areas\UserManage\Views\IpConfig\Form.cshtml" />
+    <Content Include="Areas\UserManage\Views\IpConfig\BigQuotaMac.cshtml" />
+    <Content Include="Areas\UserManage\Views\IpConfig\BigQuotaForm.cshtml" />
+    <Content Include="Areas\UserManage\Views\Transfer\TaxRecord.cshtml" />
+    <Content Include="Areas\UserManage\Views\Transfer\YbToJinBi.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

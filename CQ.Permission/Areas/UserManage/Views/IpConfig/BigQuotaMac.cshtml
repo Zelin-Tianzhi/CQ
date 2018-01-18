@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "BigQuotaMac";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<script>
+    $(function () {
+        gridList();
+    })
+    function gridList() {
+        var $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: "/UserManage/IpConfig/GetIpGridJson",
+            height: $(window).height() - 128,
+            colModel: [
+                { label: '主键', name: 'F_Id', hidden: true },
+                {
+                    label: '日期', name: 'CreateTime', width: 180, align: 'left',
+                    formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                },
+                { label: 'IP(MAC)地址', name: 'Ip', width: 180, align: 'left' }
+            ],
+            pager: "#gridPager",
+            sortname: 'F_CreatorTime desc',
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            var queryJson = {
+                keyword: $("#txt_user").val(),
+                begintime: $("#txt_begintime").val(),
+                endtime: $("#txt_endtime").val(),
+                iptype: $("#ip_type").val()
+        }
+            $gridList.jqGrid('setGridParam', {
+                postData: { queryJson: JSON.stringify(queryJson) },
+            }).trigger('reloadGrid');
+        });
+    }
+    function btn_add() {
+        $.modalOpen({
+            id: "Form",
+            title: "添加",
+            url: "/UserManage/IpConfig/Form",
+            width: "440px",
+            height: "280px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+</script>
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <div class="btn-group">
+            <a id="NF-add" authorize="yes" class="btn btn-primary dropdown-text" onclick="btn_add()"><i class="fa fa-plus"></i>添加Ip名单</a>
+        </div>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>时间：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_begintime" type="text" class="form-control" onclick="WdatePicker()" placeholder="开始时间" style="width: 160px; border-radius: 5px;">-
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_endtime" type="text" class="form-control" onclick="WdatePicker()" placeholder="结束时间" style="width: 160px; border-radius: 5px;">
+                    </div>
+                </td>
+                <td style="padding-left: 5px;">用户帐号：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_user" type="text" class="form-control" placeholder="用户游戏ID" style="width: 120px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+

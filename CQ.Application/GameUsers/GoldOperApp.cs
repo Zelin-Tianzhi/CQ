@@ -100,6 +100,119 @@ namespace CQ.Application.GameUsers
             return obj?.ToString() ?? "0";
         }
 
+        public List<object> GetTaxList(Pagination pagination, string queryJson)
+        {
+            var queryParam = queryJson.ToJObject();
+            //1：黑名单； 0：白名单
+            string sysTable = "View_Tax";
+            string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "CreateTime desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
+            if (!queryParam["keyword"].IsEmpty())
+            {
+                sysWhere += $" and AccountID like '%{GetIdByNum(queryParam["keyword"].ToString(),0)}%'";
+            }
+            if (!queryParam["begintime"].IsEmpty())
+            {
+                sysWhere += $" and CreateTime>='{queryParam["begintime"]}' ";
+            }
+            if (!queryParam["endtime"].IsEmpty())
+            {
+                sysWhere += $" and CreateTime<='{queryParam["endtime"]}' ";
+            }
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _qpAccount.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    User = GetIdByNum(dr["AccountID"].ToString(), 1),
+                    Tax = dr["Tax"],
+                    CreateTime = dr["CreateTime"],
+                    TaxType = dr["TaxType"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+        }
+
+        public List<object> GetYb2JinBiList(Pagination pagination, string queryJson)
+        {
+            var queryParam = queryJson.ToJObject();
+            //1：黑名单； 0：白名单
+            string sysTable = "UserGYB2Gold";
+            string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "CreateTime desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
+            if (!queryParam["keyword"].IsEmpty())
+            {
+                sysWhere += $" and AccountID like '%{GetIdByNum(queryParam["keyword"].ToString(), 0)}%'";
+            }
+            if (!queryParam["begintime"].IsEmpty())
+            {
+                sysWhere += $" and CreateTime>='{queryParam["begintime"]}' ";
+            }
+            if (!queryParam["endtime"].IsEmpty())
+            {
+                sysWhere += $" and CreateTime<='{queryParam["endtime"]}' ";
+            }
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _qpAccount.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    User = GetIdByNum(dr["AccountID"].ToString(), 1),
+                    GYBValue = dr["GYBValue"],
+                    CreateTime = dr["CreateTime"],
+                    MoneyGet= dr["MoneyGet"],
+                    GYBType = dr["GYBType"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+        }
+
         #endregion
 
         #region 私有方法

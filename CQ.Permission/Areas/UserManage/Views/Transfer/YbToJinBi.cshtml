@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "YbToJinBi";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<script>
+    $(function () {
+        gridList();
+    })
+    function gridList() {
+        var $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: "/UserManage/Transfer/GetExchangeJson",
+            height: $(window).height() - 128,
+            colModel: [
+                { label: '主键', name: 'F_Id', hidden: true },
+                {
+                    label: '玩家帐号', name: 'User', width: 100, align: 'left',
+                    formatter: function(cellvalue) {
+                        return "<a href='#' onclick='btn_details(\"" + cellvalue + "\")'>" + cellvalue + "</a>";
+                    }
+                },
+                {
+                    label: '元宝', name: 'GYBValue', width: 180, align: 'left',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                { 
+                    label: '兑换金币', name: 'MoneyGet', width: 180, align: 'left',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    } 
+                }
+            ],
+            pager: "#gridPager",
+            sortname: 'F_CreatorTime desc',
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            var queryJson = {
+                keyword: $("#txt_user").val(),
+                begintime: $("#txt_begintime").val(),
+                endtime: $("#txt_endtime").val(),
+                iptype: $("#ip_type").val()
+        }
+            $gridList.jqGrid('setGridParam', {
+                postData: { queryJson: JSON.stringify(queryJson) },
+            }).trigger('reloadGrid');
+        });
+    }
+    function format_number(n){
+        var b=parseInt(n).toString();
+        var len=b.length;
+        if(len<=4){return b;}
+        var r=len%4;
+        return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{4}/g).join(","):b.slice(r,len).match(/\d{4}/g).join(",");
+    }
+    function btn_details(account) {
+        $.modalOpen({
+            id: "DisableUser",
+            title: '用户信息',
+            url: '/UserManage/User/Details?keyValue=' + account + "&account=" + escape(account),
+            width: "680px",
+            height: "510px",
+            btn: null
+        });
+    }
+</script>
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>时间：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_begintime" type="text" class="form-control" onclick="WdatePicker()" placeholder="开始时间" style="width: 160px; border-radius: 5px;">-
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_endtime" type="text" class="form-control" onclick="WdatePicker()" placeholder="结束时间" style="width: 160px; border-radius: 5px;">
+                    </div>
+                </td>
+                <td>黑/白名单：</td>
+                <td>
+                    <div class="input-group">
+                        <select id="ip_type" name="ip_type" class="form-control">
+                            <option value="0">白名单</option>
+                            <option value="1">黑名单</option>
+                        </select>
+                    </div>
+                </td>
+                <td style="padding-left: 5px;">IP：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_user" type="text" class="form-control" placeholder="IP地址" style="width: 120px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+
+

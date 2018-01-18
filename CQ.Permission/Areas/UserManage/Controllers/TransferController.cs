@@ -25,6 +25,16 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             return View();
         }
 
+        public ActionResult TaxRecord()
+        {
+            return View();
+        }
+
+        public ActionResult YbToJinBi()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Ajax请求
@@ -49,6 +59,34 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             var data = new
             {
                 rows = _operLogApp.GetList(pagination, queryJson,1),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetTaxJson(Pagination pagination, string queryJson)
+        {
+            var data = new
+            {
+                rows = _goldApp.GetTaxList(pagination, queryJson),
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetExchangeJson(Pagination pagination, string queryJson)
+        {
+            var data = new
+            {
+                rows = _goldApp.GetYb2JinBiList(pagination, queryJson),
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records
