@@ -32,7 +32,7 @@ namespace CQ.WebSiteTests.ApiTests
             {
                 account += 1;
                 accountnum += 1;
-                url = "http://115.238.87.114:11004/flop.cpp?" + string.Format("ysfunction={0}&account={1}&password={2}&accounttype={3}&accountsecondtype={4}&sex={5}&nickname={6}&accountnum={7}&ipaddress={8}&mac={9}&details={10}",
+                url = "http://183.131.69.236:11004/flop.cpp?" + string.Format("ysfunction={0}&account={1}&password={2}&accounttype={3}&accountsecondtype={4}&sex={5}&nickname={6}&accountnum={7}&ipaddress={8}&mac={9}&details={10}",
                     "register", "w" + account, pwd, 0, accounttype, sex, "新手" + accountnum, accountnum, ip, mac, details);
                 try
                 {

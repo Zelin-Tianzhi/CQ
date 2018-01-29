@@ -50,13 +50,13 @@
                 {
                     label: "帐号类型", name: "AccountType", width: 100, align: "left",
                     formatter: function (cellvalue) {
-                        return cellvalue === 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        return cellvalue === 11 ? "未初始化" : "普通用户";
                     }
                 },
                 {
                     label: "扩展类型", name: "AccountSecondType", width: 100, align: "left",
                     formatter: function (cellvalue) {
-                        return cellvalue === 1 ? "<i class=\"fa fa-toggle-on\"></i>" : "<i class=\"fa fa-toggle-off\"></i>";
+                        return cellvalue === 0 ? "" : cellvalue === 1 ? "机器人" : "普通用户";
                     }
                 },
                 {
@@ -200,7 +200,7 @@
             id: "DisableUser",
             title: '用户信息',
             url: '/UserManage/User/Details?keyValue=' + account + "&account=" + escape(account),
-            width: "680px",
+            width: "700px",
             height: "510px",
             btn: null
         });

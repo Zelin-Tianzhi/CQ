@@ -124,7 +124,11 @@ namespace CQ.Permission.Areas.UserManage.Controllers
         public ActionResult SubmitRevisePassword(string keyValue)
         {
             string result = _userApp.RevisePassword(keyValue, "", "");
-            return Success("操作成功。");
+            if (result == "0")
+            {
+                return Success("操作成功。");
+            }
+            return Error("操作失败。");
         }
         [HttpPost]
         [HandlerAjaxOnly]

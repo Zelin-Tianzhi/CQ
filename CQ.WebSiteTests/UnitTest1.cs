@@ -26,7 +26,7 @@ namespace CQ.WebSiteTests
         [TestMethod]
         public void TestYs()
         {
-            string url = "http://115.238.87.114:11004/flop.cpp?ysfunction=getuserdata&account=wwj001";
+            string url = "http://183.131.69.236:11004/flop.cpp?ysfunction=getuserdata&account=wwj001";
 
             var aa = new {Result = "Success", data = new { }};
             var temp = HttpMethods.HttpGet(url, Encoding.Default);

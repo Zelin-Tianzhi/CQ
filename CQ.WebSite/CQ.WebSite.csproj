@@ -173,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Controllers\FindPasswordController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -318,10 +319,12 @@
     <Content Include="Views\Game\Game.cshtml" />
     <Content Include="Views\News\News.cshtml" />
     <Content Include="Views\Recharge\UploadHeader.cshtml" />
+    <Content Include="Views\Helper\UserProtocol.cshtml" />
+    <Content Include="Views\Helper\Auction.cshtml" />
+    <Content Include="Views\FindPassword\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Views\Api\" />
     <Folder Include="Views\BaseApi\" />
     <Folder Include="Views\UserApi\" />
     <Folder Include="Views\Utility\" />

@@ -30,10 +30,11 @@ namespace CQ.WebSite.Controllers
             var productEntitys = productApp.GetList();
             return Content(productEntitys.ToJson());
         }
-
-        public ActionResult GetHotList(int top)
+        [HttpGet]
+        public ActionResult GetHotList(int keyValue)
         {
-            return Content("");
+            var productEntitys = productApp.GetList().Take(8).ToList();
+            return Content(productEntitys.ToJson());
         }
         [HttpGet]
         public ActionResult GetFormJson(string keyValue)

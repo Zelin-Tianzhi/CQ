@@ -234,7 +234,7 @@ namespace CQ.Application.GameUsers
             string msg = HttpMethods.HttpGet(url);
             Regex rex = new Regex(@"(-\d+|\d+)<");
             string response = rex.Match(msg).Groups[1].Value;
-            return response;
+            return msg;
         }
         /// <summary>
         /// 增减用户金币

@@ -62,55 +62,8 @@
             <h3><i class="icon-title icon-app"></i>热门游戏<a href="/Game" target="_blank" class="tit_more">更多<i></i></a></h3>
         </div>
         <div class="bd clearfix">
-            <ul>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game-img.jpg" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game1.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game2.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game3.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game4.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game5.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game6.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="showgame.html" title="" class="app-icons">
-                        <img src="~/Content/Img/temp/game7.png" alt="">
-                        <h4>斗地主</h4>
-                    </a>
-                </li>
+            <ul id="GameList">
+                
             </ul>
         </div>
     </div>
@@ -120,34 +73,10 @@
         </div>
         <div class="bd">
             <div class="headline">
-                <a href="shownews.html" target="_blank">首款棋牌大厅 强势来袭</a>
+                <a href="/download" target="_blank">首款棋牌大厅 强势来袭</a>
             </div>
             <div class="txt_news_list">
-                <ul>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 公告 ]游戏币使用及盗号处理</a><span>06/16</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 公告 ]新版官网上线公告</a><span>03/16</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 新闻 ]首充奖励，中秋回馈</a><span>03/11</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 新闻 ]WEB版大厅 神秘上线</a><span>08/04</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 公告 ]首款棋牌大厅 强势来袭</a><span>08/04</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 公告 ]游戏币使用及盗号处理</a><span>08/04</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 新闻 ]WEB版大厅 神秘上线</a><span>08/04</span>
-                    </li>
-                    <li>
-                        <a href="shownews.html" target="_blank">[ 新闻 ]首充奖励，中秋回馈</a><span>08/04</span>
-                    </li>
+                <ul id="NewList">
                 </ul>
             </div>
         </div>
@@ -214,3 +143,54 @@
     </div>
 </div>
 <!--/精品游戏-->
+
+<script>
+    $(function() {
+        GetList();
+    });
+
+    function GetList() {
+        var keyValue = 0;
+        $.ajax({
+            url: "/News/GetHomeNews",
+            data: { keyValue: keyValue },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var _html = "";
+                $.each(data, function (i, o) {
+                    var type = o.F_ArticleType == 1 ? "新闻" : "公告";
+                    _html += '<li>';
+                    _html += '<a href="/News/News?keyValue=' + o.F_Id + '" target="_blank">[ ' + type + ' ]' + o.F_ArticleTitle + '</a>';
+                    _html += '</li>';
+                });
+                $("#NewList").prepend(_html);
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            }
+        });
+        $.ajax({
+            url: "/Game/GetHotList",
+            data: { keyValue: 0 },
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var _html = "";
+                $.each(data, function (i, o) {
+                    _html += '<li>';
+                    _html += '  <a href="/Game/Game?keyValue=' + o.F_Id + '" title="' + o.F_ProductName + '" class="app-icons">';
+                    _html += '    <img src="http://183.131.69.236:11010'+o.F_IcoImg+'" alt="">';
+                    _html += '    <h4>' + o.F_ProductName + '</h4>';
+                    _html += '  </a>';
+                    _html += '</li>';
+                });
+                $("#GameList").prepend(_html);
+            },
+            error: function (msg) {
+                alert(msg.statusText);
+            }
+        });
+    }
+
+</script>

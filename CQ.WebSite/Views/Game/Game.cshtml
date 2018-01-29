@@ -58,11 +58,11 @@
                         $("#GameName").text(data.GameModel.F_ProductName);
                         $("#notify").text(data.GameModel.F_Explain);
                         $(".text-li").append(data.GameModel.F_Rule);
-                        $(".game-img").html('<img src="http://115.238.87.114:11010' + data.GameModel.F_IcoImg + '" alt="">');
+                        $(".game-img").html('<img src="http://183.131.69.236:11010' + data.GameModel.F_IcoImg + '" alt="">');
                         var _html = "";
                         $.each(data.ImgList,
                             function(i, o) {
-                                _html += '<div class="swiper-slide" ><img src="http://115.238.87.114:11010' + o.F_Img + '" style="width: 287px; height: 207px;"></div>';
+                                _html += '<div class="swiper-slide" ><img src="http://183.131.69.236:11010' + o.F_Img + '" style="width: 287px; height: 207px;"></div>';
                             });
                         $(".swiper-wrapper").html(_html);
     

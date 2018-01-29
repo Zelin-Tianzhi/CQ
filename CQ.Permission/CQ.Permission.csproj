@@ -796,7 +796,6 @@
     <Folder Include="Areas\SystemConfig\Views\IpConfig\" />
     <Folder Include="Areas\SystemManage\Models\" />
     <Folder Include="Areas\SystemManage\Views\RoleAuthorize\" />
-    <Folder Include="Areas\SystemManage\Views\Shared\" />
     <Folder Include="Areas\SystemSecurity\Models\" />
     <Folder Include="Areas\SystemSecurity\Views\Shared\" />
     <Folder Include="Areas\UserManage\Models\" />

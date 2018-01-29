@@ -8,10 +8,31 @@ namespace CQ.WebSite.Controllers
 {
     public class HelperController : BaseController
     {
-        // GET: Helper
-        public ActionResult Index()
+        #region 属性
+
+
+
+        #endregion
+
+
+        #region 视图
+
+        public ActionResult UserProtocol()
         {
             return View();
         }
+
+        public ActionResult Auction()
+        {
+            return View();
+        }
+
+        #endregion
+
+        #region Ajax请求
+
+        
+
+        #endregion
     }
 }
