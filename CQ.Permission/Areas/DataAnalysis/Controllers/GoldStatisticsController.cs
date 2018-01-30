@@ -23,6 +23,11 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
             return View();
         }
 
+        public ActionResult TaxList()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Ajax请求
@@ -30,7 +35,6 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(string begintime, string endtime, string keyword)
         {
-
             var btime = string.IsNullOrEmpty(begintime) ? DateTime.Today.AddDays(-1) : begintime.ToDate();
             var etime = string.IsNullOrEmpty(endtime) ? DateTime.Today : endtime.ToDate();
             if (etime.Month != btime.Month)
@@ -38,6 +42,21 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
                 return Content("暂时不支持跨月度查询。");
             }
             var list = _app.UserGoldStatis(btime, etime, keyword);
+            var data = new
+            {
+                rows = list,
+                total = 1,
+                page = 1,
+                records = list.Count
+            };
+            return Content(data.ToJson());
+        }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetTaxGridJson(Pagination pagination, string queryJson)
+        {
+            var list = _app.GetTaxList(pagination, queryJson);
             var data = new
             {
                 rows = list,
