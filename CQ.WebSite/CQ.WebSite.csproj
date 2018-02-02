@@ -450,6 +450,7 @@
     <Content Include="Views\Helper\UserProtocol.cshtml" />
     <Content Include="Views\Helper\Auction.cshtml" />
     <Content Include="Views\FindPassword\Index.cshtml" />
+    <Content Include="Views\FindPassword\ModifyForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -33,7 +33,7 @@ namespace CQ.Application.DataAnalusis
             {
                 sql += $" and GameId={gameid} ";
             }
-            sql += " group by AccountID) as wintable order by GoldWin desc ";
+            sql += " group by AccountID) as wintable order by gold desc ";
             DataTable dt = _qpLogStatis.GetDataTablebySql(sql).Tables[0];
             string uids = string.Join(",",(from r in dt.AsEnumerable() select r.Field<int>("AccountID")).ToArray());
             DataTable userDt = new DataTable();
@@ -117,6 +117,159 @@ namespace CQ.Application.DataAnalusis
             return list;
         }
 
+        public List<object> GetUserGameGold(Pagination pagination, string keyValue, string begintime, string engtime, string account)
+        {
+            if ( begintime.IsEmpty() || engtime.IsEmpty())
+            {
+                begintime = DateTime.Today.AddDays(-1).ToString();
+                engtime = DateTime.Today.ToString();
+            }
+            //1：黑名单； 0：白名单
+            string tableName = " LogDayGame" + begintime.ToDate().ToString("yyyyMM");
+            string sourceWhere = " 1=1 ";
+            string sourceGroup = " GameID,AccountID ";
+            if (keyValue.IsEmpty())
+            {
+                keyValue = "0";
+            }
+            if (!account.IsEmpty())
+            {
+                sourceWhere += $" and AccountID ={account}";
+            }
+            if (!begintime.IsEmpty())
+            {
+                sourceWhere += $" and CurrentDay>='{begintime}' ";
+            }
+            if (!engtime.IsEmpty())
+            {
+                sourceWhere += $" and CurrentDay<'{engtime}' ";
+            }
+            if (keyValue !="0" && keyValue != "")
+            {
+                sourceWhere += $" and GameID={keyValue} ";
+            }
+            string sourceTable =
+                $"(select Row_Number() over ( order by getdate() ) as Id, GameID,sum(Gold) as GoldWin,AccountID from {tableName} where {sourceWhere} group by {sourceGroup}) ";
+
+            string sysTable = sourceTable;
+            string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "Id desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = " 1=1 ";
+            
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = _qpLogStatis.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            var gameList = GetGameList();
+            string userSql = $"select AccountID,Account from Account where AccountID={account}";
+            var userDt = _qpAccount.GetDataTablebySql(userSql).Tables[0];
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    Account = userDt.Rows[0]["Account"].ToString(),
+                    GoldWin = dr["GoldWin"],
+                    GameName = gameList.Select($"GameID={dr["GameID"].ToString()}")[0]["GameName"].ToString(),
+                    GameID = dr["GameID"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+        }
+
+        public List<object> GetGameGoldList(Pagination pagination, string keyValue, string begintime, string engtime,
+            string account)
+        {
+            string dbName = Enum.Parse(typeof(TableNameEnum), keyValue).ToString();
+            var helper = new DbHelper("QPLog" + dbName);
+            string yearMon = begintime.ToDate().ToString("yyyyMM");
+            string sourceTableName = "Item_" + yearMon;
+            string isExists = $"select * from sysobjects where name='{sourceTableName}' and xtype='U'";
+            var obj = helper.GetObject(isExists, null);
+            if (obj == null)
+            {
+                return new List<object>();
+            }
+            string sourceWhere = " 1=1 ";
+            if (keyValue.IsEmpty())
+            {
+                keyValue = "0";
+            }
+            if (!account.IsEmpty())
+            {
+                sourceWhere += $" and AccountID ={account}";
+            }
+            if (!begintime.IsEmpty())
+            {
+                sourceWhere += $" and CurrentDay>='{begintime}' ";
+            }
+            if (!engtime.IsEmpty())
+            {
+                sourceWhere += $" and CurrentDay<'{engtime}' ";
+            }
+            string sysTable = sourceTableName;
+            string sysKey = @"Id";
+            const string sysFields = @"*";
+            const string sysOrder = "Id desc";
+            const int sysBegin = 1;
+            var sysPageIndex = pagination.page;
+            var sysPageSize = pagination.rows;
+            var sysWhere = sourceWhere;
+
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@sys_Table", sysTable),
+                new SqlParameter("@sys_Key", sysKey),
+                new SqlParameter("@sys_Fields", sysFields),
+                new SqlParameter("@sys_Where", sysWhere),
+                new SqlParameter("@sys_Order", sysOrder),
+                new SqlParameter("@sys_Begin", sysBegin),
+                new SqlParameter("@sys_PageIndex", sysPageIndex),
+                new SqlParameter("@sys_PageSize", sysPageSize),
+                new SqlParameter("@PCount",SqlDbType.Int),
+                new SqlParameter("@RCount",SqlDbType.Int),
+            };
+            parameters[8].Direction = ParameterDirection.Output;
+            parameters[9].Direction = ParameterDirection.Output;
+            var dataTable = helper.ExecuteNonQuery(ProcedureConfig.SysPageV2, parameters);
+            var list = new List<object>();
+            var gameList = GetGameList();
+            string userSql = $"select AccountID,Account from Account where AccountID={account}";
+            var userDt = _qpAccount.GetDataTablebySql(userSql).Tables[0];
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new
+                {
+                    F_ID = dr["Id"],
+                    Account = userDt.Rows[0]["Account"].ToString(),
+                    GoldWin = dr["GoldWin"],
+                    GameName = gameList.Select($"GameID={dr["GameID"].ToString()}")[0]["GameName"].ToString(),
+                    GameID = dr["GameID"]
+                });
+            }
+            pagination.records = parameters[9].Value.ToInt();
+            return list;
+            return null;
+        }
+
         #endregion
 
         #region 私有方法
@@ -131,24 +284,6 @@ namespace CQ.Application.DataAnalusis
             DataTable oneGameList = helper.GetDataTablebySql(sql).Tables[0];
             return oneGameList;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         private DataTable GetGameList()

@@ -28,12 +28,27 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
             return View();
         }
 
+        public ActionResult DayDetails()
+        {
+            return View();
+        }
+
+        public ActionResult GoldDetails()
+        {
+            return View();
+        }
+
+        public ActionResult GameGoldDetails()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Ajax请求
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(string begintime, string endtime, string keyword)
+        public ActionResult GetGridJson(string begintime, string endtime, string keyword, string usertype)
         {
             var btime = string.IsNullOrEmpty(begintime) ? DateTime.Today.AddDays(-1) : begintime.ToDate();
             var etime = string.IsNullOrEmpty(endtime) ? DateTime.Today : endtime.ToDate();
@@ -57,6 +72,20 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         public ActionResult GetTaxGridJson(Pagination pagination, string queryJson)
         {
             var list = _app.GetTaxList(pagination, queryJson);
+            var data = new
+            {
+                rows = list,
+                total = 1,
+                page = 1,
+                records = list.Count
+            };
+            return Content(data.ToJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetUserGameGridJson(Pagination pagination, string keyValue,string begintime, string engtime,string account)
+        {
+            var list = _app.GetUserGameGold(pagination, begintime, begintime, engtime, account);
             var data = new
             {
                 rows = list,

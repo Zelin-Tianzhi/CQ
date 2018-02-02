@@ -997,6 +997,9 @@
     <Content Include="Areas\UserManage\Views\Transfer\TaxRecord.cshtml" />
     <Content Include="Areas\UserManage\Views\Transfer\YbToJinBi.cshtml" />
     <Content Include="Areas\DataAnalysis\Views\GoldStatistics\TaxList.cshtml" />
+    <Content Include="Areas\DataAnalysis\Views\GoldStatistics\DayDetails.cshtml" />
+    <Content Include="Areas\DataAnalysis\Views\GoldStatistics\GoldDetails.cshtml" />
+    <Content Include="Areas\DataAnalysis\Views\GoldStatistics\GameGoldDetails.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

@@ -72,6 +72,13 @@ namespace CQ.Application.AutoService
             {
                 return;
             }
+            string targetTableName = "LogDayGame" + yearMon;
+            //string maxIsCurrent = $"select top 1 CurrentDay from {targetTableName} where CurrentDay='{time}'";
+            //object maxDate = _qpLogStatis.GetObject(maxIsCurrent, null);
+            //if (maxDate != null && maxDate.ToDate() == time)
+            //{
+            //    return;
+            //}
             string sql =
                 $"SELECT AccountID,RoomID,SUM(GoldWin) AS win,SUM(ABS(GoldWin)) AS allgold, SUM(GoldTax) AS Tax,SUM(CASE WHEN GoldWin>0 THEN GoldWin ELSE 0 END) AS goldWin FROM {sourceTableName} WHERE CreationDate >= '{time}' AND CreationDate< '{time.AddDays(1)}' GROUP BY RoomID,AccountID ";
             DataTable oneGameList = helper.GetDataTablebySql(sql).Tables[0];
@@ -80,7 +87,6 @@ namespace CQ.Application.AutoService
 
             //DataTable robotList = _qpAccount.GetDataTablebySql(sql).Tables[0];
 
-            string targetTableName = "LogDayGame" + yearMon;
 
             List<string> sqlList = new List<string>();
 
@@ -105,7 +111,12 @@ namespace CQ.Application.AutoService
         private void AddLogDay(DateTime time)
         {
             string yearMon = time.ToString("yyyyMM");
-
+            string maxIsCurrent = $"select top 1 CurrentDay from LogDay where CurrentDay='{time}'";
+            object maxDate = _qpLogStatis.GetObject(maxIsCurrent, null);
+            if (maxDate != null && maxDate.ToDate() == time)
+            {
+                return;
+            }
             string sql =
                 $"select AccountID,SUM(ABS(Gold)) as AllGold,SUM(Gold) as Win,SUM(Tax) as Tax from LogDayGame{yearMon} where CurrentDay >= '{time}' and CurrentDay < '{time.AddDays(1)}' group by AccountID";
             DataTable dt = _qpLogStatis.GetDataTablebySql(sql).Tables[0];
@@ -131,17 +142,23 @@ namespace CQ.Application.AutoService
         private void AddLogMonth(DateTime time)
         {
             string yearMon = time.ToString("yyyyMM");
-
+            string yearMon2 = time.ToString("yyyy/MM");
+            string maxIsCurrent = $"select top 1 CurrentMonth from LogMonth where CurrentMonth={yearMon}";
+            object maxDate = _qpLogStatis.GetObject(maxIsCurrent, null);
+            if (maxDate != null && maxDate.ToString() == yearMon)
+            {
+                return;
+            }
             string sql =
-                $"select AccountID,SUM(GoldGame) as Win,SUM(ABS(GoldGame)) as AllGold from LogDay where CurrentDay>='{time}' and CurrentDay<'{time.AddDays(1)}' group by AccountID";
+                $"select AccountID,SUM(GoldGame) as Win,SUM(ABS(GoldGame)) as AllGold from LogDay where CurrentDay>='{yearMon2.ToDate()}' and CurrentDay<'{yearMon2.ToDate().AddMonths(1)}' group by AccountID";
             DataTable oneGameTable = _qpLogStatis.GetDataTablebySql(sql).Tables[0];
 
             List<string> sqlList = new List<string>();
 
             foreach (DataRow dr in oneGameTable.Rows)
             {
-                string insertSql = "insert into LogMonth(CurrentMonth,GoldGame,AccountID,AllGold,Tax) ";
-                insertSql += $" values({yearMon.ToInt()},{dr["Win"]},{dr["AccountID"]},{dr["AllGold"]},{dr["Tax"]})";
+                string insertSql = "insert into LogMonth(CurrentMonth,GoldGame,AccountID,AllGold) ";
+                insertSql += $" values({yearMon.ToInt()},{dr["Win"]},{dr["AccountID"]},{dr["AllGold"]})";
                 sqlList.Add(insertSql);
             }
             if (sqlList.Count > 0)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CQ.Application.BusinessData;
 using CQ.Core;
 using CQ.Plugin.Cache;
 
@@ -10,6 +11,11 @@ namespace CQ.WebSite.Controllers
 {
     public class FindPasswordController : BaseController
     {
+        #region 属性
+
+        FindPasswordApp pwdApp = new FindPasswordApp();
+
+        #endregion
         // GET: FindPassword
         public ActionResult Index()
         {
@@ -17,6 +23,12 @@ namespace CQ.WebSite.Controllers
             ViewBag.Token = token;
             return View();
         }
+
+        public ActionResult ModifyForm()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult GetAuthCode(string token)
         {
@@ -29,7 +41,7 @@ namespace CQ.WebSite.Controllers
 
         public ActionResult SubmitAccount(string account, string yzm, string token)
         {
-            var verifyCode = Cache.Get(token);
+            object verifyCode = Cache.Get(token);
             if (verifyCode.IsEmpty())
             {
                 return Error("验证码超时，请重新获取");
@@ -38,7 +50,15 @@ namespace CQ.WebSite.Controllers
             {
                 return Error("验证码错误，请重新输入");
             }
-            return Success("");
+
+            string result = pwdApp.SendCheckCode(account);
+            if (result == "0")
+            {
+                return Success("发送成功");
+            }
+            return Error(result);
         }
+
+
     }
 }

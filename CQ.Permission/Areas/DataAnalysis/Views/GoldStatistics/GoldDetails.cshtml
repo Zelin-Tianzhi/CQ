@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "GoldDetails";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<script>
+    $(function() {
+        gridList();
+    });
+
+    function gridList() {
+        var keyValue = $.request("keyword");
+        var begintime = $.request("begintime");
+        var engtime = $.request("engtime");
+        var account = $.request("account");
+        var queryJson = {
+            keyValue: keyValue,
+            begintime: begintime,
+            engtime: engtime,
+            account: account
+        };
+        var $gridList = $("#gridList");
+
+        $gridList.dataGrid({
+            url: "/DataAnalysis/GoldStatistics/GetUserGameGridJson",
+            height: $(window).height() - 128,
+            postData:{
+                keyValue: keyValue,
+                begintime: begintime,
+                engtime: engtime,
+                account: account
+            },
+            colModel: [
+                { label: '主键', name: 'F_ID', hidden: true },
+                { label: '游戏ID', name: 'GameID', hidden: true },
+                { label: '玩家帐号', name: 'Account', width: 160, align: 'center' },
+                { label: '游戏名称', name: 'GameName', width: 160, align: 'center' },
+                {
+                    label: '盈利', name: 'GoldWin', width: 200, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                }
+            ],
+            pager: "#gridPager",
+            sortname: 'ID desc',
+            viewrecords: true
+        });
+    }
+    function format_number(n) {
+        var b = parseInt(n).toString();
+        var len = b.length;
+        if (len <= 4) { return b; }
+        var r = len % 4;
+        return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{4}/g).join(",") : b.slice(r, len).match(/\d{4}/g).join(",");
+    }
+</script>
+
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+

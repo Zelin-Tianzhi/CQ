@@ -47,6 +47,7 @@
     <Compile Include="AutoService\GoldStatisticsApp.cs" />
     <Compile Include="BaseApp.cs" />
     <Compile Include="BusinessData\ArticleApp.cs" />
+    <Compile Include="BusinessData\FindPasswordApp.cs" />
     <Compile Include="BusinessData\ImageApp.cs" />
     <Compile Include="BusinessData\ProductApp.cs" />
     <Compile Include="DataAnalusis\GoldApp.cs" />
