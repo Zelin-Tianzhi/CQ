@@ -28,7 +28,7 @@
                 {
                     label: '用户输赢', name: 'WinGold', width: 80, align: 'center',
                     formatter: function (cellvalue, options, rowdata, action) {
-                        return "<a href='#' onclick='GoldDetails(\"" + rowdata.AccountId + "\")'>" + format_number(cellvalue) + "</a>";
+                        return "<a href='#' onclick='GoldDetails(\"" + rowdata.AccountId + "\")'>" +format_number(cellvalue) + "</a>";
                     }
                 }
             ],
@@ -68,7 +68,7 @@
         var len=b.length;
         if(len<=4){return b;}
         var r=len%4;
-        return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{4}/g).join(","):b.slice(r,len).match(/\d{4}/g).join(",");
+        return r>0?b.slice(0,r)+","+b.slice(r,len).match(/\d{4}/g).join(","):b.slice(r,len).match(/-\d{3}|\d{4}/g).join(",");
     }
 
     function GoldDetails(account) {

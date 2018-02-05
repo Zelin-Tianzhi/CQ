@@ -85,7 +85,22 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetUserGameGridJson(Pagination pagination, string keyValue,string begintime, string engtime,string account)
         {
-            var list = _app.GetUserGameGold(pagination, begintime, begintime, engtime, account);
+            var list = _app.GetUserGameGold(pagination, keyValue, begintime, engtime, account);
+            var data = new
+            {
+                rows = list,
+                total = 1,
+                page = 1,
+                records = list.Count
+            };
+            return Content(data.ToJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetGameDetailsGridJson(Pagination pagination, string keyValue, string begintime,
+            string engtime, string account)
+        {
+            var list = _app.GetGameGoldList(pagination, keyValue, begintime, engtime, account);
             var data = new
             {
                 rows = list,

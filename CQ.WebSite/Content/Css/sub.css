@@ -59,7 +59,7 @@
 .text-title{ margin-top:50px; border-top: 1px dashed #C9C9C9; color: #333; line-height: 60px; height: 60px; font-weight: bold; font-size: 26px; padding: 10px 0 0;}
 .text-li{ color: #707070; font-size: 18px; line-height: 30px;}
 
-.game-inf{position: relative; padding: 0 0 0px 0;}
+.game-inf{position: relative; padding: 0 0 0px 0;height: 230px;}
 .game-inf .game-img{ position: absolute; top:0; left: 0; width: 230px; height: 230px; padding: 0 25px 0 0; overflow: hidden;}
 .game-text{ padding: 0 285px 0 260px;}
 .game-text h1{ color:#333; font-weight: bold; font-size: 32px; line-height: 50px; padding: 10px 0 10px;}

@@ -2,11 +2,26 @@
     Layout = "~/Views/Shared/_LayoutIndex.cshtml";
     ViewBag.Title = "棋牌-斗地主，麻将，斗牛，棋牌游戏平台";
 }
+@section styles{
+    <link rel="stylesheet" href="/Content/Js/layui/css/layui.css?v=@ViewBag.Version" media="all">
+}
+@section scripts
+{
+    <script type="text/javascript" src="/Content/Js/layui/layui.js?v=@ViewBag.Version"></script>
+}
 <!--轮播-->
 <div class="wrap clearfix">
     <div class="active-banner">
         <div class="ad-big-img">
-            <a href="###"><img src="~/Content/Img/temp/ad1.jpg"></a>
+            <div class="layui-carousel" id="test1" lay-filter="test1">
+                <div carousel-item="">
+                    <div><img src="~/Content/Img/temp/ad1.jpg"></div>
+                    <div><img src="~/Content/Img/temp/ad1-2.jpg"></div>
+                    <div><img src="~/Content/Img/temp/ad1-3.jpg"></div>
+                    <div><img src="~/Content/Img/temp/ad1-4.jpg"></div>
+                    <div><img src="~/Content/Img/temp/ad1-5.jpg"></div>
+                </div>
+            </div> 
         </div>
         <ul class="ad-small-img">
             <li>
@@ -96,45 +111,45 @@
         <div class="bd">
             <ul class="h_gamelive_list">
                 <li>
-                    <a class="video_info" href="showgame.html"><img src="~/Content/Img/temp/temp1.jpg"></a>
+                    <a class="video_info" href="/Game/Game?keyValue=2"><img src="~/Content/Img/temp/jp_hhsw.png"></a>
                     <div class="webgame-sub">
-                        <a class="webgame_name" href="showgame.html" target="_blank">欢乐斗地主</a>
-                        <span class="webgame-txt">98区即将开启！万人热血PK!</span>
+                        <a class="webgame_name" href="/Game/Game?keyValue=2" target="_blank">虎虎生威</a>
+                        @*<span class="webgame-txt">98区即将开启！万人热血PK!</span>*@
                     </div>
                 </li>
                 <li>
-                    <a class="video_info" href="showgame.html"><img src="~/Content/Img/temp/temp2.jpg"></a>
+                    <a class="video_info" href="/Game/Game?keyValue=8"><img src="~/Content/Img/temp/jp_ss.png"></a>
                     <div class="webgame-sub">
-                        <a class="webgame_name" href="showgame.html" target="_blank">血战麻将</a>
-                        <span class="webgame-txt">68区即将开启！万人热血PK!</span>
+                        <a class="webgame_name" href="/Game/Game?keyValue=8" target="_blank">神兽</a>
+                        @*<span class="webgame-txt">68区即将开启！万人热血PK!</span>*@
                     </div>
                 </li>
                 <li>
-                    <a class="video_info" href="showgame.html"><img src="~/Content/Img/temp/temp3.jpg"></a>
+                    <a class="video_info" href="/Game/Game?keyValue=3"><img src="~/Content/Img/temp/jp_brnn.png"></a>
                     <div class="webgame-sub">
-                        <a class="webgame_name" href="showgame.html" target="_blank">德州扑克</a>
-                        <span class="webgame-txt">68区即将开启！万人热血PK!</span>
+                        <a class="webgame_name" href="/Game/Game?keyValue=3" target="_blank">百人牛牛</a>
+                        @*<span class="webgame-txt">68区即将开启！万人热血PK!</span>*@
                     </div>
                 </li>
                 <li>
-                    <a class="video_info" href="showgame.html"><img src="~/Content/Img/temp/temp4.jpg"></a>
+                    <a class="video_info" href="/Game/Game?keyValue=9"><img src="~/Content/Img/temp/jp_sh.png"></a>
                     <div class="webgame-sub">
-                        <a class="webgame_name" href="showgame.html" target="_blank">愤怒的渔夫</a>
-                        <span class="webgame-txt">68区即将开启！万人热血PK!</span>
+                        <a class="webgame_name" href="/Game/Game?keyValue=9" target="_blank">梭哈</a>
+                        @*<span class="webgame-txt">68区即将开启！万人热血PK!</span>*@
                     </div>
                 </li>
                 <li>
-                    <a class="video_info" href="showgame.html"><img src="~/Content/Img/temp/temp5.jpg"></a>
+                    <a class="video_info" href="/Game/Game?keyValue=11"><img src="~/Content/Img/temp/jp_21d.png"></a>
                     <div class="webgame-sub">
-                        <a class="webgame_name" href="showgame.html" target="_blank">超级小丑</a>
-                        <span class="webgame-txt">68区即将开启！万人热血PK!</span>
+                        <a class="webgame_name" href="/Game/Game?keyValue=11" target="_blank">21点</a>
+                        @*<span class="webgame-txt">68区即将开启！万人热血PK!</span>*@
                     </div>
                 </li>
                 <li>
-                    <a class="video_info" href="showgame.html"><img src="~/Content/Img/temp/temp6.jpg"></a>
+                    <a class="video_info" href="/Game/Game?keyValue=1"><img src="~/Content/Img/temp/jp_hlddz.png"></a>
                     <div class="webgame-sub">
-                        <a class="webgame_name" href="showgame.html" target="_blank">连线英雄</a>
-                        <span class="webgame-txt">68区即将开启！万人热血PK!</span>
+                        <a class="webgame_name" href="/Game/Game?keyValue=1" target="_blank">欢乐斗地主</a>
+                        @*<span class="webgame-txt">68区即将开启！万人热血PK!</span>*@
                     </div>
                 </li>
             </ul>
@@ -145,6 +160,17 @@
 <!--/精品游戏-->
 
 <script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+        //常规轮播
+        carousel.render({
+            elem: '#test1',
+            arrow: 'always',
+            width: '710px',
+            height: '532px'
+        });
+    });
     $(function() {
         GetList();
     });

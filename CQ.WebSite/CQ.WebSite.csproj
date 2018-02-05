@@ -233,6 +233,12 @@
     <Content Include="Content\Img\temp\game8.png" />
     <Content Include="Content\Img\temp\gh_01.jpg" />
     <Content Include="Content\Img\temp\gh_02.jpg" />
+    <Content Include="Content\Img\temp\jp_21d.png" />
+    <Content Include="Content\Img\temp\jp_brnn.png" />
+    <Content Include="Content\Img\temp\jp_hhsw.png" />
+    <Content Include="Content\Img\temp\jp_hlddz.png" />
+    <Content Include="Content\Img\temp\jp_sh.png" />
+    <Content Include="Content\Img\temp\jp_ss.png" />
     <Content Include="Content\Img\temp\temp1.jpg" />
     <Content Include="Content\Img\temp\temp2.jpg" />
     <Content Include="Content\Img\temp\temp3.jpg" />

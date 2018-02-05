@@ -3,7 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutGame.cshtml";
 }
-
+@section styles{
+    <link rel="stylesheet" href="/Content/Css/user.css?v=@ViewBag.Version" media="all">
+}
 <div class="fdx_nav">
     <div class="find_tab clearfix">
         <h4 class="find_li1 current"><a href="/FindPassword/Index">通过绑定的手机号找回</a></h4>

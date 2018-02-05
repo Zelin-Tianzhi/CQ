@@ -23,7 +23,7 @@
         var $gridList = $("#gridList");
 
         $gridList.dataGrid({
-            url: "/DataAnalysis/GoldStatistics/GetUserGameGridJson",
+            url: "/DataAnalysis/GoldStatistics/GetGameDetailsGridJson",
             height: $(window).height() - 128,
             postData:{
                 keyValue: keyValue,
@@ -33,13 +33,49 @@
             },
             colModel: [
                 { label: '主键', name: 'F_ID', hidden: true },
-                { label: '玩家帐号', name: 'Account', width: 160, align: 'center' },
-                { label: '游戏名称', name: 'GameID', width: 160, align: 'center' },
+                { label: '游戏ID', name: 'GameID', hidden: true },
+                { label: '房间ID', name: 'RoomID', hidden: true },
+                { label: '玩家帐号', name: 'Account', width: 100, align: 'center' },
+                { label: '游戏名称', name: 'GameName', width: 100, align: 'center' },
+                { label: '房间名称', name: 'RoomName', width: 80, align: 'center' },
                 {
-                    label: '盈利', name: 'GoldWin', width: 200, align: 'center',
+                    label: '盈利', name: 'GoldWin', width: 120, align: 'center',
                     formatter: function (cellvalue) {
                         return format_number(cellvalue);
                     }
+                },
+                {
+                    label: '税收', name: 'GoldTax', width: 120, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '当前金币', name: 'GoldCurrent', width: 120, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '带入金币', name: 'GoldBring', width: 120, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '银行金币', name: 'GoldBank', width: 120, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '总金币', name: 'GoldTotal', width: 120, align: 'center',
+                    formatter: function (cellvalue) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '游戏时间', name: 'CreateTime', width: 150, align: 'center'
                 }
             ],
             pager: "#gridPager",

@@ -3,7 +3,15 @@
     ViewBag.Title = "Game";
     Layout = "~/Views/Shared/_LayoutGame.cshtml";
 }
-
+@section styles{
+    
+    <link rel="stylesheet" type="text/css" href="/Content/Css/idangerous.swiper.css?v=@ViewBag.Version">
+}
+@section scripts
+{
+    
+    <script type="text/javascript" src="/Content/Js/layer/layer.js?v=@ViewBag.Version"></script>
+}
 <div class="wrap mt20">
     <div class="hd">
         <h3><i class="icon-title icon-event"></i>游戏中心</h3>

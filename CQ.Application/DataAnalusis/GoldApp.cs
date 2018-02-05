@@ -198,6 +198,11 @@ namespace CQ.Application.DataAnalusis
         public List<object> GetGameGoldList(Pagination pagination, string keyValue, string begintime, string engtime,
             string account)
         {
+            if (begintime.IsEmpty() || engtime.IsEmpty())
+            {
+                begintime = DateTime.Today.AddDays(-1).ToString();
+                engtime = DateTime.Today.ToString();
+            }
             string dbName = Enum.Parse(typeof(TableNameEnum), keyValue).ToString();
             var helper = new DbHelper("QPLog" + dbName);
             string yearMon = begintime.ToDate().ToString("yyyyMM");
@@ -209,21 +214,17 @@ namespace CQ.Application.DataAnalusis
                 return new List<object>();
             }
             string sourceWhere = " 1=1 ";
-            if (keyValue.IsEmpty())
-            {
-                keyValue = "0";
-            }
             if (!account.IsEmpty())
             {
                 sourceWhere += $" and AccountID ={account}";
             }
             if (!begintime.IsEmpty())
             {
-                sourceWhere += $" and CurrentDay>='{begintime}' ";
+                sourceWhere += $" and CreationDate>='{begintime}' ";
             }
             if (!engtime.IsEmpty())
             {
-                sourceWhere += $" and CurrentDay<'{engtime}' ";
+                sourceWhere += $" and CreationDate<'{engtime}' ";
             }
             string sysTable = sourceTableName;
             string sysKey = @"Id";
@@ -254,20 +255,29 @@ namespace CQ.Application.DataAnalusis
             var gameList = GetGameList();
             string userSql = $"select AccountID,Account from Account where AccountID={account}";
             var userDt = _qpAccount.GetDataTablebySql(userSql).Tables[0];
+            var userName = userDt.Rows[0]["Account"].ToString();
             foreach (DataRow dr in dataTable.Rows)
             {
                 list.Add(new
                 {
                     F_ID = dr["Id"],
-                    Account = userDt.Rows[0]["Account"].ToString(),
+                    Account = userName,
+                    GameName = gameList.Select($"GameID={keyValue}")[0]["GameName"].ToString(),
+                    GameID = keyValue,
+                    RoomID = dr["RoomID"],
+                    RoomName = gameList.Select($"RoomID={dr["RoomID"].ToString()}")[0]["RoomName"].ToString(),
+                    GroupId = dr["GroupID"],
+                    GoldTax = dr["GoldTax"],
                     GoldWin = dr["GoldWin"],
-                    GameName = gameList.Select($"GameID={dr["GameID"].ToString()}")[0]["GameName"].ToString(),
-                    GameID = dr["GameID"]
+                    GoldCurrent = dr["GoldCurrent"],
+                    GoldBring = dr["GoldBring"],
+                    GoldBank = dr["GoldBank"],
+                    GoldTotal = dr["GoldTotal"],
+                    CreateTime = dr["CreationDate"]
                 });
             }
             pagination.records = parameters[9].Value.ToInt();
             return list;
-            return null;
         }
 
         #endregion
@@ -288,7 +298,7 @@ namespace CQ.Application.DataAnalusis
 
         private DataTable GetGameList()
         {
-            string sql = "select GameID,GameName from GameRoomName group by GameID,GameName";
+            string sql = "select GameID,GameName,RoomID,RoomName from GameRoomName";
             DataSet ds = _qpGameName.GetDataTablebySql(sql);
             DataTable dt = ds.Tables[0];
             return dt;

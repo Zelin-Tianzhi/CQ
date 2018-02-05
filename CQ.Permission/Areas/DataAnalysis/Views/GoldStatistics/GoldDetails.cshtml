@@ -5,15 +5,16 @@
 }
 
 <script>
+    var keyValue = $.request("keyword");
+    var begintime = $.request("begintime");
+    var engtime = $.request("engtime");
+    var account = $.request("account");
     $(function() {
         gridList();
     });
 
     function gridList() {
-        var keyValue = $.request("keyword");
-        var begintime = $.request("begintime");
-        var engtime = $.request("engtime");
-        var account = $.request("account");
+
         var queryJson = {
             keyValue: keyValue,
             begintime: begintime,
@@ -38,8 +39,8 @@
                 { label: '游戏名称', name: 'GameName', width: 160, align: 'center' },
                 {
                     label: '盈利', name: 'GoldWin', width: 200, align: 'center',
-                    formatter: function (cellvalue) {
-                        return format_number(cellvalue);
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return "<a href='#' onclick='GameGoldDetails(\"" + rowdata.GameID + "\")'>" + format_number(cellvalue) + "</a>";
                     }
                 }
             ],
@@ -54,6 +55,25 @@
         if (len <= 4) { return b; }
         var r = len % 4;
         return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{4}/g).join(",") : b.slice(r, len).match(/\d{4}/g).join(",");
+    }
+
+    function GameGoldDetails(keyword) {
+
+        $.modalOpen({
+            id: "GameGoldDetails",
+            title: '游戏输赢信息',
+            url: '/DataAnalysis/GoldStatistics/GameGoldDetails?keyword=' +
+                keyword +
+                '&begintime=' +
+                begintime +
+                '&engtime=' +
+                engtime +
+                '&account=' +
+                account,
+            width: "900px",
+            height: "660px",
+            btn: null
+        });
     }
 </script>
 
