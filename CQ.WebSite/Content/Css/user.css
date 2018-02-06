@@ -5,15 +5,15 @@ body{background:#17020B;}
 .fl{ float:left; display:inline;}
 .fr{ float:right; display:inline;}
 
-.find_banner{ width: 100%; height:265px; background: url(../Images/find_banner.jpg) no-repeat top center; overflow: hidden;}
+.find_banner{ width: 100%; height:265px; background: url(../Img/find_banner.jpg) no-repeat top center; overflow: hidden;}
 /**********************************************/
 /* 找回密码 tab
 /**********************************************/
 .find_tab{ margin-top:23px; padding: 0 0 0 10px;}
-.find_tab h4{ cursor: pointer; font-size: 18px; margin-top:13px; height: 39px; line-height: 42px; width:225px; padding: 0 8px; float: left; background:url(../images/t1.png) no-repeat top center; text-align: center; color: #fff;}
-.find_tab h4.find_li1{ background:url(../images/t1.png) no-repeat top center; color: #b53201;}
-.find_tab h4.find_li2{ background:url(../images/t2.png) no-repeat top center; color: #997202;}
-.find_tab h4.find_li3{ background:url(../images/t3.png) no-repeat top center; color: #008954;}
+.find_tab h4{ cursor: pointer; font-size: 18px; margin-top:13px; height: 39px; line-height: 42px; width:225px; padding: 0 8px; float: left; background:url(../Img/t1.png) no-repeat top center; text-align: center; color: #fff;}
+.find_tab h4.find_li1{ background:url(../Img/t1.png) no-repeat top center; color: #b53201;}
+.find_tab h4.find_li2{ background:url(../Img/t2.png) no-repeat top center; color: #997202;}
+.find_tab h4.find_li3{ background:url(../Img/t3.png) no-repeat top center; color: #008954;}
 .find_tab h4.find_li1 a{ text-decoration: none; color: #b53201;}
 .find_tab h4.find_li2 a{ text-decoration: none; color: #997202;}
 .find_tab h4.find_li3 a{ text-decoration: none; color: #008954;}
@@ -26,20 +26,20 @@ body{background:#17020B;}
 /**********************************************/
 .fdx_bg{background:#ececec;width:100%;padding-bottom:510px;}
 .fdx_header{width:990px;margin:0 auto;padding:15px 0 20px 0;}
-.fdx_header h3{background:url(../../images/temp/fdx_hd.png) no-repeat left top;width:990px;height:65px;}
+.fdx_header h3{background:url(../../Img/temp/fdx_hd.png) no-repeat left top;width:990px;height:65px;}
 .fdx_nav{width:990px;margin:0 auto;}
 .find_content{padding:76px 0; background: #fff; position: relative; z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,.35);}
 /*进度条S*/
 
 .fdx_nav .fdx_pro{width:760px;margin:6px auto 0; position: relative;}
-.fdx_pro ul li{float:left;_display:inline;width:190px;}
+.fdx_pro ul li{float:left;_display:inline;width:380px;}
 .fdx_pro ul li span{ display:block;height:30px; margin:0 auto; width: 30px; border-radius: 100%; background: #CCCCCC; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 30px; text-align: center; position: relative; z-index: 5;}
 .fdx_pro ul li p{margin-top:10px;text-align:center;font-size:12px;font-family:"微软雅黑";color:#999;}
 
 .fdx_pro .huidi{ background: #CCCCCC; width: 100%; height: 6px; border-radius: 6px; position: absolute; top:13px}
 .fdx_pro ul { position: relative; z-index: 5;}
 .fdx_pro ul li.fdx_jd2 p.pro_txt{color:#7ABD54; position: relative; z-index: 5;}
-.fdx_pro ul li .pro_current{ width: 190px; height: 6px; border-radius: 6px; background: #7ABD54; position: absolute; margin-top:13px;display:none;}
+.fdx_pro ul li .pro_current{ width: 380px; height: 6px; border-radius: 6px; background: #7ABD54; position: absolute; margin-top:13px;display:none;}
 .fdx_pro ul li.fdx_jd2 .pro_current{ display: block;}
 .fdx_pro .pro1 span{background-position:20px 0;}
 .fdx_pro .pro2 span{background-position:-92px 0;}
@@ -202,7 +202,7 @@ body{background:#17020B;}
 .agree_dd{ color:#555555; line-height:26px; padding-top:30px;}
 .agree_dd dt{ font-weight:bold; color:#333333; font-size:16px; padding:10px 0;}
 
-.prompt{ clear: both; background:url(../images/promt.gif) no-repeat 2px 4px; font-size: 13px; color: #777777;  width: 760px; line-height:44px; margin: 0 auto;}
+.prompt{ clear: both; background:url(../Img/promt.gif) no-repeat 2px 4px; font-size: 13px; color: #777777;  width: 760px; line-height:44px; margin: 0 auto;}
 .prompt span{ font-weight:bold; font-size:14px;}
 .land-ad{ width:382px; height:101px;  margin:16px 0 0 12px;}
 
@@ -214,10 +214,10 @@ body{background:#17020B;}
 
 .codeNum,.codeNum:link,.codeNum:visited,.codeNum:hover,.codeNum:active{padding:5px 10px; line-height:53px;background:#EEF7E6;border-radius:3px;display:inline;text-align: center;color:#323333;font-size:13px;font-family:"微软雅黑";  border: 1px solid #BFD6AF;}
 
-.Success{ margin: 40px 0 0 93px; position: absolute;  width: 664px; height: 58px; background:url(../Images/Success.png) no-repeat top left; line-height: 47px; font-size: 12px; color: #565656;}
+.Success{ margin: 40px 0 0 93px; position: absolute;  width: 664px; height: 58px; background:url(../Img/Success.png) no-repeat top left; line-height: 47px; font-size: 12px; color: #565656;}
 .Success .success_t{ font-size: 14px; display: inline; float:left; padding: 0 10px 0 50px;}
 
-.codeNumDisable,.codeNumDisable:link,.codeNumDisable:visited,.codeNumDisable:hover,.codeNumDisable:active{padding:5px 10px; line-height:53px;background:#EEEEEE;border-radius:3px;display:inline;text-align: center;color:#323333;font-size:13px;font-family:"微软雅黑";  border: 1px solid #C2C2C2;}
+.codeNumDisable,.codeNumDisable:link,.codeNumDisable:visited,.codeNumDisable:hover,.codeNumDisable:active{padding:5px 10px; line-height:23px;background:#EEEEEE;border-radius:3px;display:inline;text-align: center;color:#323333;font-size:13px;font-family:"微软雅黑";  border: 1px solid #C2C2C2;}
 
 .findTable{ color: #666666; font-size: 13px; margin:5px 0 0 115px; width: 800px; border: 1px solid #D9D9D9; line-height: 35px; text-align: center; border-collapse: collapse; }
 .findTable th{ background: #D9D9D9;}

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "密码找回-验证通行证帐号";
     Layout = "~/Views/Shared/_LayoutGame.cshtml";
 }
 @section styles{
@@ -49,7 +49,7 @@
                 </li>
                 <li>
                     <span></span>
-                    <a href="javascript:void(0);" class="fdx_btn">下一步</a>
+                    <a onclick="SubmitAccount();" href="javascript:void(0);" class="fdx_btn">下一步</a>
                 </li>
             </ul>
         </div>
@@ -63,9 +63,22 @@
 <script>
     function SubmitAccount() {
         var account = $("#useraccount").val();
-        var yam = $("#yzm").val();
+        var yzm = $("#yzm").val();
         var token = $("#checktoken").val();
-
+        $.ajax({
+            url: "/FindPassword/SubmitAccount",
+            type: "GET",
+            data: { account: account, yzm: yzm, token: token },
+            dataType: "json",
+            success: function(data) {
+                if (data.state == "success") {
+                    window.location.href = "/FindPassword/ModifyForm?account=" + account;
+                } else {
+                    alert(data.message);
+                }
+                $("#switchCode").trigger('click');
+            }
+        });
     }
     $("#switchCode").click(function () {
         $("#imgcode").attr("src", "/FindPassword/GetAuthCode/?token=@ViewBag.Token" + "&time=" + Math.random());

@@ -205,6 +205,18 @@
     <Content Include="Content\Img\find_banner.jpg" />
     <Content Include="Content\Img\find_bg.jpg" />
     <Content Include="Content\Img\guide.jpg" />
+    <Content Include="Content\Img\Helper\6365354501692017568941673.png" />
+    <Content Include="Content\Img\Helper\6365354502569586273691828.png" />
+    <Content Include="Content\Img\Helper\6365354503430956544429425.png" />
+    <Content Include="Content\Img\Helper\6365354505823306338554719.png" />
+    <Content Include="Content\Img\Helper\6365354506639890356189899.png" />
+    <Content Include="Content\Img\Helper\6365354507472893168713876.png" />
+    <Content Include="Content\Img\Helper\6365354508485742384720632.png" />
+    <Content Include="Content\Img\Helper\6365354509481800482013001.png" />
+    <Content Include="Content\Img\Helper\6365354510239408971464279.png" />
+    <Content Include="Content\Img\Helper\6365354510908150385586963.png" />
+    <Content Include="Content\Img\Helper\6365354511583804133154045.png" />
+    <Content Include="Content\Img\Helper\6365354512088450699279091.png" />
     <Content Include="Content\Img\login_yzm.png" />
     <Content Include="Content\Img\logo.png" />
     <Content Include="Content\Img\promt.gif" />
@@ -221,6 +233,9 @@
     <Content Include="Content\Img\temp\ad2.jpg" />
     <Content Include="Content\Img\temp\ad3.jpg" />
     <Content Include="Content\Img\temp\ad4.jpg" />
+    <Content Include="Content\Img\temp\banner1.png" />
+    <Content Include="Content\Img\temp\banner2.png" />
+    <Content Include="Content\Img\temp\banner3.png" />
     <Content Include="Content\Img\temp\code.png" />
     <Content Include="Content\Img\temp\game-img.jpg" />
     <Content Include="Content\Img\temp\game1.png" />
@@ -239,6 +254,7 @@
     <Content Include="Content\Img\temp\jp_hlddz.png" />
     <Content Include="Content\Img\temp\jp_sh.png" />
     <Content Include="Content\Img\temp\jp_ss.png" />
+    <Content Include="Content\Img\temp\qrcode.png" />
     <Content Include="Content\Img\temp\temp1.jpg" />
     <Content Include="Content\Img\temp\temp2.jpg" />
     <Content Include="Content\Img\temp\temp3.jpg" />
@@ -457,6 +473,7 @@
     <Content Include="Views\Helper\Auction.cshtml" />
     <Content Include="Views\FindPassword\Index.cshtml" />
     <Content Include="Views\FindPassword\ModifyForm.cshtml" />
+    <Content Include="Views\Helper\Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

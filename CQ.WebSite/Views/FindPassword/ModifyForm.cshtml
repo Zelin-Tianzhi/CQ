@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "ModifyForm";
+    ViewBag.Title = "密码找回-修改新密码";
     Layout = "~/Views/Shared/_LayoutGame.cshtml";
 }
 @section styles{
@@ -17,12 +17,12 @@
         <div class="fdx_pro clearfix">
             <div class="huidi"></div>
             <ul>
-                <li class="pro1 fdx_jd2">
+                <li class="pro1">
                     <p class="pro_current"></p>
                     <span>1</span>
                     <p class="pro_txt">填写通行证账号 </p>
                 </li>
-                <li class="pro4 ">
+                <li class="pro4 fdx_jd2">
                     <p class="pro_current"></p>
                     <span>2</span>
                     <p class="pro_txt">修改通行证密码</p>
@@ -34,30 +34,25 @@
         <div class="fdx_input">
             <ul class="fdx_inpd1 clearfix">
                 <li>
-                    <span>当前密码：</span>
-                    <input type="text" placeholder="" class="itxput" />
-                    <em class="itxt_red" style="display:none;">您输入的用户名有误</em>
-                </li>
-                <li>
                     <span>新密码：</span>
-                    <input type="text" placeholder="" class="itxput" />
+                    <input id="newpassword" type="password" placeholder="" class="itxput" />
                     <em class="itxt_red" style="display:none;">您输入的用户名有误</em>
                 </li>
                 <li>
                     <span>确认新密码：</span>
-                    <input type="text" placeholder="" class="itxput" />
+                    <input id="checkpassword" type="password" placeholder="" class="itxput" />
                     <em class="itxt_red" style="display:none;">您输入的用户名有误</em>
                 </li>
                 <li>
                     <span>手机验证码：</span>
-                    <input type="text" class="itxput itxput_wd2" />
+                    <input id="checkcode" type="text" class="itxput itxput_wd2" />
                     <input type="text" class="itxput_red" style="display:none;" />
-                    <a href="###" class="codeNumDisable">59秒后重新获取</a>
+                    <input type="button" id="againcheckcode" onclick="time(this)" class="codeNumDisable" value="重新发送" />
                     <p class="itx_pd1" style="display:none;"><em class="itxt_red">您输入的验证码有误</em></p>
                 </li>
                 <li>
                     <span></span>
-                    <a href="###" class="fdx_btn">提交</a>
+                    <a onclick="SubmitModify();" href="javascript:void(0);" class="fdx_btn">提交</a>
                 </li>
             </ul>
         </div>
@@ -88,4 +83,70 @@
     </div>
 </div>
 <!-- 主体 E -->
+<script>
+    var account = $.request("account");
+
+    var wait=60;
+    function time(o) {
+        if (wait == 60 && o.value == "重新发送") {
+            $.ajax({
+                url: "/FindPassword/SendCode",
+                type: "GET",
+                data: { account: account },
+                dataType: "json",
+                success: function(data) {
+                    if (data.state == "success") {
+                        alert("发送成功");
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.value="重新发送";
+            wait = 60;
+        } else {
+            o.setAttribute("disabled", true);
+            o.value=" " + wait + " 后重新发送";
+            wait--;
+            setTimeout(function() {
+                    time(o);
+                },
+                1000);
+        }
+    }
+
+    function SubmitModify() {
+        var newpwd = $("#newpassword").val();
+        var checkpwd = $("#checkpassword").val();
+        var checkcode = $("#checkcode").val();
+        if (newpwd.length >20 || newpwd.length <6) {
+            alert("密码长度为6-20位。");
+            return;
+        }
+        if (checkpwd != newpwd) {
+            alert("两次密码输入不一致。");
+            return;
+        }
+        if (checkcode.length <= 0) {
+            alert("手机验证码必填。");
+            return;
+        }
+        $.ajax({
+            url: "/FindPassword/SubmitModifyPwd",
+            type: "GET",
+            data: { account: account,newpwd:newpwd,checkcode:checkcode },
+            dataType: "json",
+            success: function(data) {
+                if (data.state == "success") {
+                    alert("修改成功。");
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
 

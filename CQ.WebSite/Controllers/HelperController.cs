@@ -17,6 +17,16 @@ namespace CQ.WebSite.Controllers
 
         #region 视图
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Help()
+        {
+            return View();
+        }
+
         public ActionResult UserProtocol()
         {
             return View();

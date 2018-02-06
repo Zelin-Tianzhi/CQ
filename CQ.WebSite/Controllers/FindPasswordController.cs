@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CQ.Application.BusinessData;
@@ -26,6 +27,11 @@ namespace CQ.WebSite.Controllers
 
         public ActionResult ModifyForm()
         {
+            var superiorUrl = HttpContext.Request.UrlReferrer?.LocalPath;
+            if (superiorUrl != "/FindPassword/Index" && superiorUrl != "/FindPassword" && superiorUrl != "/FindPassword/")
+            {
+                return Redirect("/FindPassword/Index");
+            }
             return View();
         }
 
@@ -41,6 +47,16 @@ namespace CQ.WebSite.Controllers
 
         public ActionResult SubmitAccount(string account, string yzm, string token)
         {
+            if (account.IsEmpty() || yzm.IsEmpty())
+            {
+                return Error("账号验证码不能为空。");
+            }
+            string accountKey = account + "SendCodeTime";
+            object sendCodeTime = Cache.Get(accountKey);
+            if (sendCodeTime != null)
+            {
+                return Error("请等待一分钟再次请求。");
+            }
             object verifyCode = Cache.Get(token);
             if (verifyCode.IsEmpty())
             {
@@ -54,11 +70,57 @@ namespace CQ.WebSite.Controllers
             string result = pwdApp.SendCheckCode(account);
             if (result == "0")
             {
+                object timeUnix = Common.GetCurrentTimeUnix() + 60;
+                Cache.Insert(accountKey, timeUnix, 1);
                 return Success("发送成功");
             }
             return Error(result);
         }
 
+        public ActionResult SendCode(string account)
+        {
+            if (account.IsEmpty() )
+            {
+                return Error("账号不能为空。");
+            }
+            string accountKey = account + "SendCodeTime";
+            object sendCodeTime = Cache.Get(accountKey);
+            if (sendCodeTime == null)
+            {
+                object timeUnix = Common.GetCurrentTimeUnix() + 60;
+                Cache.Insert(accountKey, timeUnix, 1);
+            }
+            else
+            {
+                return Error("请等待一分钟再次请求。");
+            }
 
+            string result = pwdApp.SendCheckCode(account);
+            if (result == "0")
+            {
+                return Success("发送成功。");
+            }
+            return Error(result);
+        }
+
+        public ActionResult SubmitModifyPwd(string account, string newpwd, string checkcode)
+        {
+            if (account.IsEmpty() || newpwd.IsEmpty() || checkcode.IsEmpty())
+            {
+                return Error("参数错误。");
+            }
+            Regex rgx = new Regex("^[A-Za-z0-9_]{6,20}$");
+            if (!rgx.IsMatch(newpwd))
+            {
+                return Error("密码不符合规则。");
+            }
+
+            string result = pwdApp.SubmitModifyPwd(account,checkcode,newpwd);
+            if (result == "0")
+            {
+                return Success("发送成功。");
+            }
+            return Error(result);
+        }
     }
 }

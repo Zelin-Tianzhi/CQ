@@ -6,7 +6,21 @@ $(function() {
 	initwdWidth(); //窗口大小变化
 	onwdresize(); //窗口大小变化
 })
-
+$.request = function (name) {
+    var search = location.search.slice(1);
+    var arr = search.split("&");
+    for (var i = 0; i < arr.length; i++) {
+        var ar = arr[i].split("=");
+        if (ar[0] == name) {
+            if (unescape(ar[1]) == 'undefined') {
+                return "";
+            } else {
+                return unescape(ar[1]);
+            }
+        }
+    }
+    return "";
+}
 window.prop = 1000;//定义充值比例
 
 //充值
