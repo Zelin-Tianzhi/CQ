@@ -26,7 +26,7 @@ namespace CQ.Application
         [Description("21点|BlackJack")]
         BlackJack = 66,
 
-        [Description("斗地主|LandCrazy")]
+        [Description("欢乐斗地主|LandCrazy")]
         LandCrazy = 12,
 
         [Description("欢乐斗牛|CrazyOx")]

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoService\GoldStatisticsApp.cs" />
+    <Compile Include="AutoService\OnlineTimeApp.cs" />
     <Compile Include="BaseApp.cs" />
     <Compile Include="BusinessData\ArticleApp.cs" />
     <Compile Include="BusinessData\FindPasswordApp.cs" />
