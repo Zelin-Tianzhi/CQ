@@ -42,6 +42,11 @@ namespace CQ.Permission.Areas.UserManage.Controllers
             return View();
         }
 
+        public ActionResult UserGoldOper()
+        {
+            return View();
+        }
+
         #endregion
 
 

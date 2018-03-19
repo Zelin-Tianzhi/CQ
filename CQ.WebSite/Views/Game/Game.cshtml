@@ -41,7 +41,25 @@
             </div>
         </div>
     </div>
-    
+    <script type="text/javascript" src="/Content/Js/idangerous.swiper.min.js"></script>
+    <script>
+        var mySwiper = $('.swiper-container').swiper({
+            loop: false,
+            grabCursor: true,
+            paginationClickable: true,
+            slidesPerView: 4
+        });
+        $('.arrow-left').on('click', function(e){
+            e.preventDefault()
+            var swiper = $(this).siblings('.swiper-container').data('swiper');
+            swiper.swipePrev();
+        });
+        $('.arrow-right').on('click', function(e){
+            e.preventDefault()
+            var swiper = $(this).siblings('.swiper-container').data('swiper');
+            swiper.swipeNext();
+        });
+    </script>
 
     <div class="text-li">
         <div class="text-title">基本规则</div>
@@ -56,7 +74,7 @@
     var keyValue = $.request("keyValue");
     $(function () {
         if (!!keyValue) {
-            $.ajax({
+            $.ajax({ 
                 url: "/Game/GetFormJson",
                 data: { keyValue: keyValue },
                 dataType: "json",

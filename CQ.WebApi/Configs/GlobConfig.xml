@@ -2,8 +2,12 @@
 
 <configuration>
   <aqiuUrl url="http://192.168.1.10:11004/flop.cpp?"></aqiuUrl>
+  <apiServiceUrl url="http://127.0.0.1:1860/flop.cpp?"></apiServiceUrl>
   <oldPropID val="12082301"></oldPropID>
   <newPropID val="12082302"></newPropID>
+  <!--21218cca77804d2ba1922c33e0151105-->
+  <DefaultPassword value="4059673565acaf57fee24fe68f209007"></DefaultPassword>
+  
 
   <TermGameList>
     <game ID="4" Name="二人麻将" Conn="QPLog_Baccarat" DjPeople="2" roomId="461|快速夺金,462|高手夺金,463|高级场" />

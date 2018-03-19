@@ -88,7 +88,10 @@ namespace CQ.Repository.EntityFramework
             {
                 using (SqlCommand cmd = new SqlCommand(cmdText, conn))
                 {
-                    cmd.Parameters.AddRange(parameters);
+                    if (parameters != null)
+                    {
+                        cmd.Parameters.AddRange(parameters);
+                    }
                     conn.Open();
                     return cmd.ExecuteNonQuery();//返回受影响行数
                 }
@@ -123,6 +126,34 @@ namespace CQ.Repository.EntityFramework
                  }
              }
          }
+
+        public SqlParameter[] ExecuteNonQueryOutPut(string sqlText, SqlParameter[] parameters)
+        {
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlText, conn))
+                {
+                    try
+                    {
+                        conn.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (SqlParameter parameter in parameters)
+                        {
+                            cmd.Parameters.Add(parameter);
+                        }
+
+                        cmd.ExecuteNonQuery();
+                        return parameters;
+                    }
+                    catch (SqlException ex)
+                    {
+                        conn.Close();
+                        Log.Error(ex);
+                        throw new Exception($"执行{sqlText}失败:{ex.Message}");
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 执行存储过程，返回结果集
         /// </summary>

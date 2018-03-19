@@ -20,20 +20,19 @@ namespace CQ.WebSiteTests.ApiTests
             //url = "http://192.168.1.10:11003/YLWebToServerInterface/test";
             
 
-            int accountnum = 103061;
+            int accountnum = 203061;
             int account = 4061;
-            string pwd = "c8c8e2585e7555ee27396f4645b415ff";
+            string pwd = "2396926147ee02b652877fb5ca551f9b";
             int sex = 1;
             int accounttype = 1;
             string ip = Net.Ip;
             string mac = string.Join(";", Net.GetMacByNetworkInterface());
             string details = "|||0|0|||||||";
-            for (int i = 0; i < 10000; i++)
-            {
+            
                 account += 1;
                 accountnum += 1;
-                url = "http://183.131.69.236:11004/flop.cpp?" + string.Format("ysfunction={0}&account={1}&password={2}&accounttype={3}&accountsecondtype={4}&sex={5}&nickname={6}&accountnum={7}&ipaddress={8}&mac={9}&details={10}",
-                    "register", "w" + account, pwd, 0, accounttype, sex, "新手" + accountnum, accountnum, ip, mac, details);
+                url = "http://183.131.69.236:10101/api/factory?" + string.Format("ysfunction={0}&account={1}&password={2}&accounttype={3}&accountsecondtype={4}&sex={5}&nickname={6}&accountnum={7}&ipaddress={8}&mac={9}&details={10}",
+                    "register", "zz2211123321", pwd, 0, accounttype, sex, "新手" + accountnum, accountnum, ip, mac, details);
                 try
                 {
                     string msg = CQ.Core.HttpMethods.HttpGet(url);
@@ -43,7 +42,7 @@ namespace CQ.WebSiteTests.ApiTests
                     Log log = LogFactory.GetLogger(GetType().ToString());
                     log.Error(ex.Message);
                 }
-            }
+            
 
         }
 
@@ -59,7 +58,7 @@ namespace CQ.WebSiteTests.ApiTests
             string url = "http://192.168.1.10:11005/api/user/MemberRegister?username=w11111&userpwd=123123&yzm=1231&useryz=1231&fw=1231";
             UserController user = new UserController();
             user.TouristLogin(verify);
-            string msg = CQ.Core.HttpMethods.HttpGet(url);
+            //string msg = CQ.Core.HttpMethods.HttpGet(url);
         }
     }
 }

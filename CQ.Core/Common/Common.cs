@@ -135,7 +135,19 @@ namespace CQ.Core
         public static long GetCurrentTimeUnix()
         {
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1);
-            return ts.TotalMilliseconds.ToInt64(); //精确到毫秒
+            return ts.TotalSeconds.ToInt64(); //精确到毫秒
+        }
+        /// <summary>        
+        /// 时间戳转为C#格式时间        
+        /// </summary>        
+        /// <param name=”timeStamp”></param>        
+        /// <returns></returns>        
+        public static DateTime ConvertStringToDateTime(string timeStamp)
+        {
+            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long lTime = long.Parse(timeStamp + "0000");
+            TimeSpan toNow = new TimeSpan(lTime);
+            return dtStart.Add(toNow);
         }
 
         #endregion

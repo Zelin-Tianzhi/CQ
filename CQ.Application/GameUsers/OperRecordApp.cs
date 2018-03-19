@@ -73,6 +73,8 @@ namespace CQ.Application.GameUsers
             return list;
         }
 
+        
+
         #endregion
 
         #region 私有方法

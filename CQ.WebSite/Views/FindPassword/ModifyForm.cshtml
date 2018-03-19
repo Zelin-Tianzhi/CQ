@@ -85,7 +85,9 @@
 <!-- 主体 E -->
 <script>
     var account = $.request("account");
-
+    $(function() {
+        time(document.getElementById("againcheckcode"));
+    });
     var wait=60;
     function time(o) {
         if (wait == 60 && o.value == "重新发送") {

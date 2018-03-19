@@ -26,11 +26,14 @@ namespace CQ.WebSiteTests
         [TestMethod]
         public void TestYs()
         {
-            string url = "http://183.131.69.236:11004/flop.cpp?ysfunction=getuserdata&account=wwj001";
+            long a = 812636891239467;
 
-            var aa = new {Result = "Success", data = new { }};
-            var temp = HttpMethods.HttpGet(url, Encoding.Default);
-            Console.WriteLine(aa);
+            int b = (int) a;
+            //string url = "http://183.131.69.236:11004/flop.cpp?ysfunction=getuserdata&account=wwj001";
+
+            //var aa = new {Result = "Success", data = new { }};
+            //var temp = HttpMethods.HttpGet(url, Encoding.Default);
+            //Console.WriteLine(aa);
         }
     }
 }
