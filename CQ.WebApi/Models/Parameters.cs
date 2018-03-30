@@ -27,6 +27,8 @@ namespace CQ.WebApi.Models
 
         public string mac { get; set; }
 
+        public string pid { get; set; }
+
         public string details { get; set; }
 
         public string realname { get; set; }
@@ -38,6 +40,8 @@ namespace CQ.WebApi.Models
         public string parentid { get; set; }
 
         public string photouuid { get; set; }
+
+        public string regtype { get; set; }
 
         public int minutes { get; set; }
 

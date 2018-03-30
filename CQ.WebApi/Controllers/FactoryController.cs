@@ -37,7 +37,7 @@ namespace CQ.WebApi.Controllers
                 }
             }
             OperationApp app = new OperationApp();
-            string result = string.Empty;
+            dynamic result = string.Empty;
             switch (funName)
             {
                 case "onlineuser":
@@ -47,6 +47,7 @@ namespace CQ.WebApi.Controllers
                    result= app.GetUserData(parameters);
                     break;
                 case "getusercount":
+                    result = app.GetAllUserCount(parameters);
                     break;
                 case "register":
                    result= app.RegisterUser(parameters);

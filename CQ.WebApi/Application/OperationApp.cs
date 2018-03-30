@@ -36,51 +36,78 @@ namespace CQ.WebApi.Application
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public string GetOnlineUser(Parameters parameters)
+        public dynamic GetAllUserCount(Parameters parameters)
         {
             int type = parameters.type;
             string url = GetUrlStr() + $"ysfunction=getusercount&type={type}";
             string result = HttpMethods.HttpGet(url);
+            if (result == null)
+            {
+                return -5;
+            }
             return result;
         }
+
+        public dynamic GetOnlineUser(Parameters parameters)
+        {
+            int type = parameters.type;
+            string url = GetUrlStr() + $"ysfunction=getusercount&type={type}";
+            string result = HttpMethods.HttpGet(url);
+            if (result == null)
+            {
+                return -5;
+            }
+            return result;
+        }
+
+        //public string UserLoginVerify(Parameters parameters)
+        //{
+        //    string username = parameters.account;
+        //    string pwd = parameters.password;
+
+        //}
 
         /// <summary>
         /// 注册帐号
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public string RegisterUser(Parameters parameters)
+        public long RegisterUser(Parameters parameters)
         {
             if (parameters.accountnum <= 100000 || parameters.account.Length <= 0 || parameters.password.Length <= 0)
             {
-                return "-1";
+                return -1;
             }
-            parameters.nickname = "新手" + parameters.accountnum;
+            string nickname = string.IsNullOrEmpty(parameters.nickname)
+                ? "新手" + parameters.accountnum
+                : parameters.nickname;
             parameters.account = parameters.account.ToLower();
             parameters.password = parameters.password.ToLower();
+            string password = Md5.md5(parameters.password + "hydia", 32);
             long accountId = GetAccountId(parameters.account);
             if (accountId > 0)
             {
-                return "-4";
+                return -4;
             }
             accountId = -999;
             SqlParameter[] sqlPara = new SqlParameter[]
             {
                 new SqlParameter("@Account", parameters.account),
-                new SqlParameter("@Password", parameters.password),
+                new SqlParameter("@Password", password),
                 new SqlParameter("@AccountType", parameters.accounttype),
                 new SqlParameter("@Sex", parameters.sex),
-                new SqlParameter("@NickName", parameters.nickname),
+                new SqlParameter("@NickName", nickname),
                 new SqlParameter("@AccountSecondType", parameters.accountsecondtype),
                 new SqlParameter("@AccountNum", parameters.accountnum),
                 new SqlParameter("@RegisterAddress", parameters.ipaddress),
                 new SqlParameter("@Details", parameters.details),
-                new SqlParameter("@RegisterMac", parameters.mac),
-                new SqlParameter("@RealName", DBNull.Value),
-                new SqlParameter("@IdentityCard", DBNull.Value),
-                new SqlParameter("@Telephone", DBNull.Value),
-                new SqlParameter("@ParentID", DBNull.Value),
-                new SqlParameter("@PhotoUUID", DBNull.Value),
+                new SqlParameter("@RegisterMac", SqlNull(parameters.mac)),
+                new SqlParameter("@PhoneID",SqlNull(parameters.pid)), 
+                new SqlParameter("@RealName", SqlNull(parameters.realname)),
+                new SqlParameter("@IdentityCard", SqlNull(parameters.idntirycard)),
+                new SqlParameter("@Telephone", SqlNull(parameters.telephone)),
+                new SqlParameter("@ParentID", SqlNull(parameters.parentid)),
+                new SqlParameter("@PhotoUUID", parameters.photouuid),
                 new SqlParameter("@AccountID", SqlDbType.Int),
             };
             sqlPara[15].Direction = ParameterDirection.Output;
@@ -100,7 +127,7 @@ namespace CQ.WebApi.Application
             {
                 Log.Error(e);
             }
-            return accountId + "";
+            return accountId;
         }
 
         /// <summary>
@@ -108,18 +135,18 @@ namespace CQ.WebApi.Application
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public string GetUserData(Parameters parameters)
+        public dynamic GetUserData(Parameters parameters)
         {
             string account = parameters.account;
             if (account.Length <= 0)
             {
-                return "-1";
+                return -1;
             }
             string url = GetUrlStr() + $"ysfunction=getuserdata&account={account}";
             string result = HttpMethods.HttpGet(url);
             if (result == null)
             {
-                return "-5";
+                return -5;
             }
             return result;
         }
@@ -387,7 +414,7 @@ namespace CQ.WebApi.Application
             {
                 return "-1";
             }
-            password = password.ToLower();
+            password = Md5.md5(password.ToLower(),32);
             long accountId = GetAccountId(account);
             if (accountId <= 0)
             {
@@ -396,7 +423,8 @@ namespace CQ.WebApi.Application
             string sql = string.Empty;
             if (password.Length <= 0 && oldpassword.Length <= 0)
             {
-                sql = $"update Account set Password = '{GetDefaultPwd()}' where AccountID = {accountId}";
+                string pwd = GetDefaultPwd().ToLower();
+                sql = $"update Account set Password = '{pwd}' where AccountID = {accountId}";
             }
             else
             {
@@ -1713,6 +1741,18 @@ namespace CQ.WebApi.Application
                 return data.ToInt64();
             }
             return -1;
+        }
+
+        private static object SqlNull(object obj)
+        {
+            if (obj == null || obj.ToString() == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return obj;
+            }
         }
 
         #endregion

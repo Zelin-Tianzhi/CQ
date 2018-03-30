@@ -18,6 +18,7 @@ namespace CQ.Application.GameUsers
         private readonly DbHelper _qpAccount = new DbHelper("QpAccount");
         private readonly DbHelper _qpLogTotal = new DbHelper("QPLogTotal");
         private readonly DbHelper _qpWebLog = new DbHelper("QPWebLog");
+        private readonly DbHelper _QPRobot = new DbHelper("QPRobot");
 
         #endregion
 
@@ -318,22 +319,26 @@ namespace CQ.Application.GameUsers
         /// <param name="userpwd"></param>
         /// <param name="macaddress"></param>
         /// <returns></returns>
-        public string MemberRegister(string username, string userpwd, string macaddress)
+        public string MemberRegister(string username, string userpwd, string macaddress,string mbid)
         {
-            //解密获得mac地址
-            var len = macaddress.Length / 2;
-            byte[] inputByteArray = new byte[len];
-            int x, i;
-            for (x = 0; x < len; x++)
+            string str = null;
+            if (!string.IsNullOrEmpty(macaddress))
             {
-                i = Convert.ToInt32(macaddress.Substring(x * 2, 2), 16);
-                inputByteArray[x] = (byte)i;
+                //解密获得mac地址
+                var len = macaddress.Length / 2;
+                byte[] inputByteArray = new byte[len];
+                int x, i;
+                for (x = 0; x < len; x++)
+                {
+                    i = Convert.ToInt32(macaddress.Substring(x * 2, 2), 16);
+                    inputByteArray[x] = (byte)i;
+                }
+
+                byte[] mingwen = YSEncrypt.DecryptData(inputByteArray);
+                str = Encoding.ASCII.GetString(mingwen); 
             }
 
-            byte[] mingwen = YSEncrypt.DecryptData(inputByteArray);
-            string str = Encoding.ASCII.GetString(mingwen);
-
-            var response = SendRegisterRequest(username, userpwd, str,"11","0","0");
+            var response = SendRegisterRequest(username, userpwd, str, "11", "0", "0", null, mbid);
             return response;
         }
         /// <summary>
@@ -391,8 +396,8 @@ namespace CQ.Application.GameUsers
                 ds = _qpAccount.GetDataTablebySql(sql);
                 rows = ds.Tables[0].Rows.Count;
             } while (rows > 0);
-            string upwd = "c8c8e2585e7555ee27396f4645b415ff";
-            var response = SendRegisterRequest(uname, upwd, str, "7", "2","0");
+            string upwd = "e10adc3949ba59abbe56e057f20f883e";
+            var response = SendRegisterRequest(uname, upwd, str, "7", "2","0",null,null);
             if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
                 string result = $"0&{uname}&{upwd}";// uname + "&" + upwd;
@@ -443,13 +448,18 @@ namespace CQ.Application.GameUsers
                     ds = _qpAccount.GetDataTablebySql(sql);
                     rows = ds.Tables[0].Rows.Count;
                 } while (rows > 0);
-                string pwd = "c8c8e2585e7555ee27396f4645b415ff";
+                string pwd = "e10adc3949ba59abbe56e057f20f883e";
                 string mac = Net.GetMacAddress();
                 Random rd = new Random(unchecked((int)DateTime.Now.Ticks));
+                Random rr = new Random(System.Environment.TickCount);
                 string uuid = rd.Next(1, 37).ToString();
                 string utype = "0";
                 string secondtype = "1";
-                string uid = SendRegisterRequest(uname, pwd, mac, utype, secondtype, uuid);
+                string nickSql =
+                    "select top 1 name from [dbo].[RobotNickName] where [Name] not in (select NickName from QPAccount.dbo.Account) order by NEWID()";
+                object nick = _QPRobot.GetObject(nickSql, null);
+
+                string uid = SendRegisterRequest(uname, pwd, mac, utype, secondtype, uuid, nick + "",null);
                 uids += uid + ",";
             }
             return uids.TrimEnd(',');
@@ -696,7 +706,7 @@ namespace CQ.Application.GameUsers
             uname = sFirst + "_" + sLast;
             return uname;
         }
-        private string SendRegisterRequest(string username, string userpwd, string macaddress, string usertype, string usersecondtype, string uuid)
+        private string SendRegisterRequest(string username, string userpwd, string macaddress, string usertype, string usersecondtype, string uuid, string nick, string mbid)
         {
             long maxNum = GetMaxUserNum();
 
@@ -705,12 +715,13 @@ namespace CQ.Application.GameUsers
             string accounttype = usertype;
             string accountsecondtype = usersecondtype;
             string sex = "2";
-            string nickname = "新手" + maxNum;
+            string nickname = string.IsNullOrEmpty(nick) ? "新手" + maxNum : nick;
             string accountnum = maxNum.ToString();
             string ipaddress = Net.Ip;
             string mac = macaddress;
             string details = "|||0|0|||||||";
             string photouuid = uuid;
+            string pid = mbid;
             //|密保问题|密保答案|年龄|身高cm|学历|生肖|星座|职业|省|市|
             //string[] userInfo = details.Split('|');
             //string mbwt = userInfo[1];
@@ -729,9 +740,9 @@ namespace CQ.Application.GameUsers
             string telephone = "";
             string parentid = "";
             string Url = GetUrlStr() +
-                         $"ysfunction=register&account={account}&password={password}&accounttype={accounttype}&accountsecondtype={accountsecondtype}&sex={sex}&nickname={nickname}&accountnum={accountnum}&ipaddress={ipaddress}&mac={mac}&details={details}&photouuid={photouuid}";
+                         $"ysfunction=register&account={account}&password={password}&accounttype={accounttype}&accountsecondtype={accountsecondtype}&sex={sex}&nickname={nickname}&accountnum={accountnum}&ipaddress={ipaddress}&mac={mac}&details={details}&photouuid={photouuid}&pid={pid}";
             string msg = HttpMethods.HttpGet(Url);
-            Regex rex = new Regex(@"(-\d+|\d+)<");
+            Regex rex = new Regex(@"(-\d+|\d+)");
             int result = 0;
             string response = rex.Match(msg).Groups[1].Value;
             return msg;
