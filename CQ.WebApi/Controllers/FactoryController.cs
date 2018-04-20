@@ -40,6 +40,15 @@ namespace CQ.WebApi.Controllers
             dynamic result = string.Empty;
             switch (funName)
             {
+                case "logout":
+                    result = app.Logout(parameters);
+                    break;
+                case "userlogin":
+                    result = app.UserLogin(parameters);
+                    break;
+                case "mblogin":
+                    result = app.UserLoginVerify(parameters);
+                    break;
                 case "onlineuser":
                    result = app.GetOnlineUser(parameters);
                     break;

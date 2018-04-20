@@ -31,6 +31,50 @@ namespace CQ.WebApi.Application
 
         #region 用户操作
 
+        public dynamic ModifyInfo(Parameters parameters)
+        {
+            long accountnum = parameters.accountnum;
+            string nickname = parameters.nickname;
+            string uuid = parameters.photouuid;
+            if (accountnum<=0 || string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(uuid))
+            {
+                return 1;
+            }
+            string sql = $"select * from account where accountnum={accountnum}";
+            DataSet ds = _qpAccount.GetDataTablebySql(sql);
+            if (ds.Tables[0].Rows.Count <= 0)
+            {
+                return 1;
+            }
+
+            sql = $"select * from UserAccountInfo where nickname = '{nickname}' and AccountNum={accountnum}";
+            DataSet dsNick = _qpAccount.GetDataTablebySql(sql);
+            if (dsNick.Tables[0].Rows.Count > 0)
+            {
+                return 11;
+            }
+            List<string> sqlList = new List<string>();
+            sqlList.Add($"update Account set PhotoUUID={uuid}, OpenFunctionFlag=3 where AccountNum={accountnum}");
+            sql = $"select * from UserAccountInfo where AccountNum={accountnum}";
+            DataSet nick = _qpAccount.GetDataTablebySql(sql);
+            if (nick.Tables[0].Rows.Count > 0)
+            {
+                sqlList.Add($"update UserAccountInfo set NickName='{nickname}' where AccountNum={accountnum}");
+            }
+            else
+            {
+                sqlList.Add($"insert into UserAccountInfo(AccountID,AccountNum,NickName,CreateTime) values({ds.Tables[0].Rows[0]["AccountID"]},{accountnum},'{nickname}',GETDATE())");
+            }
+
+            int rows = _qpAccount.ExecuteSqlTran(sqlList);
+            if (rows >= 0)
+            {
+                return 0;
+            }
+
+            return 17;
+        }
+
         /// <summary>
         /// 获取在线用户
         /// </summary>
@@ -60,12 +104,100 @@ namespace CQ.WebApi.Application
             return result;
         }
 
-        //public string UserLoginVerify(Parameters parameters)
-        //{
-        //    string username = parameters.account;
-        //    string pwd = parameters.password;
+        public dynamic UserLoginVerify(Parameters parameters)
+        {
+            string username = parameters.account;
+            string pwd = Md5.md5(parameters.password.ToLower() + "hydra", 32);
+            string sql = $"select a.*,b.LastLoginTime,c.NickName as Nick from Account a left join AccountLastLogin b on a.AccountID = b.AccountID left join UserAccountInfo c on a.AccountID = c.AccountID  where a.Account='{username}'";
+            DataTable dtTable = _qpAccount.GetDataTablebySql(sql).Tables[0];
+            if (dtTable == null || dtTable.Rows.Count <=0 || pwd.ToLower() != dtTable.Rows[0]["Password"].ToString().ToLower())
+            {
+                return 9; //帐号密码错误
+            }
 
-        //}
+            string token = Guid.NewGuid().ToString();
+
+            if (dtTable.Rows[0]["OnLineType"].ToString() == "0")
+            {
+                string updataSql = $"update Account set OnLineType=2,Token='{token}' where Account='{username}'";
+
+                int rows = _qpAccount.ExecuteSql(updataSql, null);
+                if (rows > 0)
+                {
+                    return new
+                    {
+                        AID = dtTable.Rows[0]["AccountNum"],
+                        AccountType = dtTable.Rows[0]["AccountType"],
+                        AccountSecondType = dtTable.Rows[0]["AccountSecondType"],
+                        PhotoUUID = dtTable.Rows[0]["PhotoUUID"],
+                        YuanBao = dtTable.Rows[0]["YuanBao"],
+                        OpenFunctionFlag = dtTable.Rows[0]["OpenFunctionFlag"],
+                        SafeWay = dtTable.Rows[0]["SafeWay"],
+                        OnLineType = dtTable.Rows[0]["OnLineType"],
+                        PID = dtTable.Rows[0]["MobilePhoneID"],
+                        Glod = dtTable.Rows[0]["Gold"],
+                        GoldBank = dtTable.Rows[0]["GoldBank"],
+                        VIP = dtTable.Rows[0]["VipExp"],
+                        LastLoginTime = dtTable.Rows[0]["LastLoginTime"],
+                        NickName = dtTable.Rows[0]["Nick"],
+                        Sex = dtTable.Rows[0]["Sex"],
+                        Token = token
+                    };
+                }
+                return 8; // 登录错误
+            }
+            return dtTable.Rows[0]["OnLineType"];
+        }
+
+        public dynamic UserLogin(Parameters parameters)
+        {
+            string username = parameters.account;
+            string token = parameters.token;
+            string sql = $"select a.*,b.LastLoginTime,c.NickName as Nick from Account a left join AccountLastLogin b on a.AccountID = b.AccountID left join UserAccountInfo c on a.AccountID = c.AccountID  where a.Account='{username}'";
+            DataTable dtTable = _qpAccount.GetDataTablebySql(sql).Tables[0];
+            if (dtTable == null || dtTable.Rows.Count <= 0 || token.ToLower() != dtTable.Rows[0]["ToKen"].ToString().ToLower())
+            {
+                return 9; //帐号密码错误
+            }
+            if (dtTable.Rows[0]["OnLineType"].ToString() == "0")
+            {
+                string updataSql = $"update Account set OnLineType=2,Token='{token}' where Account='{username}'";
+
+                int rows = _qpAccount.ExecuteSql(updataSql, null);
+                if (rows > 0)
+                {
+                    return new
+                    {
+                        AID = dtTable.Rows[0]["AccountNum"],
+                        PID = dtTable.Rows[0]["MobilePhoneID"],
+                        Glod = dtTable.Rows[0]["Gold"],
+                        GoldBank = dtTable.Rows[0]["GoldBank"],
+                        VIP = dtTable.Rows[0]["VipExp"],
+                        LastLoginTime = dtTable.Rows[0]["LastLoginTime"],
+                        NickName = dtTable.Rows[0]["Nick"],
+                        Sex = dtTable.Rows[0]["Sex"],
+                        Token = token
+                    };
+                }
+                return 8; // 登录错误
+            }
+            return dtTable.Rows[0]["OnLineType"];
+        }
+
+        public dynamic Logout(Parameters parameters)
+        {
+            string username = parameters.account;
+            string token = parameters.token;
+            string pid = parameters.pid;
+            string updataSql = $"update Account set OnLineType=0 where Account='{username}'";
+            int rows = _qpAccount.ExecuteSql(updataSql, null);
+            if (rows > 0)
+            {
+                return 0;
+            }
+
+            return -1;
+        }
 
         /// <summary>
         /// 注册帐号
@@ -83,7 +215,7 @@ namespace CQ.WebApi.Application
                 : parameters.nickname;
             parameters.account = parameters.account.ToLower();
             parameters.password = parameters.password.ToLower();
-            string password = Md5.md5(parameters.password + "hydia", 32);
+            string password = Md5.md5(parameters.password.ToLower() + "hydra", 32);
             long accountId = GetAccountId(parameters.account);
             if (accountId > 0)
             {
@@ -110,12 +242,12 @@ namespace CQ.WebApi.Application
                 new SqlParameter("@PhotoUUID", parameters.photouuid),
                 new SqlParameter("@AccountID", SqlDbType.Int),
             };
-            sqlPara[15].Direction = ParameterDirection.Output;
+            sqlPara[16].Direction = ParameterDirection.Output;
 
             try
             {
                 _qpAccount.ExecuteNonQueryOutPut("csp_Account_register", sqlPara);
-                accountId = sqlPara[15].Value.ToInt();
+                accountId = sqlPara[16].Value.ToInt();
                 if (accountId > 0)
                 {
                     string message =
@@ -127,7 +259,8 @@ namespace CQ.WebApi.Application
             {
                 Log.Error(e);
             }
-            return accountId;
+
+            return accountId > 0 ? parameters.accountnum : 0;
         }
 
         /// <summary>

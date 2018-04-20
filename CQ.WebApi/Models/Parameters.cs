@@ -11,9 +11,11 @@ namespace CQ.WebApi.Models
 
         public string account { get; set; }
 
-        public int accountnum { get; set; }
+        public long accountnum { get; set; }
 
         public string password { get; set; }
+
+        public string token { get; set; }
 
         public string accounttype { get; set; }
 

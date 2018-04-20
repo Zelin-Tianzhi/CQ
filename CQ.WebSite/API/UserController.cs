@@ -26,12 +26,20 @@ namespace CQ.WebSite.API
         #endregion
 
         #region Ajax请求处理
+
+        public IHttpActionResult ModifyInfo(string aid, string nickname, string uuid)
+        {
+            
+
+            return null;
+        }
         /// <summary>
         /// 用户注册
         /// </summary>
         [HttpGet, HttpPost]
         public IHttpActionResult MemberRegister(string username, string userpwd, string verify, string yzm, string useryz, string fw, string type, string pcode,string pid)
         {
+            string telphone = null;
             if (type == "1")
             {
                 Regex accountRex = new Regex("^[A-Za-z0-9_][A-Za-z0-9_]*$");
@@ -53,6 +61,8 @@ namespace CQ.WebSite.API
                 {
                     return Json(9);
                 }
+
+                telphone = username;
             }
             if (userApp.UserNameIsExist(username))
             {
@@ -60,7 +70,7 @@ namespace CQ.WebSite.API
             }
 
             int result = 0;
-            string response = userApp.MemberRegister(username, userpwd, verify, pid);
+            string response = userApp.MemberRegister(username, userpwd, verify, pid, telphone);
             if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
                 result = 0;
@@ -72,10 +82,33 @@ namespace CQ.WebSite.API
             return Json(result);
 
         }
-        [HttpGet, HttpPost]
-        public IHttpActionResult TouristLogin(string verify)
+
+        [HttpGet]
+        public IHttpActionResult Register(string username, string userpwd, string pid)
         {
-            string result = userApp.TouristLogin(verify);
+            
+
+            if (userApp.UserNameIsExist(username))
+            {
+                return Json("-4");
+            }
+            dynamic result = 0;
+            dynamic response = userApp.Register(username, userpwd, pid);
+            if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
+            {
+                result = $"0|{response}";
+            }
+            else
+            {
+                result = response;
+            }
+            return Json(result);
+        }
+
+        [HttpGet, HttpPost]
+        public IHttpActionResult TouristLogin(string verify, int type=0)
+        {
+            string result = userApp.TouristLogin(verify, type);
             return Json(result);
         }
         [HttpGet]
@@ -105,6 +138,51 @@ namespace CQ.WebSite.API
             string msg = HttpMethods.HttpGet(url);
             var result = string.Empty;
             return Json(msg);
+        }
+        [HttpGet]
+        public IHttpActionResult PerfectInfo(string account, string phonenum, string idcardno, string realname, string isenablephone="0")
+        {
+            if (string.IsNullOrEmpty(account) || string.IsNullOrEmpty(phonenum) || string.IsNullOrEmpty(idcardno) || string.IsNullOrEmpty(realname))
+            {
+                return Json("用户信息错误。");
+            }
+
+            string accountid = userApp.GetIdByNum(account, 3);
+            if (!(accountid.ToInt64() > 0))
+            {
+                return Json("帐号不存在");
+            }
+
+            int rows = userApp.ModifyUserInfo(accountid, phonenum, idcardno, realname, isenablephone);
+            if (rows >=2)
+            {
+                return Json("0");
+            }
+            else
+            {
+                return Json("-1");
+            }
+        }
+
+
+
+        [HttpGet]
+        public IHttpActionResult BindInfo(string aid, string account, string pwd, string nickname, string type)
+        {
+            if (string.IsNullOrEmpty(aid) || string.IsNullOrEmpty(account) || string.IsNullOrEmpty(pwd) || string.IsNullOrEmpty(type))
+            {
+                return Json("参数错误。");
+            }
+
+            int rows = userApp.BindInfo(aid, account, pwd, nickname, type);
+            if (rows > 0 )
+            {
+                return Json("0");
+            }
+            else
+            {
+                return Json("-1");
+            }
         }
 
         #endregion

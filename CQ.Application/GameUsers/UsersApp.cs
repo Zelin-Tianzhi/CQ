@@ -319,7 +319,7 @@ namespace CQ.Application.GameUsers
         /// <param name="userpwd"></param>
         /// <param name="macaddress"></param>
         /// <returns></returns>
-        public string MemberRegister(string username, string userpwd, string macaddress,string mbid)
+        public string MemberRegister(string username, string userpwd, string macaddress,string mbid, string telphone)
         {
             string str = null;
             if (!string.IsNullOrEmpty(macaddress))
@@ -338,66 +338,100 @@ namespace CQ.Application.GameUsers
                 str = Encoding.ASCII.GetString(mingwen); 
             }
 
-            var response = SendRegisterRequest(username, userpwd, str, "11", "0", "0", null, mbid);
+            var response = SendRegisterRequest(username, userpwd, str, "11", "0", "0", null, mbid, telphone);
+            return response;
+        }
+
+        public dynamic Register(string username, string userpwd, string pid)
+        {
+            string telphone = null;
+            //Regex accountRex = new Regex("^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$");
+            //if (accountRex.IsMatch(username))
+            //{
+            //    telphone = username;
+            //}
+
+            if (username.Length == 11)
+            {
+                telphone = username;
+            }
+
+            var response = SendRegisterRequest(username, userpwd, "", "11", "0", "0", null, pid, telphone);
             return response;
         }
         /// <summary>
         /// 游客登录
         /// </summary>
         /// <returns></returns>
-        public string TouristLogin(string mac)
+        public string TouristLogin(string mac, int type)
         {
-            //网卡mac地址
-            var len = mac.Length / 2;
-            var inputByteArray = new byte[len];
-            int x, y;
-            for (x = 0; x < len; x++)
+            string sql = string.Empty;
+            string macAddress = "";
+            if (type == 0)
             {
-                y = Convert.ToInt32(mac.Substring(x * 2, 2), 16);
-                inputByteArray[x] = (byte)y;
-            }
-
-            byte[] mingwen = YSEncrypt.DecryptData(inputByteArray);
-
-            var str = Encoding.ASCII.GetString(mingwen);
-
-            string sql = "select * from AccountRegInfo where ";
-            int m = 0;
-            foreach (string item in str.Split('|'))
-            {
-                if (item.Length >= 12)
+                //网卡mac地址
+                var len = mac.Length / 2;
+                var inputByteArray = new byte[len];
+                int x, y;
+                for (x = 0; x < len; x++)
                 {
-                    if (m > 0)
+                    y = Convert.ToInt32(mac.Substring(x * 2, 2), 16);
+                    inputByteArray[x] = (byte)y;
+                }
+
+                byte[] mingwen = YSEncrypt.DecryptData(inputByteArray);
+
+                macAddress = Encoding.ASCII.GetString(mingwen);
+
+                sql = "select * from AccountRegInfo a ";
+                sql += "left join Account b on a.AccountID = b.AccountID ";
+                sql += " where 1=1 and ";
+                sql += " ( ";
+                int m = 0;
+                foreach (string item in macAddress.Split('|'))
+                {
+                    if (item.Length >= 12)
                     {
-                        sql += " or ";
+                        if (m > 0)
+                        {
+                            sql += " or ";
+                        }
+                        sql += $" RegisterMac like '%{item.Trim()}%' ";
+                        m++;
                     }
-                    sql += $" RegisterMac like '%{item.Trim()}%' ";
-                    m++;
+                }
+
+                sql += " ) ";
+                sql += " and b.AccountSecondType = 7 ";
+                DataSet ds = _qpAccount.GetDataTablebySql(sql);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    sql = $"select * from account where AccountID={ds.Tables[0].Rows[0]["AccountID"]}";
+                    DataSet accountDs = _qpAccount.GetDataTablebySql(sql);
+                    string username = accountDs.Tables[0].Rows[0]["Account"].ToString();
+                    string pwd = accountDs.Tables[0].Rows[0]["Password"].ToString();
+                    string result = "99&" + username + "&" + pwd;
+                    byte[] bytes1 = Encoding.ASCII.GetBytes(result);
+                    byte[] bytes2 = YSEncrypt.EncryptFishFile(bytes1);
+                    return string.Join(",", bytes2);
                 }
             }
-            DataSet ds = _qpAccount.GetDataTablebySql(sql);
-            if (ds.Tables[0].Rows.Count > 0)
+            else
             {
-                sql = $"select * from account where AccountID={ds.Tables[0].Rows[0]["AccountID"]}";
-                DataSet accountDs = _qpAccount.GetDataTablebySql(sql);
-                string username = accountDs.Tables[0].Rows[0]["Account"].ToString();
-                string pwd = accountDs.Tables[0].Rows[0]["Password"].ToString();
-                string result = "99&" + username + "&" + pwd;
-                byte[] bytes1 = Encoding.ASCII.GetBytes(result);
-                byte[] bytes2 = YSEncrypt.EncryptFishFile(bytes1);
-                return string.Join(",", bytes2);
+                
             }
             int rows = 0;
             string uname = string.Empty;
+            DataSet tempDs = new DataSet();
             do
             {
                 uname = BuildAccount();
                 sql = $"select * from account where account='{uname}'";
-                ds = _qpAccount.GetDataTablebySql(sql);
-                rows = ds.Tables[0].Rows.Count;
+                tempDs = _qpAccount.GetDataTablebySql(sql);
+                rows = tempDs.Tables[0].Rows.Count;
             } while (rows > 0);
             string upwd = "e10adc3949ba59abbe56e057f20f883e";
-            var response = SendRegisterRequest(uname, upwd, str, "7", "2","0",null,null);
+            var response = SendRegisterRequest(uname, upwd, macAddress, "0", "7", "0", null, null, null);
             if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
                 string result = $"0&{uname}&{upwd}";// uname + "&" + upwd;
@@ -448,7 +482,7 @@ namespace CQ.Application.GameUsers
                     ds = _qpAccount.GetDataTablebySql(sql);
                     rows = ds.Tables[0].Rows.Count;
                 } while (rows > 0);
-                string pwd = "e10adc3949ba59abbe56e057f20f883e";
+                string pwd = "298227641715cda9f0a755acaa5c6704";
                 string mac = Net.GetMacAddress();
                 Random rd = new Random(unchecked((int)DateTime.Now.Ticks));
                 Random rr = new Random(System.Environment.TickCount);
@@ -459,7 +493,7 @@ namespace CQ.Application.GameUsers
                     "select top 1 name from [dbo].[RobotNickName] where [Name] not in (select NickName from QPAccount.dbo.Account) order by NEWID()";
                 object nick = _QPRobot.GetObject(nickSql, null);
 
-                string uid = SendRegisterRequest(uname, pwd, mac, utype, secondtype, uuid, nick + "",null);
+                string uid = SendRegisterRequest(uname, pwd, mac, utype, secondtype, uuid, nick + "",null,null);
                 uids += uid + ",";
             }
             return uids.TrimEnd(',');
@@ -569,7 +603,62 @@ namespace CQ.Application.GameUsers
             return msg;
         }
 
-        
+        public int ModifyUserInfo(string accountid, string phonenum, string idcardno, string realname,
+            string isenablephone)
+        {
+            List<string> sqlArr = new List<string>();
+            sqlArr.Add($"update Account set SafeWay={isenablephone} where accountid={accountid}");
+            sqlArr.Add(
+                $"update AccountRegInfo set IdentityCard='{idcardno}',set RealName='{realname}',Telephone='{phonenum}' where accountid={accountid}");
+
+            int rows = _qpAccount.ExecuteSqlTran(sqlArr);
+            return rows;
+        }
+
+        public int BindInfo(string aid, string account, string pwd, string nickname, string type)
+        {
+            string password = Md5.Md5Hash(pwd + "hydra");
+            string accountid = GetIdByNum(aid, 0);
+            if (type == "1")
+            {
+                List<string> sqlArr = new List<string>();
+                sqlArr.Add(
+                    $"update Account set Account='{account}',Password='{password}',AccountSecondType=0 where AccountNum={aid}");
+                string sql = $"select AccountID from UserAccountInfo where AccountNum={aid}";
+                object obj = _qpAccount.GetObject(sql, null);
+                if (obj != null)
+                {
+                    sqlArr.Add($"update UserAccountInfo set NickName='{nickname}' where AccountNum={aid}");
+                }
+                else
+                {
+                    sqlArr.Add(
+                        $"insert into UserAccountInfo(AccountID,AccountNum,NickName,CreateTime) values({accountid},{aid},'{nickname}',GETDATE())");
+                }
+
+                int rows = _qpAccount.ExecuteSqlTran(sqlArr);
+                return rows;
+            }
+            else
+            {
+                List<string> sqlArr = new List<string>();
+                sqlArr.Add($"update Account set Account='{account}',Password='{password}' where AccountNum={aid} ");
+                sqlArr.Add($"update AccountRegInfo Telephone='{account}' where AccountID={accountid}");
+                string sql = $"select AccountID from UserAccountInfo where AccountNum={aid}";
+                object obj = _qpAccount.GetObject(sql, null);
+                if (obj != null)
+                {
+                    sqlArr.Add($"update UserAccountInfo set NickName='{nickname}' where AccountNum={aid}");
+                }
+                else
+                {
+                    sqlArr.Add(
+                        $"insert into UserAccountInfo(AccountID,AccountNum,NickName,CreateTime) values({accountid},{aid},'{nickname}',GETDATE())");
+                }
+                int rows = _qpAccount.ExecuteSqlTran(sqlArr);
+                return rows;
+            }
+        }
 
         #endregion
 
@@ -706,7 +795,9 @@ namespace CQ.Application.GameUsers
             uname = sFirst + "_" + sLast;
             return uname;
         }
-        private string SendRegisterRequest(string username, string userpwd, string macaddress, string usertype, string usersecondtype, string uuid, string nick, string mbid)
+
+        private string SendRegisterRequest(string username, string userpwd, string macaddress, string usertype,
+            string usersecondtype, string uuid, string nick, string mbid, string telphone)
         {
             long maxNum = GetMaxUserNum();
 
@@ -737,10 +828,10 @@ namespace CQ.Application.GameUsers
 
             string realname = "";
             string idntirycard = "";
-            string telephone = "";
+            string telephone = telphone;
             string parentid = "";
             string Url = GetUrlStr() +
-                         $"ysfunction=register&account={account}&password={password}&accounttype={accounttype}&accountsecondtype={accountsecondtype}&sex={sex}&nickname={nickname}&accountnum={accountnum}&ipaddress={ipaddress}&mac={mac}&details={details}&photouuid={photouuid}&pid={pid}";
+                         $"ysfunction=register&account={account}&password={password}&accounttype={accounttype}&accountsecondtype={accountsecondtype}&sex={sex}&nickname={nickname}&accountnum={accountnum}&ipaddress={ipaddress}&mac={mac}&details={details}&photouuid={photouuid}&pid={pid}&telephone={telephone}";
             string msg = HttpMethods.HttpGet(Url);
             Regex rex = new Regex(@"(-\d+|\d+)");
             int result = 0;
@@ -748,7 +839,7 @@ namespace CQ.Application.GameUsers
             return msg;
         }
 
-        private string GetIdByNum(string account, int type)
+        public string GetIdByNum(string account, int type)
         {
             var sql = string.Empty;// 
             switch (type)

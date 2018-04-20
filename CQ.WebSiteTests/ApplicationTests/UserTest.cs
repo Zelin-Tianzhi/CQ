@@ -14,5 +14,11 @@ namespace CQ.WebSiteTests.ApplicationTests
             UsersApp app = new UsersApp();
             //app.tousurecord();
         }
+        [TestMethod]
+        public void TouristLoginTest()
+        {
+            UsersApp app = new UsersApp();
+            app.TouristLogin("30d75532541d732be881cc89f04bc26f24");
+        }
     }
 }
