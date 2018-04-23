@@ -4,6 +4,7 @@
   <aqiuUrl url="http://183.131.69.236:10101/api/Factory?"></aqiuUrl>
   <oldPropID val="12082301"></oldPropID>
   <newPropID val="12082302"></newPropID>
+  <item ip="127.0.0.1" />
 
   <TermGameList>
     <game ID="4" Name="二人麻将" Conn="QPLog_Baccarat" DjPeople="2" roomId="461|快速夺金,462|高手夺金,463|高级场" />

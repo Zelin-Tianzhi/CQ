@@ -13,6 +13,7 @@ using CQ.WebApi.Models;
 
 namespace CQ.WebApi.Controllers
 {
+    [AuthorizeAttrbute]
     public class FactoryController : ApiController
     {
         public Log Log

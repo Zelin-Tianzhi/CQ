@@ -18,7 +18,7 @@ namespace CQ.WebSiteTests.ApplicationTests
         public void TouristLoginTest()
         {
             UsersApp app = new UsersApp();
-            app.TouristLogin("30d75532541d732be881cc89f04bc26f24");
+            app.IpConfig("127.0.0.2");
         }
     }
 }

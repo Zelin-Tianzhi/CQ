@@ -11,6 +11,7 @@ using CQ.Application.GameUsers;
 
 namespace CQ.WebSite.API
 {
+    [AuthorizeAttrbute]
     public class UserController : BaseApiController
     {
         #region 属性

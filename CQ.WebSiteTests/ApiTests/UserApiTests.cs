@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,7 @@ using CQ.Core.Log;
 using CQ.Core.Security;
 using CQ.WebApi.Application;
 using CQ.WebApi.Models;
+using System.Xml.Linq;
 
 namespace CQ.WebSiteTests.ApiTests
 {
@@ -82,6 +84,7 @@ namespace CQ.WebSiteTests.ApiTests
         [TestMethod]
         public void MobileRegister()
         {
+
             //123qwe
             string username = "master001";
             string pwd = "46f94c8de14fb36680850768ff1b7f2a";

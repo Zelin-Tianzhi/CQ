@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using CQ.Core;
 using CQ.Core.Security;
 using CQ.Plugin.Cache;
@@ -23,6 +25,16 @@ namespace CQ.Application.GameUsers
         #endregion
 
         #region 公共方法
+
+        public bool IpConfig(string ip)
+        {
+            string urlIndex = "~/Configs/GlobConfig.xml";
+            string filePath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\Configs\\GlobConfig.xml";
+            //string FileName = System.Web.HttpContext.Current.Server.MapPath(urlIndex);
+            XDocument doc = XDocument.Load(filePath);
+            var rel = from p in doc.Descendants("item") where p.Attribute("ip").Value.ToLower() == ip select p;
+            return rel != null && rel.Count() > 0 ? true : false;
+        }
         /// <summary>
         /// 获取用户列表
         /// </summary>
@@ -383,7 +395,7 @@ namespace CQ.Application.GameUsers
 
                 macAddress = Encoding.ASCII.GetString(mingwen);
 
-                sql = "select * from AccountRegInfo a ";
+                sql = "select * from TouristMac a ";
                 sql += "left join Account b on a.AccountID = b.AccountID ";
                 sql += " where 1=1 and ";
                 sql += " ( ";
@@ -396,13 +408,12 @@ namespace CQ.Application.GameUsers
                         {
                             sql += " or ";
                         }
-                        sql += $" RegisterMac like '%{item.Trim()}%' ";
+                        sql += $" MacAddress like '%{item.Trim()}%' ";
                         m++;
                     }
                 }
 
                 sql += " ) ";
-                sql += " and b.AccountSecondType = 7 ";
                 DataSet ds = _qpAccount.GetDataTablebySql(sql);
                 if (ds.Tables[0].Rows.Count > 0)
                 {
