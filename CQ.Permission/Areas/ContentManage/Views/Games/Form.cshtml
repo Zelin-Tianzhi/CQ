@@ -154,7 +154,11 @@
                     $("#ueditor").html(value);
                     $("#imgheadbox")
                         .html('<img style="height:100px;width:100px;" src="' + $("#F_IcoImg").val() + '" />');
-
+                    var imgList = $("#F_Remark").val().split(',');
+                    $.each(imgList,
+                        function(index, value) {
+                            $("#imgbox").append('<td><img src="' + value + '" /></td>');
+                        });
                 }
             });
         }

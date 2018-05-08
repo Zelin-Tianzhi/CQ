@@ -7,11 +7,12 @@ using CQ.Core;
 using CQ.Plugin.Cache;
 using CQ.Core.Security;
 using System.Text;
+using System.Web;
 using CQ.Application.GameUsers;
 
 namespace CQ.WebSite.API
 {
-    [AuthorizeAttrbute]
+    [ApiPermissionFilter]
     public class UserController : BaseApiController
     {
         #region 属性
@@ -148,14 +149,14 @@ namespace CQ.WebSite.API
                 return Json("用户信息错误。");
             }
 
-            string accountid = userApp.GetIdByNum(account, 3);
+            string accountid = userApp.GetIdByNum(account, 0);
             if (!(accountid.ToInt64() > 0))
             {
-                return Json("帐号不存在");
+                return Json("帐号不存在。");
             }
 
             int rows = userApp.ModifyUserInfo(accountid, phonenum, idcardno, realname, isenablephone);
-            if (rows >=2)
+            if (rows >=1)
             {
                 return Json("0");
             }
@@ -168,22 +169,17 @@ namespace CQ.WebSite.API
 
 
         [HttpGet]
-        public IHttpActionResult BindInfo(string aid, string account, string pwd, string nickname, string type)
+        public IHttpActionResult BindInfo(string pid, string account, string pwd, string nickname, string type)
         {
-            if (string.IsNullOrEmpty(aid) || string.IsNullOrEmpty(account) || string.IsNullOrEmpty(pwd) || string.IsNullOrEmpty(type))
+            string mbid = HttpUtility.UrlDecode(pid);
+            if (string.IsNullOrEmpty(pid) || string.IsNullOrEmpty(account) || string.IsNullOrEmpty(pwd) || string.IsNullOrEmpty(type))
             {
                 return Json("参数错误。");
             }
 
-            int rows = userApp.BindInfo(aid, account, pwd, nickname, type);
-            if (rows > 0 )
-            {
-                return Json("0");
-            }
-            else
-            {
-                return Json("-1");
-            }
+            dynamic result = userApp.BindInfo(mbid, account, pwd, nickname, type);
+            
+            return Json(result);
         }
 
         #endregion

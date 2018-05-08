@@ -112,7 +112,7 @@ namespace CQ.WebApi.Application
             DataTable dtTable = _qpAccount.GetDataTablebySql(sql).Tables[0];
             if (dtTable == null || dtTable.Rows.Count <=0 || pwd.ToLower() != dtTable.Rows[0]["Password"].ToString().ToLower())
             {
-                return 9; //帐号密码错误
+                return "9"; //帐号密码错误
             }
 
             string token = Guid.NewGuid().ToString();
@@ -124,7 +124,7 @@ namespace CQ.WebApi.Application
                 int rows = _qpAccount.ExecuteSql(updataSql, null);
                 if (rows > 0)
                 {
-                    return new
+                    object data = new
                     {
                         AID = dtTable.Rows[0]["AccountNum"],
                         AccountType = dtTable.Rows[0]["AccountType"],
@@ -143,8 +143,9 @@ namespace CQ.WebApi.Application
                         Sex = dtTable.Rows[0]["Sex"],
                         Token = token
                     };
+                    return "0|" + data.ToJson();
                 }
-                return 8; // 登录错误
+                return "8"; // 登录错误
             }
             return dtTable.Rows[0]["OnLineType"];
         }
@@ -166,9 +167,16 @@ namespace CQ.WebApi.Application
                 int rows = _qpAccount.ExecuteSql(updataSql, null);
                 if (rows > 0)
                 {
-                    return new
+                    object data = new
                     {
                         AID = dtTable.Rows[0]["AccountNum"],
+                        AccountType = dtTable.Rows[0]["AccountType"],
+                        AccountSecondType = dtTable.Rows[0]["AccountSecondType"],
+                        PhotoUUID = dtTable.Rows[0]["PhotoUUID"],
+                        YuanBao = dtTable.Rows[0]["YuanBao"],
+                        OpenFunctionFlag = dtTable.Rows[0]["OpenFunctionFlag"],
+                        SafeWay = dtTable.Rows[0]["SafeWay"],
+                        OnLineType = dtTable.Rows[0]["OnLineType"],
                         PID = dtTable.Rows[0]["MobilePhoneID"],
                         Glod = dtTable.Rows[0]["Gold"],
                         GoldBank = dtTable.Rows[0]["GoldBank"],
@@ -178,6 +186,7 @@ namespace CQ.WebApi.Application
                         Sex = dtTable.Rows[0]["Sex"],
                         Token = token
                     };
+                    return "0|" + data.ToJson();
                 }
                 return 8; // 登录错误
             }
@@ -189,7 +198,10 @@ namespace CQ.WebApi.Application
             string username = parameters.account;
             string token = parameters.token;
             string pid = parameters.pid;
-            string updataSql = $"update Account set OnLineType=0 where Account='{username}'";
+            string gold = parameters.gold;
+            string bgold = parameters.bgold;
+            string yb = parameters.yb;
+            string updataSql = $"update Account set OnLineType=0,Gold={gold},GoldBank={bgold},YuanBao={yb} where Account='{username}'";
             int rows = _qpAccount.ExecuteSql(updataSql, null);
             if (rows > 0)
             {

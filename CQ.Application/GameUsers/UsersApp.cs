@@ -350,7 +350,9 @@ namespace CQ.Application.GameUsers
                 str = Encoding.ASCII.GetString(mingwen); 
             }
 
-            var response = SendRegisterRequest(username, userpwd, str, "11", "0", "0", null, mbid, telphone);
+            Random ran = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
+            var uuid = ran.Next(1, 37);
+            var response = SendRegisterRequest(username, userpwd, str, "11", "0", uuid+"", null, mbid, telphone);
             return response;
         }
 
@@ -367,8 +369,9 @@ namespace CQ.Application.GameUsers
             {
                 telphone = username;
             }
-
-            var response = SendRegisterRequest(username, userpwd, "", "11", "0", "0", null, pid, telphone);
+            Random ran = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
+            var uuid = ran.Next(1, 37);
+            var response = SendRegisterRequest(username, userpwd, "", "11", "0", uuid+"", null, pid, telphone);
             return response;
         }
         /// <summary>
@@ -379,6 +382,7 @@ namespace CQ.Application.GameUsers
         {
             string sql = string.Empty;
             string macAddress = "";
+            string pid = "";
             if (type == 0)
             {
                 //网卡mac地址
@@ -429,7 +433,16 @@ namespace CQ.Application.GameUsers
             }
             else
             {
-                
+                pid = mac;
+                sql = $"select * from account where MobilePhoneID like '%{mac}%'";
+                DataSet ds = _qpAccount.GetDataTablebySql(sql);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    string username = ds.Tables[0].Rows[0]["Account"].ToString();
+                    string pwd = ds.Tables[0].Rows[0]["Password"].ToString();
+                    string result = "99&" + username + "&" + pwd;
+                    return result;
+                }
             }
             int rows = 0;
             string uname = string.Empty;
@@ -442,20 +455,22 @@ namespace CQ.Application.GameUsers
                 rows = tempDs.Tables[0].Rows.Count;
             } while (rows > 0);
             string upwd = "e10adc3949ba59abbe56e057f20f883e";
-            var response = SendRegisterRequest(uname, upwd, macAddress, "0", "7", "0", null, null, null);
+            Random ran = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
+            var uuid = ran.Next(1, 37);
+            var response = SendRegisterRequest(uname, upwd, macAddress, "0", "7", uuid+"", null, pid, null);
             if (response != "-1" && response != "-3" && response != "-999" && response != "-404")
             {
-                string result = $"0&{uname}&{upwd}";// uname + "&" + upwd;
+                string result = $"0&{uname}&{Md5.Md5Hash(upwd+ "hydra")}";// uname + "&" + upwd;
                 byte[] bytes1 = Encoding.ASCII.GetBytes(result);
                 byte[] bytes2 = YSEncrypt.EncryptFishFile(bytes1);
-                return string.Join(",", bytes2);
+                return type == 0? string.Join(",", bytes2) : result;
             }
             else
             {
                 string result = response;
                 byte[] bytes1 = Encoding.ASCII.GetBytes(result);
                 byte[] bytes2 = YSEncrypt.EncryptFishFile(bytes1);
-                return string.Join(",", bytes2);
+                return type == 0 ? string.Join(",", bytes2) : result;
             }
         }
         /// <summary>
@@ -620,16 +635,23 @@ namespace CQ.Application.GameUsers
             List<string> sqlArr = new List<string>();
             sqlArr.Add($"update Account set SafeWay={isenablephone} where accountid={accountid}");
             sqlArr.Add(
-                $"update AccountRegInfo set IdentityCard='{idcardno}',set RealName='{realname}',Telephone='{phonenum}' where accountid={accountid}");
+                $"update AccountRegInfo set IdentityCard='{idcardno}', RealName='{realname}',Telephone='{phonenum}' where accountid={accountid}");
 
             int rows = _qpAccount.ExecuteSqlTran(sqlArr);
             return rows;
         }
 
-        public int BindInfo(string aid, string account, string pwd, string nickname, string type)
+        public dynamic BindInfo(string pid, string account, string pwd, string nickname, string type)
         {
             string password = Md5.Md5Hash(pwd + "hydra");
-            string accountid = GetIdByNum(aid, 0);
+            string aidSql = $"select AccountNum from Account where AccountSecondType=7 and  MobilePhoneID='{pid}'";
+            object aid = _qpAccount.GetObject(aidSql, null);
+            if (aid == null)
+            {
+                return "-1";
+            }
+            string accountid = GetIdByNum(aid + "", 0);
+            int rows = 0;
             if (type == "1")
             {
                 List<string> sqlArr = new List<string>();
@@ -647,14 +669,14 @@ namespace CQ.Application.GameUsers
                         $"insert into UserAccountInfo(AccountID,AccountNum,NickName,CreateTime) values({accountid},{aid},'{nickname}',GETDATE())");
                 }
 
-                int rows = _qpAccount.ExecuteSqlTran(sqlArr);
-                return rows;
+                rows = _qpAccount.ExecuteSqlTran(sqlArr);
+
             }
             else
             {
                 List<string> sqlArr = new List<string>();
                 sqlArr.Add($"update Account set Account='{account}',Password='{password}' where AccountNum={aid} ");
-                sqlArr.Add($"update AccountRegInfo Telephone='{account}' where AccountID={accountid}");
+                sqlArr.Add($"update AccountRegInfo set Telephone='{account}' where AccountID={accountid}");
                 string sql = $"select AccountID from UserAccountInfo where AccountNum={aid}";
                 object obj = _qpAccount.GetObject(sql, null);
                 if (obj != null)
@@ -666,9 +688,42 @@ namespace CQ.Application.GameUsers
                     sqlArr.Add(
                         $"insert into UserAccountInfo(AccountID,AccountNum,NickName,CreateTime) values({accountid},{aid},'{nickname}',GETDATE())");
                 }
-                int rows = _qpAccount.ExecuteSqlTran(sqlArr);
-                return rows;
+                rows = _qpAccount.ExecuteSqlTran(sqlArr);
+
             }
+
+            if (rows > 0)
+            {
+                string infoSql = $"select a.*,b.LastLoginTime,c.NickName as Nick from Account a left join AccountLastLogin b on a.AccountID = b.AccountID left join UserAccountInfo c on a.AccountID = c.AccountID  where a.AccountID='{accountid}'";
+                DataTable dtTable = _qpAccount.GetDataTablebySql(infoSql).Tables[0];
+                string userInfo =
+                    $"0|{dtTable.Rows[0]["AccountNum"]}|{dtTable.Rows[0]["Gold"]}|{dtTable.Rows[0]["YuanBao"]}|{dtTable.Rows[0]["GoldBank"]}";
+                //object data = new
+                //{
+                //    AID = dtTable.Rows[0]["AccountNum"],
+                //    AccountType = dtTable.Rows[0]["AccountType"],
+                //    AccountSecondType = dtTable.Rows[0]["AccountSecondType"],
+                //    PhotoUUID = dtTable.Rows[0]["PhotoUUID"],
+                //    YuanBao = dtTable.Rows[0]["YuanBao"],
+                //    OpenFunctionFlag = dtTable.Rows[0]["OpenFunctionFlag"],
+                //    SafeWay = dtTable.Rows[0]["SafeWay"],
+                //    OnLineType = dtTable.Rows[0]["OnLineType"],
+                //    PID = dtTable.Rows[0]["MobilePhoneID"],
+                //    Glod = dtTable.Rows[0]["Gold"],
+                //    GoldBank = dtTable.Rows[0]["GoldBank"],
+                //    VIP = dtTable.Rows[0]["VipExp"],
+                //    LastLoginTime = dtTable.Rows[0]["LastLoginTime"],
+                //    NickName = dtTable.Rows[0]["Nick"],
+                //    Sex = dtTable.Rows[0]["Sex"]
+
+                //};
+                return userInfo;
+            }
+            else
+            {
+                return "-1";
+            }
+
         }
 
         #endregion

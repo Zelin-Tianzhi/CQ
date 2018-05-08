@@ -21,6 +21,12 @@ namespace CQ.WebApi.Models
 
         public string accountsecondtype { get; set; }
 
+        public string gold { get; set; }
+
+        public string bgold { get; set; }
+
+        public string yb { get; set; }
+
         public string sex { get; set; }
 
         public string nickname { get; set; }

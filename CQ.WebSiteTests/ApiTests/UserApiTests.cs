@@ -84,6 +84,11 @@ namespace CQ.WebSiteTests.ApiTests
         [TestMethod]
         public void MobileRegister()
         {
+            object data = new
+            {
+               AID=1,PID=2,CID=3
+            };
+            var aa = "0|" + data.ToJson();
 
             //123qwe
             string username = "master001";

@@ -168,9 +168,11 @@
     <Compile Include="API\UtilitysController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\Handler\ApiPermissionFilter.cs" />
     <Compile Include="App_Start\Handler\AuthorizeAttrbute.cs" />
     <Compile Include="App_Start\Handler\BaseController.cs" />
     <Compile Include="App_Start\Handler\HandlerAjaxOnlyAttribute.cs" />
+    <Compile Include="App_Start\Handler\HandlerErrorAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
