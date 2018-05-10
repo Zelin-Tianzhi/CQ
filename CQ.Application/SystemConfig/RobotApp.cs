@@ -415,13 +415,13 @@ namespace CQ.Application.SystemConfig
         public string BuildRobot(string uids)
         {
             string selectSql =
-                $"select a.account,b.NickName,[password],a.accountnum,a.accountid from account a left join UserAccountInfo b on a.AccountID = b.AccountID where a.accountid in ({uids})";
+                $"select a.account,a.NickName,[password],a.accountnum,a.accountid from account a  where a.AccountNum in ({uids})";
             DataTable dt = _qpAccount.GetDataTablebySql(selectSql).Tables[0];
             int num = 0;
             foreach (DataRow dr in dt.Rows)
             {
                 string sql =
-                    $"insert into SpareRobot(Account,NickName,PassWord,AccountNum,AccountID) values('{dr["Account"].ToString()}','{dr["NickName"].ToString()}','{dr["password"].ToString()}',{dr["accountnum"].ToString()},{dr["accountid"].ToString()})";
+                    $"insert into SpareRobot(Account,NickName,PassWord,AccountNum,AccountID) values('{dr["Account"]}','{dr["NickName"]}','{dr["password"]}',{dr["accountnum"]},{dr["accountid"]})";
                 int result = _qpRobot.ExecuteSqlCommand(sql);
                 if (result > 0) num++;
             }
@@ -437,7 +437,7 @@ namespace CQ.Application.SystemConfig
             string inRobotAccount = string.Empty;
             if (dt != null)
             {
-                Random ran = new Random(unchecked((int)DateTime.Now.Ticks));
+                Random ran = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
                 foreach (DataRow dr in dt.Rows)
                 {
                     if (!Exists(dr["Account"].ToString(),dr["AccountID"].ToString()))
@@ -466,8 +466,8 @@ namespace CQ.Application.SystemConfig
                             string insertSql =
                                 $"insert into RobotAccount(AccountID,Account,Password,GroupName,State,RoomAIID,GameAIID,NickName,gameroomconfigid) ";
                             insertSql +=
-                                $" values({accountId},'{dr["Account"].ToString()}','{dr["Password"].ToString()}','{groupname}',1,{roomid},{gameid},'{dr["NickName"].ToString()}',{timeid})";
-                            string deleteSql = $"delete SpareRobot where Account='{dr["Account"].ToString()}'";
+                                $" values({accountId},'{dr["Account"]}','{dr["Password"]}','{groupname}',1,{roomid},{gameid},'{dr["NickName"]}',{timeid})";
+                            string deleteSql = $"delete SpareRobot where Account='{dr["Account"]}'";
                             sqlList.Add(insertSql);
                             sqlList.Add(deleteSql);
                             rows += _qpRobot.ExecuteSqlTran(sqlList);
@@ -475,7 +475,7 @@ namespace CQ.Application.SystemConfig
                     }
                     else
                     {
-                        inRobotAccount += dr["Account"].ToString() + ",";
+                        inRobotAccount += dr["Account"] + ",";
                     }
                 }
             }

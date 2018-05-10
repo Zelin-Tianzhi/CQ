@@ -17,9 +17,9 @@ namespace CQ.WebApi.Models
 
         public string token { get; set; }
 
-        public string accounttype { get; set; }
+        public int accounttype { get; set; }
 
-        public string accountsecondtype { get; set; }
+        public int accountsecondtype { get; set; }
 
         public string gold { get; set; }
 

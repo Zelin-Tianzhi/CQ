@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "type": "CQ.Plugin.Cache.AspNet.NetCache, CQ.Plugin.Cache.AspNet",
+      "type": "CQ.Plugin.Cache.Redis.RedisCache, CQ.Plugin.Cache.Redis",
       "services": [
         {
           "type": "CQ.Plugin.Cache.ICache, CQ.Plugin.Cache"

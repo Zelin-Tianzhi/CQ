@@ -7,6 +7,21 @@
    
     $(function () {
         initControl();
+        var keyValue = $.request("keyValue");
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url: "/SystemConfig/GameAi/GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                    }
+                });
+            }
+        });
     });
     function initControl() {
         $("#GameAi").bindSelect({

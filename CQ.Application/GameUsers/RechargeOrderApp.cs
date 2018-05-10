@@ -60,7 +60,7 @@ namespace CQ.Application.GameUsers
             entity.F_OrderNo = orderNo;
             var rows = service.Insert(entity);
             var result = RechargeYb(userName, entity.F_Amounts, 5, 1, 1);
-            ChongzhiNotify(userName, amounts, 5, 1, 0);
+            //ChongzhiNotify(userName, amounts, 5, 1, 0);
             if (result.Trim() == "0" && rows > 0)
             {
                 var expression = ExtLinq.True<RechargeOrderEntity>();
@@ -85,7 +85,7 @@ namespace CQ.Application.GameUsers
             newLast = newLast.PadLeft(4, '0');
             newLast = newLast.Remove(0, newLast.Length - 4);
             var unixtime = Common.GetCurrentTimeUnix().ToString();
-            Random r = new Random(unchecked((int)DateTime.Now.Ticks));
+            Random r = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
             var num1 = r.Next(1, 9);
             var num2 = r.Next(1, 9);
             var timeStr = unixtime.Remove(0, unixtime.Length - 9);

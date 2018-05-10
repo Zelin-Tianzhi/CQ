@@ -437,7 +437,7 @@ namespace CQ.WebApi.Application
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public string Chongzhifunc(Parameters parameters)
+        public dynamic Chongzhifunc(Parameters parameters)
         {
             string account = parameters.account;
             long values = parameters.values;
@@ -447,20 +447,20 @@ namespace CQ.WebApi.Application
 
             if (account.Length <= 0 || values <= 0 || opertype <= 0 || type <= 0)
             {
-                return "-1";
+                return -1;
             }
             if (opertype+0 <1 || opertype +0 >3)
             {
-                return "-5";
+                return -5;
             }
             if (type != 0 && type != 1 && type != 3 && type != 5)
             {
-                return "-5";
+                return -5;
             }
             long accountId = GetAccountIDNoRobot(account);
             if (accountId <= 0)
             {
-                return "-2";
+                return -2;
             }
             string sql = string.Empty;
             switch (type)
@@ -520,9 +520,9 @@ namespace CQ.WebApi.Application
                 string url = GetUrlStr() +
                              $"ysfunction=chongzhifuncnotify&account={account}&values={values}&opertype={opertype}&type={type}&nosendmail={nosendmail}";
                 HttpMethods.HttpGet(url);
-                return "0";
+                return 0;
             }
-            return "-5";
+            return -5;
         }
         /// <summary>
         /// 充值

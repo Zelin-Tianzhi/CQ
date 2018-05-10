@@ -61,8 +61,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             int num = 500;
             num = count.ToInt();
             if (num <= 0) num = 500;
-            string uids = _usersApp.CreateRobotAccount(num);
-            string result =_robotApp.BuildRobot(uids);
+            string result = _usersApp.CreateRobotAccount(num);
             return Success(result + "个操作成功。");
         }
         [HttpGet]

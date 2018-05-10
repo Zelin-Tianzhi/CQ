@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CQ.Core;
 using CQ.Core.Security;
+using CQ.Domain.Entity.QPAccount;
 using CQ.Plugin.Cache;
 using CQ.Repository.EntityFramework;
 
@@ -20,7 +21,7 @@ namespace CQ.Application.GameUsers
         private readonly DbHelper _qpAccount = new DbHelper("QpAccount");
         private readonly DbHelper _qpLogTotal = new DbHelper("QPLogTotal");
         private readonly DbHelper _qpWebLog = new DbHelper("QPWebLog");
-        private readonly DbHelper _QPRobot = new DbHelper("QPRobot");
+        private readonly DbHelper _qpRobot = new DbHelper("QPRobot");
 
         #endregion
 
@@ -494,35 +495,96 @@ namespace CQ.Application.GameUsers
         /// <returns></returns>
         public string CreateRobotAccount(int num)
         {
-            string uids = string.Empty;
-            for (int i = 0; i < num; i++)
+            var finishCount = 0;
+            DateTime start = DateTime.Now;
+
+            for (var i = 0; i < num; i++)
             {
-                string uname = string.Empty;
-                string sql = string.Empty;
-                int rows = 0;
-                DataSet ds = new DataSet();
-                do
+                DateTime curTime = DateTime.Now;
+                Log.Debug($"第{i}条开始执行时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                var account = BuildAccount().ToLower();
+                var accountId = GetIdByNum(account, 3).ToInt64();
+                if (accountId > 0)
                 {
-                    uname = BuildAccount();
-                    sql = $"select * from account where account='{uname}'";
-                    ds = _qpAccount.GetDataTablebySql(sql);
-                    rows = ds.Tables[0].Rows.Count;
-                } while (rows > 0);
-                string pwd = "298227641715cda9f0a755acaa5c6704";
+                    continue;
+                }
+
+                Log.Debug("验证account时间：" + (DateTime.Now- curTime).TotalMilliseconds);
+                string pwd = "e10adc3949ba59abbe56e057f20f883e";
                 string mac = Net.GetMacAddress();
-                Random rd = new Random(unchecked((int)DateTime.Now.Ticks));
-                Random rr = new Random(System.Environment.TickCount);
+                Random rd = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
+                Random rr = new Random(Environment.TickCount);
                 string uuid = rd.Next(1, 37).ToString();
                 string utype = "0";
                 string secondtype = "1";
                 string nickSql =
-                    "select top 1 name from [dbo].[RobotNickName] where [Name] not in (select NickName from QPAccount.dbo.Account) order by NEWID()";
-                object nick = _QPRobot.GetObject(nickSql, null);
+                    "select top 1 name from [dbo].[RobotNickName] where [Name] not in (select NickName from QPAccount.dbo.UserAccountInfo) order by NEWID()";
+                object nick = _qpRobot.GetObject(nickSql, null);
 
-                string uid = SendRegisterRequest(uname, pwd, mac, utype, secondtype, uuid, nick + "",null,null);
-                uids += uid + ",";
+                long maxNum = GetMaxUserNum();
+                string nickname = nick+"";
+                string password = Md5.Md5Hash(pwd + "hydra");
+                string details = "|||0|0|||||||";
+                Log.Debug("查询昵称时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                accountId = -999;
+                SqlParameter[] sqlPara = new SqlParameter[]
+                {
+                new SqlParameter("@Account", account),
+                new SqlParameter("@Password", password),
+                new SqlParameter("@AccountType", utype),
+                new SqlParameter("@Sex", rr.Next(0,2)),
+                new SqlParameter("@NickName", nickname),
+                new SqlParameter("@AccountSecondType", secondtype),
+                new SqlParameter("@AccountNum", maxNum),
+                new SqlParameter("@RegisterAddress", Net.Ip),
+                new SqlParameter("@Details", details),
+                new SqlParameter("@RegisterMac", SqlNull(mac)),
+                new SqlParameter("@PhoneID",SqlNull(null)),
+                new SqlParameter("@RealName", SqlNull(null)),
+                new SqlParameter("@IdentityCard", SqlNull(null)),
+                new SqlParameter("@Telephone", SqlNull(null)),
+                new SqlParameter("@ParentID", SqlNull(null)),
+                new SqlParameter("@PhotoUUID", uuid),
+                new SqlParameter("@AccountID", SqlDbType.Int),
+                };
+                sqlPara[16].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    _qpAccount.ExecuteNonQueryOutPut("csp_Account_register", sqlPara);
+                    accountId = sqlPara[16].Value.ToInt();
+                    Log.Debug("创建账户时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                    if (accountId > 0)
+                    {
+                        var sql = $"insert into SpareRobot(Account,NickName,PassWord,AccountNum,AccountID) values('{account}','{nickname}','{pwd}',{maxNum},{accountId})";
+                        int result = _qpRobot.ExecuteSqlCommand(sql);
+                        if (result > 0)
+                        {
+                            finishCount++;
+                            Log.Debug("创建机器人时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                        }
+                        else
+                        {
+                            List<string> deleteSqlList = new List<string>
+                            {
+                                $"delete AccountRegInfo where AccountID={accountId}",
+                                $"delete UserAccountInfo where AccountID={accountId}",
+                                $"delete Account where AccountID={accountId}"
+                            };
+                            _qpAccount.ExecuteSqlTran(deleteSqlList);
+                            Log.Debug("删除账户时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+                Log.Debug("创建一条用时：" + (DateTime.Now - curTime).TotalMilliseconds);
             }
-            return uids.TrimEnd(',');
+
+            Log.Debug("总时间：" + (DateTime.Now - start).TotalMilliseconds);
+            return finishCount+"";
         }
         /// <summary>
         /// 投诉记录
@@ -744,9 +806,8 @@ namespace CQ.Application.GameUsers
         }
         long GetMaxUserNum()
         {
-            bool flag = false;
-            Random ran = new Random(unchecked((int)DateTime.Now.Ticks));
-            long Id = 100001;
+            Random ran = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
+            long id = 100001;
             try
             {
                 var maxNum = Cache.Get("MaxUserId");
@@ -758,34 +819,30 @@ namespace CQ.Application.GameUsers
                     {
                         maxNum = dsMaxNum.Tables[0].Rows[0][0].ToInt() + 1;
                     }
+                    else
+                    {
+                        maxNum = 100001;
+                    }
                 }
+
+                long newNum = maxNum.ToInt64();
                 do
                 {
-                    maxNum = maxNum.ToInt64() + ran.Next(2, 10);
-                    if (IsSpecialNum(maxNum.ToInt64()))
+                    newNum += ran.Next(2, 15);
+                    if (IsSpecialNum(newNum))
                     {
                         continue;
                     }
-                    //用户num是否存在
-                    string sql = $"select accountid from account where AccountNum='{maxNum}'";
-                    DataSet dsIsExist = _qpAccount.GetDataTablebySql(sql);
-                    if (dsIsExist.Tables[0].Rows.Count > 0)
-                    {
-                        flag = true;
-                    }
-                    else
-                    {
-                        Cache.Insert("MaxUserId",maxNum);
-                    }
+                    Cache.Insert("MaxUserId", (object)newNum);
 
-                } while (flag);
-                Id = maxNum.ToInt64();
+                } while (false);
+                id = newNum;
             }
             catch (Exception e)
             {
                 Log.Error(e);
             }
-            return Id;
+            return id;
         }
         /// <summary>
         /// 匹配五连号或者五个连续相同数字的编号
@@ -925,6 +982,18 @@ namespace CQ.Application.GameUsers
             }
             var obj = _qpAccount.GetObject(sql, null);
             return obj?.ToString() ?? "0";
+        }
+
+        private static object SqlNull(object obj)
+        {
+            if (obj == null || obj.ToString() == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return obj;
+            }
         }
         #endregion
     }

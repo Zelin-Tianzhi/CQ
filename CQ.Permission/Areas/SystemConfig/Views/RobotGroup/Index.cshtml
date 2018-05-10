@@ -57,6 +57,20 @@
             }
         });
     }
+
+    function btn_editconfig() {
+        var keyValue = $("#gridList").jqGridRowValue().GroupName;
+        $.modalOpen({
+            id: "Form",
+            title: "修改配置",
+            url: "/SystemConfig/RobotGroup/Form?keyValue=" + keyValue,
+            width: "450px",
+            height: "460px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
 </script>
 
 

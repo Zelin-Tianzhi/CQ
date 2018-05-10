@@ -21,8 +21,7 @@ namespace CQ.Plugin.Cache.Redis
                     return new RedisConfig
                     {
                         Host = "127.0.0.1",
-                        Prot = 56471,
-                        Password = "lottery@HCT28"
+                        Prot = 6379
                     };
 
                 }

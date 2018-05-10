@@ -9,9 +9,9 @@ namespace CQ.Domain.Entity.QPAccount
     [Table("Account")]
     public partial class Account
     {
-        public int AccountID { get; set; }
+        public long AccountID { get; set; }
 
-        public int AccountNum { get; set; }
+        public long AccountNum { get; set; }
 
         [Column("Account")]
         [Required]
