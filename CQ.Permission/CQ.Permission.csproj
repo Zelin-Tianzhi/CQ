@@ -1003,6 +1003,7 @@
     <Content Include="Areas\DataAnalysis\Views\GoldStatistics\GoldDetails.cshtml" />
     <Content Include="Areas\DataAnalysis\Views\GoldStatistics\GameGoldDetails.cshtml" />
     <Content Include="Areas\UserManage\Views\OperRecord\UserGoldOper.cshtml" />
+    <Content Include="Configs\Redis.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Shared\_Index.cshtml" />

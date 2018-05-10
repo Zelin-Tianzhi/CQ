@@ -48,7 +48,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiTests\UserApiTests.cs" />
@@ -73,6 +75,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Configs\log4net.config" />
+    <Content Include="Configs\Redis.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Configs\system.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -82,6 +87,18 @@
     <ProjectReference Include="..\CQ.Application\CQ.Application.csproj">
       <Project>{5835f58f-5da9-415c-b35b-69cbc6a13c23}</Project>
       <Name>CQ.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQ.Cache.AspNet\CQ.Plugin.Cache.AspNet.csproj">
+      <Project>{eb98ed8d-538a-4187-b56b-f774d12a8863}</Project>
+      <Name>CQ.Plugin.Cache.AspNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQ.Cache.Redis\CQ.Plugin.Cache.Redis.csproj">
+      <Project>{5e6935d3-62f6-4201-bbc3-02653aa927f3}</Project>
+      <Name>CQ.Plugin.Cache.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQ.Cache\CQ.Plugin.Cache.csproj">
+      <Project>{ce128c8c-cba4-4337-a5af-25870488602a}</Project>
+      <Name>CQ.Plugin.Cache</Name>
     </ProjectReference>
     <ProjectReference Include="..\CQ.Core\CQ.Core.csproj">
       <Project>{541970bd-b07e-4a84-9dfe-fdd2e2c8bf1e}</Project>

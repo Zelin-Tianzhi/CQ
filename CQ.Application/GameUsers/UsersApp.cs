@@ -497,19 +497,25 @@ namespace CQ.Application.GameUsers
         {
             var finishCount = 0;
             DateTime start = DateTime.Now;
-
+            double checktime = 0;
+            double nicktime = 0;
+            double accounttime = 0;
+            double robottime = 0;
+            double totaltime = 0;
+            double numtime = 0;
             for (var i = 0; i < num; i++)
             {
                 DateTime curTime = DateTime.Now;
-                Log.Debug($"第{i}条开始执行时间：" + (DateTime.Now - curTime).TotalMilliseconds);
                 var account = BuildAccount().ToLower();
                 var accountId = GetIdByNum(account, 3).ToInt64();
                 if (accountId > 0)
                 {
                     continue;
                 }
+                checktime += (DateTime.Now - curTime).TotalMilliseconds;
+                DateTime time2 = DateTime.Now;
 
-                Log.Debug("验证account时间：" + (DateTime.Now- curTime).TotalMilliseconds);
+
                 string pwd = "e10adc3949ba59abbe56e057f20f883e";
                 string mac = Net.GetMacAddress();
                 Random rd = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
@@ -521,11 +527,18 @@ namespace CQ.Application.GameUsers
                     "select top 1 name from [dbo].[RobotNickName] where [Name] not in (select NickName from QPAccount.dbo.UserAccountInfo) order by NEWID()";
                 object nick = _qpRobot.GetObject(nickSql, null);
 
+                nicktime += (DateTime.Now - time2).TotalMilliseconds;
+                DateTime time3 = DateTime.Now;
+
                 long maxNum = GetMaxUserNum();
                 string nickname = nick+"";
+
+
+                numtime += (DateTime.Now - time3).TotalMilliseconds;
+                DateTime time4 = DateTime.Now;
                 string password = Md5.Md5Hash(pwd + "hydra");
                 string details = "|||0|0|||||||";
-                Log.Debug("查询昵称时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+
                 accountId = -999;
                 SqlParameter[] sqlPara = new SqlParameter[]
                 {
@@ -553,7 +566,10 @@ namespace CQ.Application.GameUsers
                 {
                     _qpAccount.ExecuteNonQueryOutPut("csp_Account_register", sqlPara);
                     accountId = sqlPara[16].Value.ToInt();
-                    Log.Debug("创建账户时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                    accounttime += (DateTime.Now - time4).TotalMilliseconds;
+                    DateTime time5 = DateTime.Now;
+
+
                     if (accountId > 0)
                     {
                         var sql = $"insert into SpareRobot(Account,NickName,PassWord,AccountNum,AccountID) values('{account}','{nickname}','{pwd}',{maxNum},{accountId})";
@@ -561,7 +577,7 @@ namespace CQ.Application.GameUsers
                         if (result > 0)
                         {
                             finishCount++;
-                            Log.Debug("创建机器人时间：" + (DateTime.Now - curTime).TotalMilliseconds);
+                            robottime+= (DateTime.Now - time5).TotalMilliseconds;
                         }
                         else
                         {
@@ -580,9 +596,14 @@ namespace CQ.Application.GameUsers
                 {
                     Log.Error(e);
                 }
-                Log.Debug("创建一条用时：" + (DateTime.Now - curTime).TotalMilliseconds);
+                totaltime += (DateTime.Now - curTime).TotalMilliseconds;
             }
-
+            Log.Debug("验证时间：" + checktime);
+            Log.Debug("获取昵称时间：" + nicktime);
+            Log.Debug("创建账户时间：" + accounttime);
+            Log.Debug("创建机器人时间：" + robottime);
+            Log.Debug("帐号编号时间：" + numtime);
+            Log.Debug("时间和：" + totaltime);
             Log.Debug("总时间：" + (DateTime.Now - start).TotalMilliseconds);
             return finishCount+"";
         }
