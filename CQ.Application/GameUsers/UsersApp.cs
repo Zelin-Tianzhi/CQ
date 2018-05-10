@@ -524,7 +524,7 @@ namespace CQ.Application.GameUsers
                 string utype = "0";
                 string secondtype = "1";
                 string nickSql =
-                    "select top 1 name from [dbo].[RobotNickName] where [Name] not in (select NickName from QPAccount.dbo.UserAccountInfo) order by NEWID()";
+                    "select top 1 name from [dbo].[RobotNickName] where Usering=0 order by NEWID()";
                 object nick = _qpRobot.GetObject(nickSql, null);
 
                 nicktime += (DateTime.Now - time2).TotalMilliseconds;
