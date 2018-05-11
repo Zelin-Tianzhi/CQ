@@ -77,7 +77,7 @@ namespace CQ.Repository.EntityFramework
 
         }
         /// <summary>
-        /// 执行带参数的sql语句
+        /// 执行带参数的sql语句,返回受影响的行数
         /// </summary>
         /// <param name="cmdText"></param>
         /// <param name="parameters"></param>
