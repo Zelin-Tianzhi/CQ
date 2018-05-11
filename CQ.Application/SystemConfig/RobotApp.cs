@@ -429,18 +429,90 @@ namespace CQ.Application.SystemConfig
             return num.ToString();
         }
 
-        public string CreateGroup(string gameid,string roomid, int count, string groupname, string timeid)
+        public string CreateGroup(string gameid, string roomid, int count, string groupname, string keyValue)
         {
-            DataTable dt = GetSpareRobotList(count);
-            int notInAccount = 0;
+            long groupId = keyValue.ToInt64();
             int rows = 0;
-            string inRobotAccount = string.Empty;
-            if (dt != null)
+            DataTable newAccountDt = new DataTable();
+            if (groupId > 0)
             {
-                Random ran = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
-                foreach (DataRow dr in dt.Rows)
+                string selectSql = $"select * from View_GroupConfig where Id = {groupId}";
+                DataTable groupDt = _qpRobot.GetDataTablebySql(selectSql).Tables[0];
+                int oldNum = groupDt.Rows[0]["UserCount"].ToInt();
+                string oldName = groupDt.Rows[0]["GroupName"].ToString();
+                int gameAiId = groupDt.Rows[0]["GameAIID"].ToInt();
+                int roomAiId = groupDt.Rows[0]["RoomAIID"].ToInt();
+                string updateSql = string.Empty;
+                if (count > oldNum)
                 {
-                    if (!Exists(dr["Account"].ToString(),dr["AccountID"].ToString()))
+                    int newNum = count - oldNum;
+                    newAccountDt = GetSpareRobotList(newNum);
+
+                    if (newAccountDt != null)
+                    {
+                        foreach (DataRow dr in newAccountDt.Rows)
+                        {
+                            if (!Exists(dr["Account"].ToString(), dr["AccountID"].ToString()))
+                            {
+                                var accountId = "";
+                                if (dr["AccountID"].ToString().Trim() != "")
+                                {
+                                    accountId = dr["AccountID"].ToString();
+                                }
+                                else
+                                {
+                                    object obj = GetUserId(dr["Account"].ToString());
+                                    if (obj != null)
+                                    {
+                                        accountId = obj.ToString();
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
+                                }
+                                if (accountId != "")
+                                {
+                                    List<string> sqlList = new List<string>();
+                                    string insertSql =
+                                        $"insert into RobotAccount(AccountID,Account,Password,GroupName,State,RoomAIID,GameAIID,NickName) ";
+                                    insertSql +=
+                                        $" values({accountId},'{dr["Account"]}','{dr["Password"]}','{oldName}',1,{roomAiId},{gameAiId},'{dr["NickName"]}')";
+                                    string deleteSql = $"delete SpareRobot where Account='{dr["Account"]}'";
+                                    sqlList.Add(insertSql);
+                                    sqlList.Add(deleteSql);
+                                    rows += _qpRobot.ExecuteSqlTran(sqlList);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Log.Info("没有可用的机器人帐号。");
+                    }
+                }
+                else if (count < oldNum)
+                {
+                    
+                }
+                updateSql =
+                    $"update RobotAccount set GroupName='{groupname}',RoomAIID={roomid},GameAIID={gameid} where GroupName='{oldName}' and RoomAIID={roomAiId} and GameAIID={gameAiId}";
+
+                rows = _qpRobot.ExecuteSql(updateSql, null);
+                return rows.ToString();
+            }
+
+            if (groupId == 0)
+            {
+                newAccountDt = GetSpareRobotList(count);
+            }
+            int notInAccount = 0;
+            string inRobotAccount = string.Empty;
+            if (newAccountDt != null)
+            {
+                foreach (DataRow dr in newAccountDt.Rows)
+                {
+                    if (!Exists(dr["Account"].ToString(), dr["AccountID"].ToString()))
                     {
                         var accountId = "";
                         if (dr["AccountID"].ToString().Trim() != "")
@@ -450,23 +522,24 @@ namespace CQ.Application.SystemConfig
                         else
                         {
                             object obj = GetUserId(dr["Account"].ToString());
-                            if (obj!=null)
+                            if (obj != null)
                             {
                                 accountId = obj.ToString();
                             }
                             else
                             {
                                 notInAccount++;
-                                continue;;
+                                continue;
                             }
                         }
+
                         if (accountId != "")
                         {
                             List<string> sqlList = new List<string>();
                             string insertSql =
-                                $"insert into RobotAccount(AccountID,Account,Password,GroupName,State,RoomAIID,GameAIID,NickName,gameroomconfigid) ";
+                                $"insert into RobotAccount(AccountID,Account,Password,GroupName,State,RoomAIID,GameAIID,NickName) ";
                             insertSql +=
-                                $" values({accountId},'{dr["Account"]}','{dr["Password"]}','{groupname}',1,{roomid},{gameid},'{dr["NickName"]}',{timeid})";
+                                $" values({accountId},'{dr["Account"]}','{dr["Password"]}','{groupname}',1,{roomid},{gameid},'{dr["NickName"]}')";
                             string deleteSql = $"delete SpareRobot where Account='{dr["Account"]}'";
                             sqlList.Add(insertSql);
                             sqlList.Add(deleteSql);
@@ -484,6 +557,7 @@ namespace CQ.Application.SystemConfig
                 Log.Info("没有可用的机器人帐号。");
                 return "-1";
             }
+
             Log.Info($"RobotAccount已经存在的帐号[{inRobotAccount}],Account中不存在的帐号[{notInAccount}]。");
             return rows.ToString();
         }

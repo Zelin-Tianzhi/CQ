@@ -72,9 +72,20 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             return Success(num.ToString());
         }
 
-        public ActionResult SubmitFormGroup(string gameAi, string roomAi,string timeAi, string groupName,string num)
+        public ActionResult SubmitFormGroup(string queryJson)
         {
-            string rows = _robotApp.CreateGroup(gameAi, roomAi, num.ToInt(), groupName, timeAi);
+            var queryParam = queryJson.ToJObject();
+            string groupName = queryParam["groupName"].ToString();
+            string gameAi = queryParam["gameAi"].ToString();
+            string roomAi = queryParam["roomAi"].ToString();
+            string num = queryParam["num"].ToString();
+            string keyValue = queryParam["keyword"].ToString();
+            string gName = HttpUtility.UrlDecode(groupName);
+            if (num.ToInt() >= 0)
+            {
+                return Error("生成数量需要大于0。");
+            }
+            string rows = _robotApp.CreateGroup(gameAi, roomAi, num.ToInt(), gName,keyValue);
             return Success("创建成功。");
         }
         #endregion

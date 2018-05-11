@@ -4,24 +4,20 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-   
+    var keyValue = $.request("keyValue");
     $(function () {
         initControl();
-        var keyValue = $.request("keyValue");
-        $(function () {
-            initControl();
-            if (!!keyValue) {
-                $.ajax({
-                    url: "/SystemConfig/GameAi/GetFormJson",
-                    data: { keyValue: keyValue },
-                    dataType: "json",
-                    async: false,
-                    success: function (data) {
-                        $("#form1").formSerialize(data);
-                    }
-                });
-            }
-        });
+        if (!!keyValue) {
+            $.ajax({
+                url: "/SystemConfig/GameAi/GetFormJson",
+                data: { keyValue: keyValue },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                }
+            });
+        }
     });
     function initControl() {
         $("#GameAi").bindSelect({
@@ -53,14 +49,23 @@
         });
     }
     function submitForm() {
+        var queryJson = {
+            keyword: !!keyValue ? keyValue : 0,
+            gameAi: $("#GameAi").val(),
+            roomAi: $("#RoomAi").val(),
+            groupName: encodeURI($("#GroupName").val()),
+            num: $("#Num").val()
+        };
         var gameAi = $("#GameAi").val();
         var roomAi = $("#RoomAi").val();
-        var timeAi = $("#TimeAi").val();
-        var groupName = $("#GroupName").val();
+        //var timeAi = $("#TimeAi").val();
+        var groupName = encodeURI($("#GroupName").val());
         var num = $("#Num").val();
+
         $.ajax({
             url: "/SystemConfig/RobotGroup/SubmitFormGroup",
-            data: { gameAi: gameAi, roomAi: roomAi, timeAi: timeAi, groupName: groupName, num: num },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: { queryJson: JSON.stringify(queryJson)},
             dataType: "json",
             async: false,
             success: function (data) {
@@ -100,12 +105,12 @@
                     <select id="RoomAi" name="RoomAi" class="form-control"></select>
                 </td>
             </tr>
-            <tr>
+            @*<tr>
                 <th class="formTitle">时间配置</th>
                 <td class="formValue">
                     <select id="TimeAi" name="TimeAi" class="form-control"></select>
                 </td>
-            </tr>
+            </tr>*@
             <tr>
                 <th class="formTitle">分组名称</th>
                 <td class="formValue">
