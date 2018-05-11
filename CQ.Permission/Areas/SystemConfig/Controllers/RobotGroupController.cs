@@ -47,7 +47,7 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = _robotApp.GetRoomAiForm(keyValue);
+            var data = _robotApp.GetGroupForm(keyValue);
             return Content(data.ToJson());
         }
 

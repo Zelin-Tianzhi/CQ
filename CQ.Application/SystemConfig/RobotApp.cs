@@ -76,6 +76,25 @@ namespace CQ.Application.SystemConfig
             return list;
         }
 
+        public object GetGroupForm(string keyValue)
+        {
+            string sql = $" select * from View_GroupConfig where Id={keyValue} ";
+            DataTable dt = _qpRobot.GetDataTablebySql(sql).Tables[0];
+            if (!(dt!=null && dt.Rows.Count > 0))
+            {
+                return new { };
+            }
+            DataRow dr = dt.Rows[0];
+            object data = new
+            {
+                GameAi = dr["GameAIID"].ToInt(),
+                RoomAi = dr["RoomAIID"].ToInt(),
+                GroupName = dr["GroupName"].ToString(),
+                Num = dr["UserCount"].ToInt()
+            };
+            return data;
+        }
+
         public RobotRoomAI GetRoomAiForm(string keyValue)
         {
             string sql = $"select  * from RobotRoomAI where ID={keyValue}";
@@ -442,7 +461,6 @@ namespace CQ.Application.SystemConfig
                 string oldName = groupDt.Rows[0]["GroupName"].ToString();
                 int gameAiId = groupDt.Rows[0]["GameAIID"].ToInt();
                 int roomAiId = groupDt.Rows[0]["RoomAIID"].ToInt();
-                string updateSql = string.Empty;
                 if (count > oldNum)
                 {
                     int newNum = count - oldNum;
@@ -493,19 +511,27 @@ namespace CQ.Application.SystemConfig
                 }
                 else if (count < oldNum)
                 {
-                    
+                    int deleteRows = oldNum - count;
+                    selectSql =
+                        $"select top {deleteRows} * from RobotAccount where  GroupName='{oldName}' and RoomAIID={roomAiId} and GameAIID={gameAiId}";
+                    DataTable deleteDt = _qpRobot.GetDataTablebySql(selectSql).Tables[0];
+                    List<string> deleteList = new List<string>();
+                    foreach (DataRow row in deleteDt.Rows)
+                    {
+                        deleteList.Add(
+                            $"insert into SpareRobot(Account,NickName,[PassWord],AccountID) values('{row["Account"]}','{row["NickName"]}','{row["Password"]}',{row["AccountID"]})");
+                        deleteList.Add($"delete RobotAccount where AccountID={row["AccountID"]}");
+                    }
+                    _qpRobot.ExecuteSqlTran(deleteList);
                 }
-                updateSql =
-                    $"update RobotAccount set GroupName='{groupname}',RoomAIID={roomid},GameAIID={gameid} where GroupName='{oldName}' and RoomAIID={roomAiId} and GameAIID={gameAiId}";
+                var updateSql = $"update RobotAccount set GroupName='{groupname}',RoomAIID={roomid},GameAIID={gameid} where GroupName='{oldName}' and RoomAIID={roomAiId} and GameAIID={gameAiId}";
 
                 rows = _qpRobot.ExecuteSql(updateSql, null);
                 return rows.ToString();
             }
 
-            if (groupId == 0)
-            {
-                newAccountDt = GetSpareRobotList(count);
-            }
+
+            newAccountDt = GetSpareRobotList(count);
             int notInAccount = 0;
             string inRobotAccount = string.Empty;
             if (newAccountDt != null)
@@ -570,6 +596,10 @@ namespace CQ.Application.SystemConfig
                 sql += $"top {count} ";
             }
             sql += " * from SpareRobot ";
+            if (count > 0 )
+            {
+                sql += " order by Account ";
+            }
             DataTable dt = _qpRobot.GetDataTablebySql(sql).Tables[0];
             return dt;
         }
