@@ -21,7 +21,7 @@ $.request = function (name) {
     }
     return "";
 }
-window.prop = 1000;//定义充值比例
+window.prop = 1;//定义充值比例
 
 //充值
 function ShowPayType(name){

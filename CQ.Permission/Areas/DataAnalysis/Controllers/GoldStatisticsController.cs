@@ -43,6 +43,11 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
             return View();
         }
 
+        public ActionResult IdenticalRound()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Ajax请求

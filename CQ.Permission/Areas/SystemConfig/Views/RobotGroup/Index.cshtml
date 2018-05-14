@@ -71,6 +71,18 @@
             }
         });
     }
+
+    function btn_delete() {
+        $.deleteForm({
+            url: "/SystemConfig/RobotGroup/DeleteForm",
+            param: { keyValue: $("#gridList").jqGridRowValue().F_Id },
+            success: function () {
+                $.currentWindow().$("#gridList").resetSelection();
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+
+    }
 </script>
 
 

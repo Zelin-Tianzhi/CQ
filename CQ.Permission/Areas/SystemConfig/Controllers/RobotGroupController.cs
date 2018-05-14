@@ -81,12 +81,18 @@ namespace CQ.Permission.Areas.SystemConfig.Controllers
             string num = queryParam["num"].ToString();
             string keyValue = queryParam["keyword"].ToString();
             string gName = HttpUtility.UrlDecode(groupName);
-            if (num.ToInt() >= 0)
+            if (num.ToInt() <= 0)
             {
                 return Error("生成数量需要大于0。");
             }
             string rows = _robotApp.CreateGroup(gameAi, roomAi, num.ToInt(), gName,keyValue);
-            return Success("创建成功。");
+            return Success("操作成功。");
+        }
+
+        public ActionResult DeleteForm(string keyValue)
+        {
+            int rows = _robotApp.DeleteGroupForm(keyValue);
+            return Success("操作成功。");
         }
         #endregion
     }

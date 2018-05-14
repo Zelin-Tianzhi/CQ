@@ -17,6 +17,7 @@ namespace CQ.Application.DataAnalusis
         private readonly DbHelper _qpAccount = new DbHelper("QpAccount");
         private readonly DbHelper _qpLogStatis = new DbHelper("QPLogStatistics");
         private readonly DbHelper _qpLogTotal = new DbHelper("QPLogTotal");
+        
 
         #endregion
 
@@ -45,7 +46,7 @@ namespace CQ.Application.DataAnalusis
             List<object> list = new List<object>();
             foreach (DataRow dr in dt.Rows)
             {
-                string userName = userDt.Select($"AccountID={dr["AccountID"].ToString()}")[0]["Account"].ToString();
+                string userName = userDt.Select($"AccountID={dr["AccountID"]}")[0]["Account"].ToString();
                 list.Add(new
                 {
                     Account = userName,
@@ -119,9 +120,12 @@ namespace CQ.Application.DataAnalusis
 
         public List<object> GetUserGameGold(Pagination pagination, string keyValue, string begintime, string engtime, string account)
         {
-            if ( begintime.IsEmpty() || engtime.IsEmpty())
+            if (begintime.IsEmpty())
             {
                 begintime = DateTime.Today.AddDays(-1).ToString();
+            }
+            if ( engtime.IsEmpty())
+            {
                 engtime = DateTime.Today.ToString();
             }
             //1：黑名单； 0：白名单
@@ -198,9 +202,12 @@ namespace CQ.Application.DataAnalusis
         public List<object> GetGameGoldList(Pagination pagination, string keyValue, string begintime, string engtime,
             string account)
         {
-            if (begintime.IsEmpty() || engtime.IsEmpty())
+            if (begintime.IsEmpty())
             {
                 begintime = DateTime.Today.AddDays(-1).ToString();
+            }
+            if (engtime.IsEmpty())
+            {
                 engtime = DateTime.Today.ToString();
             }
             string dbName = Enum.Parse(typeof(TableNameEnum), keyValue).ToString();
@@ -256,6 +263,7 @@ namespace CQ.Application.DataAnalusis
             string userSql = $"select AccountID,Account from Account where AccountID={account}";
             var userDt = _qpAccount.GetDataTablebySql(userSql).Tables[0];
             var userName = userDt.Rows[0]["Account"].ToString();
+            
             foreach (DataRow dr in dataTable.Rows)
             {
                 list.Add(new
@@ -266,7 +274,7 @@ namespace CQ.Application.DataAnalusis
                     GameID = keyValue,
                     RoomID = dr["RoomID"],
                     RoomName = gameList.Select($"RoomID={dr["RoomID"].ToString()}")[0]["RoomName"].ToString(),
-                    GroupId = dr["GroupID"],
+                    GroupId = keyValue + "_" + yearMon + "_" + dr["GroupID"],
                     GoldTax = dr["GoldTax"],
                     GoldWin = dr["GoldWin"],
                     GoldCurrent = dr["GoldCurrent"],

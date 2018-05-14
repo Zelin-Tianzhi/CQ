@@ -481,7 +481,7 @@ namespace CQ.Application.GameUsers
         /// <returns></returns>
         public bool UserNameIsExist(string username)
         {
-            string sql = $"select * from account where account='{username}'";
+            string sql = $"select * from Account a left join AccountRegInfo b on a.AccountID = b.AccountID where a.Account = '{username}' or b.Telephone = '{username}'";
             DataSet ds = _qpAccount.GetDataTablebySql(sql);
             if (ds.Tables[0].Rows.Count > 0)
             {

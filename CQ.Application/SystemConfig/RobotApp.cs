@@ -321,7 +321,7 @@ namespace CQ.Application.SystemConfig
             return list;
         }
 
-        public RobotRoomAI GetTimeAiForm(string keyValue)
+        public RobotGameRoomConfig GetTimeAiForm(string keyValue)
         {
             string sql = $"select  * from RobotGameRoomConfig where ID={keyValue}";
             DataSet ds = _qpRobot.GetDataTablebySql(sql);
@@ -330,7 +330,7 @@ namespace CQ.Application.SystemConfig
                 return null;
             }
             DataRow dr = ds.Tables[0].Rows[0];
-            RobotRoomAI robotRoom = new RobotRoomAI();
+            RobotGameRoomConfig robotRoom = new RobotGameRoomConfig();
             robotRoom = Serialize.TableRowToModel(robotRoom, dr);
             return robotRoom;
         }
@@ -586,6 +586,24 @@ namespace CQ.Application.SystemConfig
 
             Log.Info($"RobotAccount已经存在的帐号[{inRobotAccount}],Account中不存在的帐号[{notInAccount}]。");
             return rows.ToString();
+        }
+
+        public int DeleteGroupForm(string keyValue)
+        {
+            string sql = $"select * from View_GroupConfig where Id={keyValue}";
+            DataTable dt = _qpRobot.GetDataTablebySql(sql).Tables[0];
+            string oldName = dt.Rows[0]["GroupName"].ToString();
+            int gameAiId = dt.Rows[0]["GameAIID"].ToInt();
+            int roomAiId = dt.Rows[0]["RoomAIID"].ToInt();
+            
+            List<string> sqlList = new List<string>();
+            sqlList.Add(
+                $"insert into SpareRobot(Account,NickName,[PassWord],AccountID) select [Account],[NickName],[Password],[AccountID]  FROM [RobotAccount] where GroupName='{oldName}' and RoomAIID={roomAiId} and GameAIID={gameAiId} ");
+            sqlList.Add(
+                $"delete RobotAccount where GroupName='{oldName}' and RoomAIID={roomAiId} and GameAIID={gameAiId}");
+
+            int rows = _qpRobot.ExecuteSqlTran(sqlList);
+            return rows;
         }
 
         public DataTable GetSpareRobotList(int count)

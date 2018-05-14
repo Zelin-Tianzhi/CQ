@@ -69,7 +69,14 @@
             dataType: "json",
             async: false,
             success: function (data) {
-                $.currentWindow().$("#gridList").trigger("reloadGrid");
+                if (data.state == "success") {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    //options.success(data);
+                    $.modalMsg(data.message, data.state);
+                    $.modalClose();
+                } else {
+                    $.modalAlert(data.message, data.state);
+                }
             }
         });
         //if (!$('#form1').formValid()) {

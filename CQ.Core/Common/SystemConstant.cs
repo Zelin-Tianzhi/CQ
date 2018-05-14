@@ -17,7 +17,7 @@ namespace CQ.Core
 
         #region DESKey
 
-        public const string DES_KEY = "permission_manage_des_key";
+        public const string DES_KEY = "permission_manage_des_key_9090opop!!((&&))";
         #endregion
 
 

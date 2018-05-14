@@ -21,7 +21,7 @@ namespace CQ.Application.DataAnalusis
         {
             string url = GetUrlStr() + $"ysfunction=getusercount";
             string Mess = HttpMethods.HttpGet(url);
-            string[] counts = Mess.Split(',');
+            string[] counts = Mess.Replace("\"","").Split(',');
             List<object> list = new List<object>();
             if (counts.Length > 0)
             {

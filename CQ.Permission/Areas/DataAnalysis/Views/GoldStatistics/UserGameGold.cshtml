@@ -40,7 +40,7 @@
         $("#btn_search").click(function() {
             $gridList.jqGrid('setGridParam',
                 {
-                    postData: { keyword: $("#txt_keyword").val(), begintime: $("#txt_begintime").val(), endtime: $("#txt_endtime").val(),usertype:$("#drop_usertype").val() },
+                    postData: { keyword: $("#drop_gamename").val(), begintime: $("#txt_begintime").val(), endtime: $("#txt_endtime").val(),usertype:$("#drop_usertype").val() },
                 }).trigger('reloadGrid');
         });
     }
@@ -90,7 +90,7 @@
                 $("#txt_endtime").val() +
                 '&account=' +
                 account,
-            width: "800px",
+            width: "1000px",
             height: "660px",
             btn: null
         });
@@ -151,7 +151,7 @@
                 <td>
                     <div class="input-group">
                         <select id="drop_gamename" name="drop_gamename" style="width: 120px;" class="form-control required">
-                            <option value="0">==请选择==</option>
+                            <option value="">==请选择==</option>
                         </select>
                         <span class="input-group-btn">
                             <button id="btn_search" type="button" class="btn  btn-primary" style="margin-left: 8px;"><i class="fa fa-search"></i></button>
