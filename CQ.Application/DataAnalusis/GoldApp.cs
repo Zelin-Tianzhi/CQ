@@ -23,16 +23,21 @@ namespace CQ.Application.DataAnalusis
 
         #region 公共方法
 
-        public List<object> UserGoldStatis(DateTime begintime, DateTime endtime, string gameid)
+        public List<object> UserGoldStatis(DateTime begintime, DateTime endtime, string gameid,string utype, string account)
         {
             string tableName = "LogDayGame" + begintime.ToString("yyyyMM");
 
             string sql =
                 $"select * from (select AccountID,sum(Gold) gold,SUM(AllGold) AllGold, sum(GoldWin) GoldWin from {tableName} ";
-            sql += $" where CurrentDay >= '{begintime}' and CurrentDay < '{endtime}' ";
+            sql += $" where CurrentDay >= '{begintime}' and CurrentDay <= '{endtime}' ";
             if (!string.IsNullOrEmpty(gameid))
             {
                 sql += $" and GameId={gameid} ";
+            }
+
+            if (!string.IsNullOrEmpty(account))
+            {
+                sql += $" and AccountID={account}";
             }
             sql += " group by AccountID) as wintable order by gold desc ";
             DataTable dt = _qpLogStatis.GetDataTablebySql(sql).Tables[0];
@@ -40,13 +45,22 @@ namespace CQ.Application.DataAnalusis
             DataTable userDt = new DataTable();
             if (uids.Length > 1)
             {
-                string userSql = $"select AccountID,Account from Account where AccountID in ({uids})";
+                string userSql = $"select AccountID,Account from Account where AccountID in ({uids}) ";
+                if (!string.IsNullOrEmpty(utype) && string.IsNullOrEmpty(account))
+                {
+                    userSql += $" and AccountSecondType={utype} ";
+                }
                 userDt = _qpAccount.GetDataTablebySql(userSql).Tables[0];
             }
             List<object> list = new List<object>();
             foreach (DataRow dr in dt.Rows)
             {
-                string userName = userDt.Select($"AccountID={dr["AccountID"]}")[0]["Account"].ToString();
+                var row = userDt.Select($"AccountID={dr["AccountID"]}");
+                if (row.Length <= 0)
+                {
+                    continue;
+                }
+                string userName = row[0]["Account"].ToString();
                 list.Add(new
                 {
                     Account = userName,
@@ -286,6 +300,25 @@ namespace CQ.Application.DataAnalusis
             }
             pagination.records = parameters[9].Value.ToInt();
             return list;
+        }
+
+        public DataTable GetIdenticalRoundGridJson(long gameid, string yearmonth, string roundflag)
+        {
+            string connectionStr = Enum.Parse(typeof(TableNameEnum), gameid+"").ToString();
+            var helper = new DbHelper("QPLog" + connectionStr);
+            string tableName ="Item_" + yearmonth;
+            string isExists = $"select * from sysobjects where name='{tableName}' and xtype='U'";
+            var obj = helper.GetObject(isExists, null);
+            if (obj == null)
+            {
+                return new DataTable();
+            }
+
+            string sql =
+                $"SELECT [ID],[GroupID],[RoomID],[CreationDate],[AccountID],[AccountIP],[GoldTax],[GoldWin],[GoldCurrent],[GoldBring],[GoldBank],[GoldTotal],[Bean],[XinYunPoint],[Score] FROM [{tableName}] WHERE GroupID={roundflag}";
+            DataTable dt = helper.GetDataTablebySql(sql).Tables[0];
+            return dt;
+            
         }
 
         #endregion

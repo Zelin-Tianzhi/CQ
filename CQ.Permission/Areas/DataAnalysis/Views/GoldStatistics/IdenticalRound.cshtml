@@ -3,6 +3,127 @@
     ViewBag.Title = "IdenticalRound";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
+<script>
+    $(function() {
+        gridList();
+    });
+    function gridList() {
 
-<h2>IdenticalRound</h2>
+        var $gridList = $("#gridList");
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam',
+                {
+                    postData: { keyword: $("#txt_keyword").val() }
+                }).trigger('reloadGrid');
+        });
+
+        $gridList.dataGrid({
+            url: "/DataAnalysis/GoldStatistics/GetIdenticalRoundGridJson",
+            height: $(window).height() - 128,
+            colModel: [
+                { label: '主键', name: 'ID', hidden: true },
+                { label: '标识', name: 'GroupID', width: 60, align: 'center' },
+                {
+                    label: '用户ID', name: 'AccountID', width: 120, align: 'left'
+                },
+                {
+                    label: '用户IP', name: 'AccountIP', width: 120, align: 'left'
+                },
+                {
+                    label: '用户输赢', name: 'GoldWin', width: 120, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '当前金币', name: 'GoldCurrent', width: 120, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '当前带入值', name: 'GoldBring', width: 120, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '金库金币', name: 'GoldBank', width: 120, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+
+                {
+                    label: '当前总金币', name: 'GoldTotal', width: 120, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '税收', name: 'GoldTax', width: 100, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '豆子', name: 'Bean', width: 80, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '幸运点', name: 'XinYunPoint', width: 80, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                },
+                {
+                    label: '积分', name: 'Score', width: 100, align: 'center',
+                    formatter: function (cellvalue, options, rowdata, action) {
+                        return format_number(cellvalue);
+                    }
+                }
+            ],
+            rowNum: -1,
+            footerrow: true,
+            sortname: 'ID desc',
+            viewrecords: true
+        });
+    }
+    function format_number(n) {
+        var b = parseInt(n).toString();
+        var len = b.length;
+        if (len <= 4) { return b; }
+        var r = len % 4;
+        return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{4}/g).join(",") : b.slice(r, len).match(/-\d{3}|\d{4}/g).join(",");
+    }
+</script>
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <script>$('.toolbar').authorizeButton()</script>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_keyword" type="text" class="form-control" placeholder="游戏同局标识" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+
 

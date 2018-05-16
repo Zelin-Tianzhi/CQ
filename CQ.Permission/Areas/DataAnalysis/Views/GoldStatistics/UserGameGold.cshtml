@@ -37,10 +37,18 @@
             sortname: 'ID desc',
             viewrecords: true
         });
-        $("#btn_search").click(function() {
+        $("#btn_search").click(function () {
+            
+            var queryJson = {
+                keyValue: $("#drop_gamename").val(),
+                begintime: $("#txt_begintime").val(),
+                engtime: $("#txt_endtime").val(),
+                usertype: $("#drop_usertype").val(),
+                account: $("#txt_account").val()
+            };
             $gridList.jqGrid('setGridParam',
                 {
-                    postData: { keyword: $("#drop_gamename").val(), begintime: $("#txt_begintime").val(), endtime: $("#txt_endtime").val(),usertype:$("#drop_usertype").val() },
+                    postData: { queryJson: JSON.stringify(queryJson) }
                 }).trigger('reloadGrid');
         });
     }
@@ -94,22 +102,6 @@
             height: "660px",
             btn: null
         });
-//        $.ajax({
-//            url: "/UserManage/User/GetFormJson",
-//            data: { queryJson: JSON.stringify(queryJson) },
-//            dataType: "json",
-//            async: false,
-//            success: function (data) {
-//                $("#form1").formSerialize(data);
-//                $("#AccountNum").val(data.F_ID + "(游戏ID:" + data.AccountNum + ")");
-//                if (data.UnfreezeDate) {
-//                    $("#F_EnabledMark").val("false");
-//                }
-//                $("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
-//                $("#form1").find('div.ckbox label').attr('for', '');
-//                $("#F_UserPassword").val("******");
-//            }
-//        });
     }
 
 </script>
@@ -137,28 +129,36 @@
                         <input id="txt_endtime" type="text" class="form-control" onclick="WdatePicker()" placeholder="结束时间" style="width: 160px; border-radius: 5px;">
                     </div>
                 </td>
+                <td style="padding-left: 5px;">用户ID：</td>
+                <td>
+                    <div class="input-group">
+                        <input id="txt_account" type="text" class="form-control" placeholder="用户ID" style="width: 120px; border-radius: 5px;">
+                    </div>
+                </td>
                 <td style="padding-left: 5px;">用户类型：</td>
                 <td>
                     <div class="input-group">
                         <select id="drop_usertype" name="drop_usertype" class="form-control" style="width: 120px; border-radius: 5px;">
-                            <option value="0">==请选择==</option>
-                            <option value="1">真实用户</option>
-                            <option value="2">机器人</option>
+                            <option value="">==请选择==</option>
+                            <option value="0">普通用户</option>
+                            <option value="1">机器人</option>
+                            <option value="2">代理</option>
+                            <option value="1">内部用户</option>
                         </select>
                     </div>
                 </td>
                 <td style="padding-left: 5px;">游戏名称：</td>
                 <td>
                     <div class="input-group">
-                        <select id="drop_gamename" name="drop_gamename" style="width: 120px;" class="form-control required">
+                        <select id="drop_gamename" name="drop_gamename" style="width: 120px; border-radius: 5px;" class="form-control required">
                             <option value="">==请选择==</option>
                         </select>
                         <span class="input-group-btn">
-                            <button id="btn_search" type="button" class="btn  btn-primary" style="margin-left: 8px;"><i class="fa fa-search"></i></button>
+                            <button id="btn_search" type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                         </span>
                     </div>
                 </td>
-                
+
             </tr>
         </table>
     </div>

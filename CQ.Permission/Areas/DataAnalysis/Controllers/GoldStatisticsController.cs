@@ -53,15 +53,21 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
         #region Ajax请求
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(string begintime, string endtime, string keyword, string usertype)
+        public ActionResult GetGridJson(string queryJson)
         {
-            var btime = string.IsNullOrEmpty(begintime) ? DateTime.Today.AddDays(-1) : begintime.ToDate();
-            var etime = string.IsNullOrEmpty(endtime) ? DateTime.Today : endtime.ToDate();
+
+            var queryParam = queryJson.ToJObject();
+            var btime = queryParam["begintime"].IsEmpty()? DateTime.Today.AddDays(-1) : queryParam["begintime"].ToDate();
+            var etime = queryParam["endtime"].IsEmpty() ? DateTime.Today.AddSeconds(-1) : queryParam["endtime"].ToDate();
+            var gameid = queryParam["keyword"] + "";
+            var utype = queryParam["usertype"] + "";
+            var account = queryParam["account"] + "";
             if (etime.Month != btime.Month)
             {
                 return Content("暂时不支持跨月度查询。");
             }
-            var list = _app.UserGoldStatis(btime, etime, keyword);
+
+            var list = _app.UserGoldStatis(btime, etime, gameid, utype, account);
             var data = new
             {
                 rows = list,
@@ -112,6 +118,33 @@ namespace CQ.Permission.Areas.DataAnalysis.Controllers
                 total = 1,
                 page = 1,
                 records = list.Count
+            };
+            return Content(data.ToJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetIdenticalRoundGridJson(string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return Error("请输入查询条件。");
+            }
+
+            var arr = keyword.Split('_');
+            if (arr.Length != 3)
+            {
+                return Error("参数错误。");
+            }
+            var gameid = arr[0].ToInt64();
+            var yearmonth = arr[1];
+            var round = arr[2];
+            var list = _app.GetIdenticalRoundGridJson(gameid, yearmonth, round);
+            var data = new
+            {
+                rows = list,
+                total = 1,
+                page = 1,
+                records = list.Rows.Count
             };
             return Content(data.ToJson());
         }

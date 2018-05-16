@@ -27,25 +27,26 @@ namespace CQ.WebSiteTests
         [TestMethod]
         public void TestYs()
         {
-            string str1 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile("12345678", "md5");
-            MD5 md5Hash = MD5.Create();
+            var aa = DateTime.Today.AddDays(1).AddSeconds(-1);
+            //string str1 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile("12345678", "md5");
+            //MD5 md5Hash = MD5.Create();
 
-            // 将输入字符串转换为字节数组并计算哈希数据 
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes("12345678"));
+            //// 将输入字符串转换为字节数组并计算哈希数据 
+            //byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes("12345678"));
 
-            // 创建一个 Stringbuilder 来收集字节并创建字符串 
-            StringBuilder sBuilder = new StringBuilder();
+            //// 创建一个 Stringbuilder 来收集字节并创建字符串 
+            //StringBuilder sBuilder = new StringBuilder();
 
-            // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串 
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
+            //// 循环遍历哈希数据的每一个字节并格式化为十六进制字符串 
+            //for (int i = 0; i < data.Length; i++)
+            //{
+            //    sBuilder.Append(data[i].ToString("x2"));
+            //}
 
-            string str2 = sBuilder.ToString();
-            long a = 812636891239467;
+            //string str2 = sBuilder.ToString();
+            //long a = 812636891239467;
 
-            int b = (int) a;
+            //int b = (int) a;
             //string url = "http://183.131.69.236:11004/flop.cpp?ysfunction=getuserdata&account=wwj001";
 
             //var aa = new {Result = "Success", data = new { }};
