@@ -51,12 +51,6 @@ namespace CQ.WebSite.Controllers
             {
                 return Error("账号验证码不能为空。");
             }
-            string accountKey = account + "SendCodeTime";
-            object sendCodeTime = Cache.Get(accountKey);
-            if (sendCodeTime != null)
-            {
-                return Error("请等待一分钟再次请求。");
-            }
             object verifyCode = Cache.Get(token);
             if (verifyCode.IsEmpty())
             {
@@ -65,6 +59,12 @@ namespace CQ.WebSite.Controllers
             else if (Md5.md5(yzm.ToLower(), 16) != verifyCode.ToString())
             {
                 return Error("验证码错误，请重新输入");
+            }
+            string accountKey = account + "SendCodeTime";
+            object sendCodeTime = Cache.Get(accountKey);
+            if (sendCodeTime != null)
+            {
+                return Success("成功");
             }
 
             string result = pwdApp.SendCheckCode(account);

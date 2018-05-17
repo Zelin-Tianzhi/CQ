@@ -74,7 +74,8 @@ namespace CQ.WebSite.Controllers
 
         public ActionResult CheckUser(string keyValue)
         {
-            string account = App.GetIdByNum(keyValue, 2);
+            var accountid = keyValue.ToInt64();
+            string account = App.GetIdByNum(accountid+"", 2);
             string data = account;
             if (account == null || account == "0")
             {

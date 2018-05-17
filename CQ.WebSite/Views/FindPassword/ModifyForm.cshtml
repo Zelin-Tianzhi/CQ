@@ -47,7 +47,7 @@
                     <span>手机验证码：</span>
                     <input id="checkcode" type="text" class="itxput itxput_wd2" />
                     <input type="text" class="itxput_red" style="display:none;" />
-                    <input type="button" id="againcheckcode" onclick="time(this)" class="codeNumDisable" value="重新发送" />
+                    <input type="button" id="againcheckcode" onclick="time(this)" class="codeNumDisable" value="获取验证码" />
                     <p class="itx_pd1" style="display:none;"><em class="itxt_red">您输入的验证码有误</em></p>
                 </li>
                 <li>
@@ -90,7 +90,7 @@
     });
     var wait=60;
     function time(o) {
-        if (wait == 60 && o.value == "重新发送") {
+        if (wait == 60 && o.value == "重新获取") {
             $.ajax({
                 url: "/FindPassword/SendCode",
                 type: "GET",
@@ -107,11 +107,11 @@
         }
         if (wait == 0) {
             o.removeAttribute("disabled");
-            o.value="重新发送";
+            o.value="重新获取";
             wait = 60;
         } else {
             o.setAttribute("disabled", true);
-            o.value=" " + wait + " 后重新发送";
+            o.value=" " + wait + " 后重新获取";
             wait--;
             setTimeout(function() {
                     time(o);
