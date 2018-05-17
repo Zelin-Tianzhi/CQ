@@ -30,8 +30,12 @@ namespace CQ.Application.DataAnalusis
                     F_Id = 1,
                     CurTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     ActiveUser = counts[0],
+                    SuperVip = counts[1],
                     InsideUser = counts[3],
                     OrdinaryUser = counts[2],
+                    ManageUser = counts[5],
+                    Vip = counts[6],
+                    Beauty = counts[7],
                     TotalUser = int.Parse(counts[0]) + int.Parse(counts[1]) + int.Parse(counts[2]) + int.Parse(counts[3])
                 });
             }
